@@ -1,0 +1,13 @@
+name: GoldRbxia
+avatar: "https://files.aurinfer.com/applications/profile-pics/1756390178154_dd8a5c10-d201-468d-8e6c-d3d18124af04.png" # or any avatar URL
+url: "https://aurinfer.com" # Optional: your website
+bio: "Founder at AurInfer Labs | Full Stack Engineer based in the Emirates"
+location: "Dubai, United Arab Emirates"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: Email
+    url: "mailto:gold@aurinfer.com"
+  - label: GitHub
+    url: "https://github.com/GoldRbxia12"
+  - label: Discord
+    url: "https://discord.com/users/1079394780292849714" # Optional
