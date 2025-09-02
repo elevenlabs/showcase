@@ -1,0 +1,57 @@
+---
+title: tellem
+description: Practice English through AI voice conversations.
+authorIds:
+  - hendrik-schuette
+  - krishan-allen
+categories:
+  - agents
+  - text-to-speech
+  - voices
+isFeatured: false
+date: "2025-09-02"
+image: /images/tellem.png
+demoUrl: https://tellem.org
+videoUrl: https://youtu.be/D9IM2KJxhq8
+---
+
+## Overview
+
+We are building **tellem**, a cross-platform application (web and iOS) where users can practice speaking English through authentic, life-like voices.  
+
+tellem collaborates directly with real teachers. These teachers contribute their teaching style, documentation and likeness, allowing us to create AI voice clones that students can interact with. This provides learners with a secondary way to engage with their tutor outside of live lessons, while still feeling connected to their teacher.
+
+## Key Features
+
+- **Voice Call Tutoring**: Natural conversations powered by cloned teacher voices.  
+- **Scenarios**: Over 80 curated real-world situations to practice speaking in context.  
+- **Chat + Memory**: Continuous chat sessions with memory, so learners build on past interactions.  
+- **Multi-Platform**: Available both as a responsive web application and a native iOS app.  
+
+## How It Works
+
+tellem consists of two main applications:
+
+- **Web app**: Built with AstroJS and SolidJS, it handles onboarding, scenarios, and conversational practice directly in the browser.  
+- **iOS app**: Developed in SwiftUI, it offers the same tutoring experience on iPhone.  
+
+
+### Implementation Notes
+
+A key part of development was integrating ElevenLabs technology across both platforms. The web app uses ElevenLabs’ JavaScript libraries, while the iOS app integrates via the Swift SDK. There were differences in how these SDKs handle real-time audio, but with some trial and error, we achieved a smooth experience on both platforms.  
+
+Once set up, ElevenLabs technology works seamlessly, delivering real-time conversational AI, text-to-speech, and voice cloning that makes tellem’s tutors feel natural and engaging.
+
+## Technologies Used
+
+- **ElevenLabs Conversational AI, TTS, and Voice Cloning**  
+- **AstroJS + SolidJS** (web frontend)  
+- **SwiftUI** (iOS app)  
+- **Node.js + MongoDB** (backend services)  
+- **RevenueCat + Stripe** (subscription and payments)
+
+## Future Plans
+
+- Expand beyond English into additional languages  
+- Add more scenarios and interactive exercises  
+- Broaden teacher partnerships into a full tutor marketplace  
