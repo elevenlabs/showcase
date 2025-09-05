@@ -1,0 +1,60 @@
+---
+title: Night Rider
+description: You sleep. AI works. ✸ Get daily AI-powered morning audio briefings on local weather, news, nearby events and more…
+authorIds:
+  - lubos-belak
+categories:
+  - text-to-speech, speech-to-text
+isFeatured: false
+date: "2025-09-05"
+image: /images/night-rider.png
+xUrl: https://x.com/NightRiderAgent
+---
+
+# Night Rider
+
+## Overview
+
+With Night Rider, you can tell the voice AI agent on what to research before going to sleep. When you wake up, a clear audio summary will be ready for you — ideal for your commute or morning coffee.
+It leverages the ElevenLabs API in two ways: first, as part of the AI voice agent’s pipeline for both text-to-speech (TTS) and speech-to-text (STT), and second, to create the audio summary using ElevenLabs TTS v3.
+
+## Key Points
+
+- You can replace hours of studying with 2–5 minute audio recaps tailored to your query.
+- You can get personalise news, weather, events, and more based on your current location.
+
+## How It Works
+
+Explain the technical implementation, architecture, or interesting challenges you solved.
+There are two technical parts to this project:
+
+1. The AI Voice Agent
+    - Tapping 'Connect' on the home screen begins the voice session using the LiveKit AI Agents framework. The ElevenLabs API is used for TTS and STT, both of which are necessary components of the cascade pipeline. Other components of the pipeline include the LLM and turn-detection models.
+    - During the session, you can instruct the AI agent to research a topic, which it will then plan to complete overnight. 
+
+2. The Morning Brief
+    - Tapping on the 'Morning Brief' tab takes you to the section where you can easily select the topics for your personal audio mini-podcast, which you will receive automatically each morning.
+    - There are two elements/models at play: First, Perplexity's Sonar model researches the topic using the current date and the user's location. It then passes the response to a different LLM model, which generates a summary suited to ElevenLabs. This summary is then sent to the ElevenLabs TTS API to produce the audio.
+
+## Technologies Used
+
+- React Native/Expo
+- ElevenLabs API:
+    - Model: `scribe_v1` for STT (AI Voice Agent feature)
+    - Model: `eleven_turbo_v2_5` for TTS (AI Voice Agent feature)
+    - Model: `eleven_v3` for TTS (Morning Brief feature)
+- LiveKit Agents
+- Perplexity API
+- Anthropic API
+- Supabase for database
+- Upstash (QStash/Redis) for background processing
+- Langfuse for tracing
+
+## Download
+
+You can download the Night Rider app:
+- iOS from the [App Store](https://apps.apple.com/us/app/night-rider-ai-researcher/id6746437996)
+- Android from the [Google Play Store](https://play.google.com/store/apps/details?id=app.httpster.nightrider&pli=1)
+
+
+
