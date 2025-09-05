@@ -1,0 +1,13 @@
+name: Reactorcore
+avatar: "https://i.postimg.cc/SNQ4jv2P/voxelweapons-icon.png" # or any avatar URL
+url: "https://reactorcore.itch.io"
+bio: "Modder, software dev, game designer, all-aspect creator artist person"
+location: "Helsinki, Finland"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "https://twitter.com/ReactorcoreDev"
+  - label: GitHub
+    url: "https://github.com/ReactorcoreGames"
+  - label: Linktree
+    url: "https://linktr.ee/reactorcore"
