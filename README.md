@@ -1,44 +1,11 @@
-# ElevenLabs Showcase
+HLI
 
-![hero](apps/www/public/opengraph-image.png)
+Hormone Harmony bridges the gap between hormonal awareness and action, giving users *evidence-based to implement into a busy schedule.*
 
-A curated collection of projects built with ElevenLabs. Submit the best of what you've built with ElevenLabs here - if it's approved we'll give rewards.
+Hormone Harmony helps women understand and act on their body’s hormonal patterns and learning style. After a user logs their daily symptoms, energy, and mood, an **Intervention AI Agent** detects their hormonal phase and recommends **personalized, research-backed interventions to manage symptoms and support your hormonal shifts.
 
-## Submit Your Project
+When users open an intervention, a **Synthesizer Agent** creates an actionable guide tailored to their preferred learning style **text, audio, or visual** using AI research synthesis, voice generation (ElevenLabs), and visual diagrams. Each guide is short, science-based, and designed for real-world usability.
 
-We welcome submissions from developers building with ElevenLabs technology.
+Users can complete a practice, reflect briefly, and track what works best for them over time.
 
-### How to Submit
 
-**Follow our step-by-step contribution guide:**
-
-- **[View Submission Instructions](.github/CONTRIBUTING.md)**
-
-The guide covers:
-
-- Creating your author profile
-- Adding your project with proper formatting
-- Submitting a pull request
-- Review process and swag eligibility
-
-### Quick Overview
-
-1. **Fork** this repository
-2. **Add** your author profile to `/authors/`
-3. **Create** your project file in `/projects/`
-4. **Submit** a pull request
-
-### Requirements
-
-- Must use ElevenLabs technology (API, SDK, or services)
-- Include working demo, repository, or video
-- Have rights to share the project publicly
-- Must be open source with publicly accessible code
-
-### Get Help
-
-- [Full Contribution Guide](.github/CONTRIBUTING.md)
-- [Browse Existing Projects](https://showcase.elevenlabs.com/projects)
-- [Join our Discord](https://discord.gg/elevenlabs)
-
----
