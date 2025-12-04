@@ -1,0 +1,50 @@
+---
+title: Valio Aimo Zero-Fail
+description: Model trying to predict shortages in stock, and automate calls to customers to provide substitutions.
+authorIds:
+  - aleksanteri-laitinen # Must match your author file name (without .yml)
+categories:
+  - agents # Choose from: agents, text-to-speech, speech-to-text, music, voices
+isFeatured: false # Leave as false, we'll feature exceptional projects
+date: "2025-01-31" # Today's date in YYYY-MM-DD format
+image: /images/your-project.png # Upload image to /public/images/
+demoUrl: https://junction25-omega.vercel.app/ # Optional: Live demo
+repoUrl: https://github.com/you/project # Optional: Repository
+videoUrl: https://youtu.be/UTEYTdzAAkE?si=0XWM5oYnWaK4LbCd # Optional: Demo video
+xUrl: https://x.com/you/status/... # Optional: X/Twitter post
+---
+
+# Valio Aimo Zero-Fail
+
+## Overview
+
+In essence, we have a prediction model for a wholesales warehouse stock designed to trigger an ElevenLabs Call Agent AI.
+We have 2 agents, one is on the website as a chatbot agent, designed to help substitutions with the customer via chat for risky items that could run out before the expected deliver.
+The second agent is a Call Agent AI that would contact the customers in urgent situations, to arrange last minute substitutions to avoid delivery failures.
+
+## Key Features
+
+- Feature 1: Prediction model to trigger Call Agent AI
+- Feature 2: Website Chatbot AI to assist customers.
+
+## How It Works
+
+The prediction model fell kinda short, and we only got the Frontend working with the AI Agents.
+The demo of the Call Agent API is on the website, because of implementation reasons. We wanted to use something so we could actually call phones Twigli for example.
+
+## Technologies Used
+
+- ElevenLabs API, AI Agents
+- Vite + React
+- Figma + AI,
+
+## Getting Started
+
+```bash
+Check out the website.
+```
+
+## Future Plans
+
+To improve the prediction model and actually combine all of the components together into a unified product. 
+And actually have the Call Agent AI call to a phone via the correct things. 

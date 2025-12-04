@@ -1,0 +1,13 @@
+name: Aleksanteri Laitinen
+avatar: "https://github.com/yourusername.png" # or any avatar URL
+url: "https://yourwebsite.com" # Optional: your website
+bio: "Open to learn, but mostly embedded ..."
+location: "Espoo, Finland"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "https://x.com/yourusername"
+  - label: GitHub
+    url: "https://github.com/aleksanteril"
+  - label: LinkedIn
+    url: "https://linkedin.com/in/yourusername" # Optional
