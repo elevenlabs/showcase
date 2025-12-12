@@ -1,0 +1,11 @@
+name: Askin Kadir Cekim
+avatar: "https://github.com/akcware.png" # or any avatar URL
+url: "" # Optional: your website
+bio: "CS student at KIT | AI & full-stack developer | Building real-time, multilingual products."
+location: "Karlsruhe, Germany"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "https://x.com/akcware"
+  - label: GitHub
+    url: "https://github.com/akcware"
