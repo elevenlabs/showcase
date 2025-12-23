@@ -1,0 +1,65 @@
+---
+title: CMats
+description: Voice-driven construction materials ordering with ElevenLabs STT/TTS, FastAPI backend, React client, inventory & approval flow.
+authorIds:
+  - flamur-maliqi
+categories:
+  - agents
+  - speech-to-text
+  - text-to-speech
+isFeatured: false
+date: "2025-12-23"
+image: /projects/images/cmats.png
+repoUrl: https://github.com/FlamurMaliqi/Tum-ai-hackathon
+---
+
+# CMats
+
+## Overview
+
+CMats is a voice-first materials ordering platform for construction teams. Site foremen speak orders, receive real-time transcripts, and get spoken confirmations via ElevenLabs. A FastAPI backend processes intent, checks inventory, and routes approvals so logistics teams can keep stock moving without manual data entry.
+
+## Key Features
+
+- Voice interface with real-time STT (Scribe v2) and low-latency TTS responses
+- Automated product matching, alternatives, and price comparisons across suppliers
+- Multi-site inventory tracking with order approvals and admin dashboard
+- Dockerized stack for fast local or on-prem deployment
+
+## How It Works
+
+- Frontend (React) streams microphone audio via `@elevenlabs/react` and shows partial/committed transcripts with stateful recording controls.
+- Backend (FastAPI) receives transcripts over WebSocket, uses Claude for intent extraction, matches SKUs in Postgres, and streams token-by-token responses to ElevenLabs TTS.
+- Dual WebSocket flow keeps audio and text streaming for low-latency, natural back-and-forth conversations.
+- Data seeding scripts crawl supplier catalogs (Hilti/Würth) and generate SQL to populate the product catalog with standardized IDs and pricing.
+
+## Technologies Used
+
+- ElevenLabs Scribe v2 (STT) and `eleven_turbo_v2_5` TTS
+- FastAPI, WebSockets, Python, Postgres
+- React, TypeScript, `@elevenlabs/react`
+- Docker Compose for local orchestration
+
+## Getting Started
+
+1) Set API keys in `server/.env` (ElevenLabs, Anthropic) and `client/.env.local` for API URL.  
+2) Run `docker compose up --build` from the repo root.  
+3) Open the client at `http://localhost:5173` and start a voice session; backend runs on `http://localhost:8000`.  
+4) Use the admin dashboard to review orders, inventory, and approvals.  
+
+## Demo
+
+Use the voice page in the client to stream audio, view transcripts, and hear TTS confirmations. A sample WebSocket test page is included in `testing/ws_construction_supervisor_5s_demo.html` for quick checks.  
+
+## Future Plans
+
+- Expand SKU catalog and supplier coverage
+- Add more languages and voice selections
+- Deeper analytics for order patterns and fulfillment SLAs
+
+## Acknowledgments
+
+- ElevenLabs for realtime voice
+- Anthropic Claude for intent extraction
+- Hilti and Würth product data sources
+
