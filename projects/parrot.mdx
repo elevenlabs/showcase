@@ -1,0 +1,183 @@
+---
+title: Parrot
+description: Standup-in-a-box with Anam avatars, cloned voices, and CodeRabbit repo intelligence powered by ElevenLabs agents.
+authorIds:
+  - krzysztof-lis
+categories:
+  - agents
+  - text-to-speech
+  - speech-to-text
+  - voices
+isFeatured: false
+date: "2025-12-23"
+image: /images/parrot.jpg
+demoUrl: ""
+repoUrl: "https://github.com/kjlis/elevenlabs-parrot"
+videoUrl: "https://youtu.be/JtXQWqVjqXE"
+xUrl: "https://x.com/tenkrzys"
+---
+
+# Parrot
+
+## Overview
+
+Parrot is a live “standup in a box” built during ElevenLabs WorldWide Hackathon: we built Anam avatars, cloned our voices, and fed them CodeRabbit-generated GitHub repo reports so they can join meetings and answer project-progress questions in real time. Everything is wired through the ElevenLabs agents platform for natural conversation, with Convex backing the data and transcripts—so your team’s daily standup can run itself.
+
+## Key Features
+
+- Real-time conversation: Bidirectional WebSocket audio to ElevenLabs with fast PCM16 streaming. ElevenLabs agents are using cloned voices.
+- Avatar lip-sync: Anam audio passthrough renders synchronized facial animation.
+- Context-aware replies: Injects a CodeRabbit report summary on connect and can persist transcripts via Convex.
+
+## How It Works
+
+```
+┌─────────────┐     WebSocket      ┌─────────────┐
+│   Browser   │◄──────────────────►│  ElevenLabs │
+│             │   (bidirectional)  │   Agent     │
+│  ┌───────┐  │                    └─────────────┘
+│  │  Mic  │──┼── user audio ──────────►
+│  └───────┘  │
+│             │◄── agent audio (PCM16) ─┐
+│  ┌───────┐  │                         │
+│  │ Anam  │◄─┼─────────────────────────┘
+│  │Avatar │  │   (audio passthrough)
+│  └───────┘  │
+└─────────────┘
+```
+
+### Conversation Flow
+
+1. **User speaks** → Microphone captures audio at 16kHz
+2. **Audio sent to ElevenLabs** → Via WebSocket as base64-encoded PCM16
+3. **ElevenLabs processes** → Speech-to-text → LLM → Text-to-speech
+4. **Agent audio returned** → PCM16 chunks arrive faster than realtime
+5. **Audio sent to Anam** → Via `createAudioPassthroughStream()` for lip-sync
+6. **Avatar animates** → Anam renders lip-sync in sync with the audio
+
+### Report Context Flow
+
+1. **Worker fetches latest CodeRabbit report** via `/api/report` (Convex if configured, otherwise `public/report.json` or `REPORT_SOURCE_URL`).
+2. **Client shows summary** above the transcript.
+3. **Context sent to ElevenLabs** on WebSocket open using `contextual_update`, so the agent answers with project-specific details.
+4. **Transcripts persisted** via `/api/transcript` when Convex is configured.
+
+### Key Concept: Audio Passthrough
+
+In **avatarOnly** mode, Anam doesn't use its own AI—it just renders an avatar that lip-syncs to audio you provide. This lets you use any external voice source (like ElevenLabs) while getting high-quality avatar visualization.
+
+```typescript
+// Create Anam session in avatarOnly mode
+const anamClient = createClient(sessionToken);
+await anamClient.streamToVideoElement("video-element");
+
+// Create audio passthrough stream
+const audioStream = anamClient.createAudioPassthroughStream({
+  encoding: "pcm_s16le",
+  sampleRate: 16000,
+  channels: 1,
+});
+
+// Send audio chunks as they arrive from ElevenLabs
+audioStream.sendAudioChunk(base64AudioData);
+
+// Signal end of speech for proper lip-sync timing
+audioStream.endOfSpeech();
+```
+
+## Technologies Used
+
+- ElevenLabs Conversational AI (speech-to-text + text-to-speech via WebSocket)
+- Anam JS SDK (avatar rendering and audio passthrough)
+- Cloudflare Workers + Hono
+- Bun, Vite, Tailwind 4
+- Convex (optional) for reports and transcript persistence
+- chatdio (audio capture utilities)
+- CodeRabbit (repo reports)
+
+## Getting Started
+
+### Prerequisites
+
+- [Bun](https://bun.sh) runtime
+- [ElevenLabs](https://elevenlabs.io) account with a configured Agent
+- [Anam](https://anam.ai) account with API access
+
+### 1. Clone and install
+
+```bash
+git clone <repo-url>
+cd elevenlabs-parrot
+bun install
+```
+
+### 2. Configure environment
+
+Create a `.dev.vars` file in the project root:
+
+```env
+ANAM_API_KEY=your_anam_api_key
+ANAM_AVATAR_ID=your_avatar_id
+ELEVENLABS_AGENT_ID=your_agent_id
+ELEVENLABS_API_KEY=your_elevenlabs_api_key
+# Optional: point to a live summary instead of the local JSON
+# REPORT_SOURCE_URL=https://your-hosted-coderabbit-summary.json
+# Optional: Convex for live reports + transcripts
+# CONVEX_URL=https://<deployment>.convex.cloud
+# VITE_CONVEX_URL=http://127.0.0.1:3210 # local dev
+# CONVEX_ADMIN_KEY=<convex_admin_key>
+# REPORT_PROJECT_ID=your-default-project-id
+# Optional: multiple voice/avatars
+# PROFILES_JSON=[{"id":"default","label":"Alice","elevenLabsAgentId":"agent_default","anamAvatarId":"avatar_default"},{"id":"bob","label":"Bob","elevenLabsAgentId":"agent_bob","anamAvatarId":"avatar_bob"}]
+```
+
+### 3. Provide a report
+
+- Easiest: edit `public/report.json` (sample provided) with your CodeRabbit summary, or
+- Host the JSON elsewhere and set `REPORT_SOURCE_URL` to that URL.
+
+### 4. Run local Convex (optional but recommended)
+
+If you want live reports/transcripts instead of the static sample:
+```bash
+bunx convex dev   # or npx convex dev
+```
+This starts Convex at `http://127.0.0.1:3210` (matches `VITE_CONVEX_URL`).
+
+### 5. Run the development server
+
+```bash
+bun run dev
+```
+
+### 6. Open in browser
+
+Navigate to `http://localhost:5173` and click **Start Conversation**.
+
+
+### Environment Variables
+
+| Variable | Description | Where to get it |
+|----------|-------------|-----------------|
+| `ANAM_API_KEY` | Anam API key | [lab.anam.ai](https://lab.anam.ai) → Settings → API Keys |
+| `ANAM_AVATAR_ID` | Avatar to render | [lab.anam.ai](https://lab.anam.ai) → Avatars |
+| `ELEVENLABS_AGENT_ID` | ElevenLabs Agent ID | [elevenlabs.io](https://elevenlabs.io) → Agents |
+| `ELEVENLABS_API_KEY` | ElevenLabs API key (for ConvAI WS auth in browser) | [elevenlabs.io](https://elevenlabs.io) |
+| `REPORT_SOURCE_URL` | (Optional) URL to latest CodeRabbit summary JSON | Any reachable URL returning the report shape |
+| `CONVEX_URL` | (Optional) Convex deployment URL | Convex dashboard |
+| `VITE_CONVEX_URL` | (Optional) Local Convex dev URL (fallback) | `convex dev` default http://127.0.0.1:3210 |
+| `CONVEX_ADMIN_KEY` | (Optional) Server auth for Convex queries/mutations | Convex dashboard |
+| `REPORT_PROJECT_ID` | (Optional) Default project id for report/transcript calls | Your chosen project id |
+| `PROFILES_JSON` | (Optional) JSON array of profile objects `{id,label,elevenLabsAgentId,anamAvatarId}` | Local env/Cloudflare secret |
+
+## Demo
+
+[![Demo video](https://img.youtube.com/vi/JtXQWqVjqXE/maxresdefault.jpg)](https://youtu.be/JtXQWqVjqXE)
+
+## Acknowledgments
+
+### Authors
+
+- [Krzysztof Zabłocki](https://github.com/krzysztofzablocki)
+- [Dominik Drąg](https://github.com/dominikdrag)
+- [Krzysztof Lis](https://github.com/kjlis)
