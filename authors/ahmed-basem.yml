@@ -1,0 +1,13 @@
+name: Ahmed Basem
+avatar: "https://github.com/ahmedbasem20.png" # or any avatar URL
+url: "https://ahmedbasem.com" # Optional: your website
+bio: "Software Engineer - Open Source Contributor"
+location: "Cairo, Egypt"
+isElevenLabs: false
+socials:
+  - label: X
+    url: "https://x.com/AhmadBasem00"
+  - label: GitHub
+    url: "https://github.com/ahmedbasem20"
+  - label: LinkedIn
+    url: "https://linkedin.com/in/ahmedbasem20" # Optional
