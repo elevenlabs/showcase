@@ -1,0 +1,75 @@
+---
+title: Quiet Protocol
+description: Multiplayer AI-driven detective simulation with on-chain rewards and intelligent NPC agents.
+authorIds:
+  - muthu
+categories:
+  - agents
+  - text-to-speech
+  - speech-to-text
+  - voices
+isFeatured: false
+date: "2026-02-26"
+image: /images/quiet-protocol.png
+demoUrl: https://quiet-protocol.vercel.app
+repoUrl: https://github.com/asrithtanniru/quite-protocol
+videoUrl: https://youtu.be/5Wt9oo0d3fo?si=TNih7cT779cT4fU2
+xUrl: https://x.com/you/status/...
+---
+
+# Quiet Protocol
+
+## Overview
+
+Quiet Protocol is a multiplayer detective-style simulation game where players interact with AI-powered NPCs inside a real-time pixel world. Every NPC is controlled by dynamic agent logic, enabling contextual conversations, memory, and role-driven behavior.  
+The game integrates AI-orchestrated interactions with blockchain-verified reward mechanics, creating a persistent, incentive-driven narrative world.
+
+## Key Features
+
+- AI-Powered Agents: NPCs with stateful personalities, contextual awareness, and dynamic conversation flow.
+- Multiplayer Pixel World: Built using Phaser, enabling exploration, missions, and real-time player interactions.
+- On-Chain Reward System: Smart contract-based token payouts validated and triggered by backend logic.
+- Anti-Spam Validation: Secure interaction tracking and backend-enforced eligibility rules.
+- Persistent Simulation: Conversations influence missions, trust levels, and rewards.
+
+## How It Works
+
+Quiet Protocol connects three major systems:
+
+1. Phaser Frontend (game1)  
+   Players explore a pixel world and interact with NPCs using a real-time dialogue UI.
+
+2. FastAPI Backend (agents_backend)  
+   Handles agent orchestration, state management, reward eligibility verification, and dialogue generation.
+
+3. Quai Smart Contract (game_contract)  
+   Executes token payouts once the backend validates player interactions.
+
+### Interaction Flow
+
+Player (Browser)  
+↓  
+Phaser Frontend (game1)  
+↓  
+FastAPI Backend (agents_backend)  
+↓  
+AI Agent Orchestration + Reward Logic  
+↓  
+Quai Smart Contract (game_contract)
+
+## Technologies Used
+
+- ElevenLabs API (TTS, STS, Voice Cloning)
+- FastAPI
+- Phaser
+- LangChain / Custom Agents
+- Quai Blockchain Smart Contracts
+- WebSockets
+- Python and Node.js
+
+## Getting Started
+
+```bash
+# Installation instructions
+docker compose up -d --build 
+docker compose up
