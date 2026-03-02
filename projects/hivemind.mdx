@@ -1,0 +1,98 @@
+---
+title: Hivemind
+description: Swarm intelligence for your browser — deploy AI agent swarms that control your real Chrome tabs with voice commands.
+authorIds:
+  - kevin-doshi
+categories:
+  - agents
+  - speech-to-text
+isFeatured: false
+date: "2026-03-02"
+image: /images/hivemind.png
+repoUrl: https://github.com/Kvndoshi/hivemind
+---
+
+# Overview
+
+Hivemind is an AI-powered browser orchestration system that transforms your web browser into a fully autonomous command center. Speak a command or type it — and Hivemind deploys coordinated swarms of intelligent agents that take over your real Chrome tabs, work in parallel across multiple websites, and deliver consolidated results in seconds.
+
+Say "find me the cheapest nonstop flight from Phoenix to San Francisco tomorrow" and watch three agents simultaneously search Google Flights, Expedia, and Kayak — each in its own Chrome tab — then synthesize the results into a single comparison.
+
+## How It Uses ElevenLabs
+
+Hivemind integrates ElevenLabs Speech-to-Text to enable fully voice-commanded browser control. Instead of typing prompts, users click a microphone button and speak naturally. ElevenLabs transcribes the voice input in real time, which is then passed to the AI orchestrator to decompose into agent tasks.
+
+This creates a completely hands-free workflow: speak a command, watch agents execute across your browser tabs, and hear results — all without touching the keyboard. Use cases include:
+
+- **"Draft an email to Sarah about tomorrow's meeting"** — agent opens Gmail, composes the draft, waits for approval
+- **"Compare 34 inch monitors on Amazon"** — agent navigates, extracts specs, returns structured comparison
+- **"Summarize my unread emails and reply to urgent ones"** — agents read inbox, prioritize, draft responses
+- **"Fill out this job application"** — agent auto-fills forms using stored profile from memory
+
+## Key Features
+
+- **Swarm Orchestration** — A central AI orchestrator (the Queen) powered by Gemini decomposes any task into parallel subtasks, assigns agents, allocates browser tabs, and synthesizes results
+- **Voice Control via ElevenLabs STT** — Speak naturally and agents execute. Full voice-to-browser-action pipeline
+- **Parallel Multi-Agent Execution** — Agents run concurrently across multiple websites in real Chrome tabs via Chrome DevTools Protocol
+- **Neural Link Feed** — Real-time telemetry of every agent action, decision, and result streaming live
+- **Visual Tab Clustering** — AI-powered grouping of browser tabs by topic with live screenshot previews
+- **Supermemory Integration** — Human-like short-term and long-term memory that learns preferences over time
+- **Human-in-the-Loop Safety** — Agents pause for approval before sensitive actions like sending emails or submitting forms
+- **Chat With Your Memory** — Conversational interface to query past results, preferences, and browsing context
+
+## Architecture
+
+Hivemind uses a Queen-Worker architecture:
+
+1. **You speak or type** a task — voice input transcribed by ElevenLabs STT
+2. **Queen (Gemini 3 Pro)** analyzes intent, checks memory, scans open tabs, decomposes into subtasks
+3. **Worker Agents (Mistral Large)** spawn concurrently, each controlling a real Chrome tab via CDP
+4. **Execution** — agents navigate, click, type, extract data with HITL pauses for sensitive actions
+5. **Synthesis** — Queen aggregates all results into a final consolidated answer
+6. **Memory** — everything saved to Supermemory for future context
+
+## Technologies Used
+
+- **ElevenLabs Speech-to-Text** — Voice command transcription for hands-free browser control
+- **Gemini 3 Pro** — Orchestrator LLM for task decomposition and result synthesis
+- **Mistral Large** — Agent LLM for browser interaction and decision-making
+- **browser-use** — AI browser automation via Chrome DevTools Protocol
+- **FastAPI + WebSockets** — Real-time backend with async agent execution
+- **React + Zustand + Framer Motion** — Responsive dashboard with live agent visualization
+- **Supermemory** — Persistent memory system for preferences and context
+- **React Flow** — Interactive tab cluster visualization
+
+## Getting Started
+
+```bash
+# Clone the repo
+git clone https://github.com/Kvndoshi/hivemind.git
+cd hivemind
+
+# Backend
+cd backend
+pip install -r requirements.txt
+cp .env.template .env
+# Add your MISTRAL_API_KEY, GEMINI_API_KEY, ELEVENLABS_API_KEY, SUPERMEMORY_API_KEY
+python run.py
+
+# Frontend (new terminal)
+cd frontend
+npm install
+npm run dev
+```
+
+Launch Chrome with remote debugging:
+```bash
+chrome.exe --remote-debugging-port=9222
+```
+
+Open http://localhost:5173 — click the mic, speak your command, and watch the swarm.
+
+## Future Plans
+
+- Multi-browser support (Firefox, Edge) via WebDriver BiDi
+- Scheduled workflow chains (daily email briefings, automated monitoring)
+- Agent collaboration — agents sharing findings mid-task for smarter decisions
+- Plugin system for custom agent skills (calendar, Slack, Notion)
+- Mobile companion app for voice-commanding your desktop browser remotely
