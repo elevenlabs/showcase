@@ -1,0 +1,11 @@
+name: Michi Yamamoto
+avatar: "https://github.com/michi883.png"
+url: "https://michi883.github.io/"
+bio: "Comedian and builder of AI tools for joke writing and performance."
+location: "New York, USA"
+isElevenLabs: false
+socials:
+  - label: GitHub
+    url: "https://github.com/michi883"
+  - label: LinkedIn
+    url: "https://linkedin.com/in/michi-yamamoto"

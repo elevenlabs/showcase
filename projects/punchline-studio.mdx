@@ -1,0 +1,61 @@
+---
+title: Punchline Studio
+description: AI powered joke rewriting and voice delivery lab for comedians to punch up material and test different performance styles.
+authorIds:
+  - michi-yamamoto
+categories:
+  - text-to-speech
+  - agents
+  - voices
+isFeatured: false
+date: "2025-11-28"
+image: /images/punchline-studio.png
+demoUrl: https://punchline.humorgenome.org
+repoUrl: https://github.com/michi883/punchline-studio
+videoUrl: https://www.youtube.com/watch?v=cIpo7zynZoU
+xUrl: https://x.com/roastifybot/status/1994481761297002814
+---
+
+# Punchline Studio
+
+## Overview
+
+Punchline Studio helps comedians turn rough jokes into punchy, stage ready material.  
+It rewrites jokes with clearer structure and adds delivery notes, then uses ElevenLabs voices so comics can hear different styles of performance on demand.
+
+## Key Features
+
+- Joke Rewrite: Tightens premises and punchlines while preserving the comic's voice
+- Delivery Notes: Adds timing, emphasis, and emotion cues for performance
+- Voice Playback: Uses ElevenLabs voices so you can audition different styles
+- History: Save, compare, and revisit past rewrites and takes
+
+## How It Works
+
+Punchline Studio connects several components:
+
+- Cerebras or LLM backend handles joke rewriting and delivery note generation
+- ElevenLabs API generates performance audio for each take
+- The frontend lets comics paste a bit, select a delivery style, trigger rewrite, and play back the AI performance
+- History view stores multiple versions so comics can compare and iterate
+
+## Technologies Used
+
+- ElevenLabs API (text to speech and voice styles)
+- Cerebras or other LLM backend for joke rewriting
+- Raindrop platform for hosting and workflow
+- Frontend framework of your choice (for example Next.js or React)
+- Any additional tooling used for storage, auth, or deployment
+
+## Getting Started
+
+```bash
+# Clone your project
+git clone https://github.com/michi883/punchline-studio
+cd punchline-studio
+
+# Install dependencies
+npm install
+
+# Run the app
+npm run dev
