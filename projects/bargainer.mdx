@@ -1,0 +1,78 @@
+---
+title: BargAIner
+description: Real-time procurement negotiation assistant that listens to vendor calls, flags risky claims, and suggests data-backed counter-arguments.
+authorIds:
+  - max-schallermayer
+  - nikolai-khalatiani
+  - anton-schedel
+  - oskar-kraak
+categories:
+  - speech-to-text
+  - agents
+isFeatured: false
+date: "2025-01-20"
+image: /images/bargainer.png
+repoUrl: https://github.com/bargAInerTUMAI/bargAIner
+videoUrl: https://drive.google.com/file/d/1PBAoM1JAaKA4B0a8TtIj3PJG-ObuC9Sl/view?usp=sharing
+---
+
+# BargAIner
+
+## Overview
+
+BargAIner is a desktop application providing real-time AI assistance during procurement negotiations—built for Software Migration & Cloud Modernization deals. It listens to vendor conversations, detects claims that could negatively impact the buyer (pricing, timelines, scope), and generates instant counter-arguments backed by data.
+
+ElevenLabs is used for **real-time Speech-to-Text via Scribe**, streaming transcripts into the UI and agent pipeline.
+
+## Key Features
+
+- **Real-time Speech-to-Text (ElevenLabs Scribe):** Live transcription with VAD-based segmentation
+- **Mic + system audio capture:** Captures both sides of the conversation
+- **Claim detection:** Flags risky vendor claims (rates, scope exclusions, timeline pressure)
+- **Fact verification:** Checks an internal knowledge base + web search benchmarks
+- **Counter-argument generation:** Produces data-backed responses in real time
+- **Wrap-up + action items:** Detects summaries and extracts next steps; exports to PDF
+- **Post-negotiation feedback:** Scoring, tactics assessment, and improvement suggestions
+
+## How It Works
+
+1. **Electron frontend** captures microphone + system audio.
+2. Audio is streamed to **ElevenLabs Scribe via WebSocket** for live transcription.
+3. Transcripts are sent to a backend agent loop (Cerebras) which:
+   - detects triggers (scope, pricing, staffing rates, timeline),
+   - verifies claims against local documents (knowledge base),
+   - pulls benchmarks via web search (Tavily),
+   - generates counter-arguments and action items.
+4. The UI shows real-time transcripts, suggestions, and wrap-up/action items.
+
+## Technologies Used
+
+- **ElevenLabs Scribe (Speech-to-Text, WebSocket streaming)**
+- Electron, React, TypeScript, Node.js, Express
+- Cerebras (fast inference)
+- Tavily (web search)
+- Vercel AI SDK (agent framework)
+
+## Getting Started
+
+Full setup instructions are in the repository README:
+https://github.com/bargAInerTUMAI/bargAIner
+
+## Demo
+
+See the repository for instructions, or checkout our live demo at:
+https://drive.google.com/file/d/1PBAoM1JAaKA4B0a8TtIj3PJG-ObuC9Sl/view?usp=sharing
+
+## Future Plans
+
+- Add more negotiation “personas” and configurable playbooks
+- Improve benchmark sourcing and citations for claims
+- Ship a hosted demo / packaged releases for easier testing
+
+## Acknowledgments
+
+Built at the TUM.ai Hackathon by:
+- Max Schallermayer
+- Nikolai Khalatiani
+- Anton Schedel
+- Oskar Kraak
