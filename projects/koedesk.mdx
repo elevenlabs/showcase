@@ -19,29 +19,36 @@ xUrl: https://x.com/koedesk_info
 
 koedesk is a desktop voice dictation app for macOS and Windows. Hold a hotkey, speak, and your words appear as text at the cursor — in any application. It uses **ElevenLabs Scribe v2** as its core speech-to-text engine, supporting all 47 Tier 1 languages.
 
-Built for developers and power users who want to type less and speak more — whether writing code comments, drafting emails, or chatting in Slack.
+koedesk is not just a transcription tool. It is a paradigm shift in how we give context to computers. As AI becomes a collaborator rather than just a tool, the amount of context we need to convey has exploded. The keyboard is no longer enough. Speaking is now a viable input method — not a novelty, but a genuine alternative to typing.
 
 ## Key Features
 
 - **Push-to-talk hotkey**: Hold a key, speak, release — text is inserted at your cursor instantly
 - **47 languages**: Full coverage of ElevenLabs Scribe v2 Tier 1 languages, from English and Japanese to Icelandic and Malayalam
 - **Works everywhere**: Inserts text into any application — editors, terminals, browsers, chat apps
+- **No LLM post-processing needed**: Scribe v2 is accurate enough that we trust the model's output directly — no extra LLM cleanup step
 - **Lightweight**: Built with Rust and Tauri, uses the OS native WebView — no bundled Chromium
 - **Pill bar UI**: A small floating indicator shows recording/processing state, stays out of your way
-- **LLM post-processing**: Optional refinement of transcribed text for punctuation, formatting, or translation
+
+## Built for every language, not just English
+
+Most voice-to-text tools are built in the US, optimized for English. Quality drops sharply for other languages. When languages mix — Japanese with English technical terms, Vietnamese with code snippets — existing tools often break down entirely.
+
+The lead developer of koedesk is Japanese, working from Vietnam. This firsthand experience of using voice input across languages and accents shaped every design decision. That is why we chose **ElevenLabs Scribe v2** as the default model — it delivers consistently high accuracy across languages, not just English.
 
 ## How It Works
 
 1. User holds the configured hotkey (e.g., Right Option on macOS)
 2. Audio is captured from the microphone in real-time
 3. On key release, the audio is sent to **ElevenLabs Scribe v2** via the Speech-to-Text API
-4. The transcribed text is optionally refined by an LLM for punctuation or formatting
-5. The final text is inserted at the current cursor position using OS-level input simulation
+4. The transcribed text is inserted at the current cursor position using OS-level input simulation
+
+No intermediate LLM step. As speech-to-text models continue to improve, koedesk benefits directly from every improvement — without layers of complexity in between.
 
 ## Technologies Used
 
 - **ElevenLabs Scribe v2** — Core speech-to-text engine (Speech-to-Text API)
-- **Rust** — Backend logic, audio capture, hotkey handling
+- **Rust** — Backend logic, audio capture, hotkey handling, tuned for minimal latency
 - **Tauri v2** — Desktop app framework (macOS and Windows)
 - **Cloudflare Workers** — API proxy, authentication, usage tracking
 
@@ -51,15 +58,8 @@ Watch the full demo video showing koedesk in action with Claude Code:
 
 <video src="https://youtu.be/b9yK4dwSg28" />
 
-## Why Scribe v2?
-
-Scribe v2's multilingual accuracy was the deciding factor for koedesk:
-
-- **Accuracy**: Strong word error rate across all 47 supported languages
-- **Language coverage**: 47 Tier 1 languages with consistent quality — not just English
-- **Filler word removal**: Built-in disfluency handling reduces post-processing needs
-- **Keyterms**: Domain-specific vocabulary support for technical terms and proper nouns
-
 ## Acknowledgments
+
+koedesk was born from daily work at [Guide Inc.](https://web.guide.inc/), a financial technology company based in Tokyo with a development office in Ho Chi Minh City. As developers building complex systems, we needed a faster way to communicate with AI coding assistants — without taking our hands off the keyboard flow. We built the tool we wished existed, and decided to share it with the world.
 
 Special thanks to the ElevenLabs team for building Scribe v2 — it made accurate multilingual dictation accessible to indie developers.
