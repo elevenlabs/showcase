@@ -17,7 +17,7 @@ xUrl: https://x.com/koedesk_info
 
 ## Overview
 
-koedesk is a desktop voice dictation app for macOS and Windows. Hold a hotkey, speak, and your words appear as text at the cursor — in any application. It uses **ElevenLabs Scribe v2** as its core speech-to-text engine, supporting all 47 Tier 1 languages with high accuracy.
+koedesk is a desktop voice dictation app for macOS and Windows. Hold a hotkey, speak, and your words appear as text at the cursor — in any application. It uses **ElevenLabs Scribe v2** as its core speech-to-text engine, supporting all 47 Tier 1 languages.
 
 Built for developers and power users who want to type less and speak more — whether writing code comments, drafting emails, or chatting in Slack.
 
@@ -26,19 +26,17 @@ Built for developers and power users who want to type less and speak more — wh
 - **Push-to-talk hotkey**: Hold a key, speak, release — text is inserted at your cursor instantly
 - **47 languages**: Full coverage of ElevenLabs Scribe v2 Tier 1 languages, from English and Japanese to Icelandic and Malayalam
 - **Works everywhere**: Inserts text into any application — editors, terminals, browsers, chat apps
-- **Lightweight and fast**: Built with Rust and Tauri, minimal resource usage (~15MB memory)
+- **Lightweight**: Built with Rust and Tauri, uses the OS native WebView — no bundled Chromium
 - **Pill bar UI**: A small floating indicator shows recording/processing state, stays out of your way
-- **LLM post-processing**: Optional refinement of transcribed text using cloud LLMs (Claude, GPT, Gemini)
+- **LLM post-processing**: Optional refinement of transcribed text for punctuation, formatting, or translation
 
 ## How It Works
 
 1. User holds the configured hotkey (e.g., Right Option on macOS)
 2. Audio is captured from the microphone in real-time
 3. On key release, the audio is sent to **ElevenLabs Scribe v2** via the Speech-to-Text API
-4. The transcribed text is optionally refined by an LLM for punctuation, formatting, or translation
+4. The transcribed text is optionally refined by an LLM for punctuation or formatting
 5. The final text is inserted at the current cursor position using OS-level input simulation
-
-The entire flow completes in under 1 second for typical utterances.
 
 ## Technologies Used
 
@@ -46,8 +44,6 @@ The entire flow completes in under 1 second for typical utterances.
 - **Rust** — Backend logic, audio capture, hotkey handling
 - **Tauri v2** — Desktop app framework (macOS and Windows)
 - **Cloudflare Workers** — API proxy, authentication, usage tracking
-- **Cloudflare D1** — User and subscription data
-- **Stripe** — Payment processing for Pro subscriptions
 
 ## Demo
 
@@ -57,22 +53,13 @@ Watch the full demo video showing koedesk in action with Claude Code:
 
 ## Why Scribe v2?
 
-We evaluated every major STT engine before choosing ElevenLabs Scribe v2:
+Scribe v2's multilingual accuracy was the deciding factor for koedesk:
 
-- **Accuracy**: Best-in-class word error rate across all 47 supported languages
-- **Speed**: Fast enough for real-time dictation workflows
+- **Accuracy**: Strong word error rate across all 47 supported languages
 - **Language coverage**: 47 Tier 1 languages with consistent quality — not just English
 - **Filler word removal**: Built-in disfluency handling reduces post-processing needs
-
-For a voice dictation tool that serves users worldwide, Scribe v2's multilingual accuracy was the deciding factor.
-
-## Future Plans
-
-- Real-time streaming transcription (WebSocket API) for live captions
-- Voice commands for app control ("select all", "new line", "undo")
-- Custom vocabulary and domain-specific tuning
-- Linux support
+- **Keyterms**: Domain-specific vocabulary support for technical terms and proper nouns
 
 ## Acknowledgments
 
-koedesk was inspired by [AquaVoice](https://aquavoice.ai/) and the growing ecosystem of voice-first developer tools. Special thanks to the ElevenLabs team for building Scribe v2 — it made accurate multilingual dictation accessible to indie developers.
+Special thanks to the ElevenLabs team for building Scribe v2 — it made accurate multilingual dictation accessible to indie developers.
