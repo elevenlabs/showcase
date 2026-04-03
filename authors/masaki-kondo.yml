@@ -1,0 +1,11 @@
+name: Masaki Kondo
+avatar: "https://github.com/masakikondo.png"
+url: "https://koedesk.app"
+bio: "CEO at Guide Inc. Vietnam. Building voice-first developer tools with Rust and Tauri."
+location: "Ho Chi Minh City, Vietnam"
+isElevenLabs: false
+socials:
+  - label: X
+    url: "https://x.com/koedesk_info"
+  - label: GitHub
+    url: "https://github.com/masakikondo"
