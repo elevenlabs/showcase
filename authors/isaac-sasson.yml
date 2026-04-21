@@ -1,0 +1,13 @@
+name: Isaac Sasson
+avatar: "https://github.com/IsaacSasson.png"
+url: "https://isaacsasson.com"
+bio: "CS student focused on full-stack, AI, mobile, and cybersecurity."
+location: "New York, USA"
+isElevenLabs: false
+socials:
+  - label: Website
+    url: "https://isaacsasson.com"
+  - label: GitHub
+    url: "https://github.com/IsaacSasson"
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/isaac-sasson/"
