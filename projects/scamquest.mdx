@@ -1,0 +1,58 @@
+---
+title: Scam Quest
+description: An interactive desktop simulation where you identify real scams across emails, calls and websites — ideal for training employees and students
+authorIds:
+  - gatsdaporn-sayananon
+  - hala-elhanafy
+categories:
+ - text-to-speech
+isFeatured: false 
+date: "2026-04-21"
+image: /projects/images/scamquest.png
+demoUrl: https://scamquest.netlify.app/
+repoUrl: https://github.com/lockedinlulu/scamquest1 
+videoUrl: https://youtu.be/etVwvc5_BTE?si=AM2f1pdnRGXZyYHt
+---
+
+# Your Project Name
+
+## Overview
+
+ScamQuest is an interactive desktop simulation that teaches users how to recognize scams by experiencing them firsthand. Players explore a realistic laptop environment — emails, messages, websites, and live phone calls — and must decide what's a scam and what's safe. We use ElevenLabs' text-to-speech API to generate realistic AI scam phone calls, simulating real-time social engineering attacks.
+
+## Key Features
+
+- Interactive desktop environment: Draggable windows, apps, folders, and realistic UI mimicking a real OS
+- Decision-based gameplay: Wrong choices cost hearts, correct ones increase your score
+- AI-generated scam calls: Powered by ElevenLabs TTS to simulate live phone scams
+- Learn More feature: Connects gameplay to real-world scam examples via Tavily API
+- Helper system: Highlights suspicious patterns without giving away the answer
+
+## How It Works
+
+The frontend simulates a desktop OS using HTML, CSS, and JavaScript. Each "app" contains scam scenarios across different categories (emails, downloads, calls, websites). Firebase handles user authentication and persistent score data. When a phone call scenario triggers, ElevenLabs generates a realistic voice in real time. Tavily pulls real-world scam examples to reinforce learning after each scenario.
+
+## Technologies Used
+
+- ElevenLabs API — AI-generated voice calls (Text-to-Speech)
+- Firebase — User authentication and persistent data
+- Tavily API — Real-world scam examples
+- HTML, CSS, JavaScript — Frontend and desktop simulation
+- Git & GitHub — Version control
+- Groq — Fast AI inference for real-time interactions
+
+## Demo
+
+Visit [scamquest.netlify.app](https://scamquest.netlify.app/) to try it live.
+
+## Future Plans
+
+- Adding more scam types (job scams, crypto scams, impersonation)
+- Personalizing difficulty based on user performance
+- Expanding AI interactions to be more dynamic
+- Bringing ScamQuest into schools and workplaces
+
+## Acknowledgments
+
+Built at a hackathon. Inspired by the rise of convincing online scams and media like Missing and Welcome to the Game.
+
