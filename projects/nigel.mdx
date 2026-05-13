@@ -1,0 +1,106 @@
+---
+title: Nigel, the Coding Butler
+description: A voice-driven butler that perceives any web page and rewrites it on the fly with injected code - command the web with elegance through conversation.
+authorIds:
+  - tony-zedginidze
+categories:
+  - agents
+isFeatured: false
+date: "2026-05-12"
+image: /images/nigel.jpg
+demoUrl: https://codingbutler.webfuse.com
+repoUrl: https://github.com/webfuse-com/Nigel
+videoUrl: https://www.youtube.com/watch?v=lDHdG7kyPHY
+---
+
+# Meet Nigel - your voice-driven Coding Butler for the open web
+
+While other agents operate blindly, Nigel perceives your page in full and rewrites it with impeccable precision - injecting code to meet your every whim.
+
+Nigel is a conversational agent that lives on top of any website. You speak, he sees the full DOM, then he acts: he can navigate, click, type, scroll - or **inject JavaScript** to reshape the page to your intent. Ask him to summarise the Wikipedia article you're reading and replace the page with just the summary. Ask him to overlay a clock while you research. Ask him to theme the page as outer space, or make your cursor a horse. Voice in, transformed web out.
+
+---
+
+## Overview
+
+Nigel pairs **ElevenLabs Conversational AI** (the voice and speech layer with agentic capabilities built-in) with **Webfuse** (the augmentation layer that lets an extension run on top of any website without users installing anything). The result is a butler-grade agent you can summon onto any site and command in natural language. He doesn't just *talk about* the page - he *changes* it for you.
+
+The demo at [codingbutler.webfuse.com](https://codingbutler.webfuse.com) drops Nigel onto Wikipedia. Tell him what to search, ask him to read and summarise an article, then ask him to rewrite the page to show just the summary. From there it's open-ended: any DOM mutation you can describe, Nigel can inject.
+
+---
+
+## Key Features
+
+- **Real-time voice conversation** powered by the ElevenLabs Conversational AI SDK - natural, low-latency, full duplex.
+- **Full-page perception** via Webfuse's DOM snapshot tool. Nigel reads the page the way you do before he acts on it.
+- **Action toolkit** - `navigate`, `click`, `type`, `scroll`, `mouse_move`, `text_select` give him control over the UI; `inject_code` gives him the freedom to do anything else.
+- **Animated character UI** - Nigel idles, listens, speaks, and acts, with the orb art swapping per state so you always know what he's doing.
+- **Zero-install deployment** - he ships as a Webfuse Extension, which means he runs on any site Webfuse can proxy. No browser extension to install, no app to download.
+
+---
+
+## How It Works
+
+Nigel is a small Manifest V3 extension built for Webfuse:
+
+1. **Voice channel.** The popup loads the `@elevenlabs/client` SDK and opens a websocket session against the configured ElevenLabs agent. Audio capture, transcription, LLM, and TTS all run server-side at ElevenLabs.
+2. **Client tools.** The agent is configured with a set of client-side tools - `take_dom_snapshot`, `navigate`, `click`, `type`, `inject_code`, and friends.
+3. **Page-side execution.** The agent can interact with `browser.webfuseSession.automation`, Webfuse's host-page automation API. `take_dom_snapshot` returns a compact, indexed view of the live DOM that the agent uses for grounding; `inject_code` evaluates arbitrary JS in the page context for anything bespoke.
+4. **State UI.** A handler maps ElevenLabs' lifecycle events (`onStatusChange`, `onModeChange`) onto the orb art and status text, so Nigel visibly idles, listens, speaks, and acts.
+
+The flow for "summarise this Wikipedia page and replace the page with the summary":
+
+```
+voice → ElevenLabs ASR → LLM
+  → tool_call: take_dom_snapshot()        # Nigel reads the article
+  → LLM composes summary
+  → tool_call: inject_code({ code: "..." })  # rewrites <main> with the summary
+  → ElevenLabs TTS → voice
+```
+
+---
+
+## Technologies Used
+
+- **[ElevenLabs Conversational AI](https://elevenlabs.io/conversational-ai)** - voice ASR + LLM orchestration + TTS, plus the client-tools mechanism that lets the agent call into the browser.
+- **[@elevenlabs/client](https://www.npmjs.com/package/@elevenlabs/client)** - official JS SDK used inside the extension popup.
+- **[Webfuse](https://www.webfuse.com)** - proxies the target website and lets the Nigel Extension run on top of it; provides the DOM snapshot and automation APIs that give Nigel his eyes and hands.
+
+---
+
+## Getting Started
+
+Try the live demo:
+
+```
+https://codingbutler.webfuse.com
+```
+
+Click **Go to Wikipedia**, allow microphone access, and start talking to Nigel. Try:
+
+- *"Search for the Eiffel Tower and open the article."*
+- *"Summarise this page and replace the article with just the summary."*
+- *"Add a live clock to the top right corner."*
+- *"Theme this page as outer space."*
+
+Source:
+
+```bash
+git clone https://github.com/webfuse-com/Nigel.git
+```
+
+The extension lives in `extension/`. Drop in your own ElevenLabs `AGENT_KEY` in `manifest.json`, point a Webfuse Space at it, and you have your own butler.
+
+---
+
+## Future Plans
+
+- Beyond Wikipedia - generalise the host-page matcher so Nigel can be summoned onto any site Webfuse proxies.
+- More tools - form-fill, multi-tab orchestration, persistent page mods that survive navigation.
+- Memory - let Nigel remember the user's preferred themes and macros across sessions.
+
+---
+
+## Acknowledgments
+
+Nigel is a love letter to the open web. Thanks to the **ElevenLabs Conversational AI** team for the voice stack that makes the interaction feel alive.

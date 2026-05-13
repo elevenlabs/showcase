@@ -1,0 +1,9 @@
+name: Tony Zedginidze
+avatar: "https://www.webfuse.com/.netlify/images?q=80&url=%2Fimages%2Fauthors%2Ftony-zedginidze.png"
+url: "https://www.webfuse.com"
+bio: "Since starting in IT at 15, Tony has built systems across every layer of technology. Now leading Webfuse infrastructure, he's focused on one goal: making web augmentation accessible to everyone, everywhere. He envisions an internet where users aren't passive consumers but active participants."
+location: "Amsterdam, Netherlands"
+isElevenLabs: false
+socials:
+  - label: GitHub
+    url: "https://github.com/tonysurfly"
