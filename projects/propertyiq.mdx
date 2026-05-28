@@ -1,0 +1,102 @@
+---
+title: PropertyIQ
+description: Always-on AI maintenance coordinator that triages tenant calls, coordinates vendor dispatch, and keeps property managers in the loop.
+authorIds:
+  - sneha-rao
+  - aditya-ladawa
+categories:
+  - agents
+isFeatured: false
+date: "2026-05-28"
+image: /images/propertyiq.png
+demoUrl: https://x.com/SnehaRao10/status/2058855889839313334
+repoUrl: https://github.com/msverma101/PropertyIQ
+xUrl: https://x.com/SnehaRao10/status/2058855889839313334
+---
+
+# PropertyIQ
+
+## Overview
+
+PropertyIQ is an always-on AI operations layer for property management. It deflects repetitive tenant calls, triages defects in real time, and coordinates vendor dispatches end-to-end — while keeping the human property manager in the approval loop.
+
+The system is built around **ElevenLabs Conversational AI** as the voice front door. Tenants either call a Twilio number assigned to the agent or use a browser widget on the `/call` page. From there, a FastMCP (Model Context Protocol) server exposes live database tools that the agent invokes during the call — looking up the tenant, reading enriched context (co-owner cards, property zipcodes, prior tickets), drafting a structured ticket, searching for the right vendor, and finally requesting manager approval before any outbound action.
+
+Once approved, PropertyIQ uses the **ElevenLabs Outbound Call API** to dispatch the vendor over PSTN through Twilio, captures the vendor's availability via the post-call webhook, and emails the tenant, vendor, and co-owners with a structured work order.
+
+> Demo: see the X video linked above (`demoUrl` / `xUrl`).
+
+## Key Features
+
+- **Always-on voice intake**: ElevenLabs Conversational AI greets the tenant by name, clarifies the issue, and extracts structured defect parameters in a single call.
+- **Live MCP tool calling**: A FastMCP server mounted at `/mcp/sse` lets the agent invoke `lookup_tenant`, `read_context`, `update_master_context`, `search_vendors`, `request_manager_approval`, and `send_notification_email` mid-call.
+- **Real-time dashboard audit trail**: Every tool call the agent makes is broadcast over WebSockets to the React dashboard so the manager sees exactly what the AI is doing as it happens.
+- **Manager-in-the-loop approvals**: Vendor dispatches are held until the property manager approves them in one click from the dashboard.
+- **Two-way vendor coordination**: Once approved, PropertyIQ triggers an ElevenLabs outbound call to the vendor, captures availability via the post-call webhook, and emails tenant + co-owners.
+- **Enriched database context**: The MCP layer pulls co-owner cards, tenant contact cards, property zipcodes, and physical context logs so the agent's first reply is grounded, not generic.
+
+## How It Works
+
+PropertyIQ runs two complementary flows on a single FastAPI backend.
+
+**Flow 1 — Tenant inbound.** A tenant calls the assigned Twilio number or opens the `/call` widget. The ElevenLabs agent is wired to invoke `read_context(call_id)` as its compulsory first tool call, which seeds the session with tenant + property + co-owner info. As the conversation progresses, the agent calls `update_master_context(...)` to create the ticket, which the backend immediately broadcasts to the dashboard via WebSocket — the ticket pops up live. When the call ends, ElevenLabs hits `/api/calls/ended`; the backend writes the transcript to disk and broadcasts `call_end`.
+
+**Flow 2 — Vendor outbound.** When the manager clicks "Dispatch Vendor" on the dashboard, the backend posts to `https://api.elevenlabs.io/v1/convai/twilio/outbound-call` with the vendor's number and a per-call `conversation_config_override` that swaps in a vendor-specific system prompt. ElevenLabs places the call via Twilio. The agent confirms availability, calls `update_master_context(status=DISPATCHED, next_steps="<availability>")`, and on call end the backend reads `next_steps`, sends the tenant an email via Resend, and broadcasts `vendor_dispatch_complete` to the dashboard.
+
+The whole loop — intake, triage, approval, dispatch, follow-up — runs through a single deterministic state machine. The MCP server is the only place the agent can mutate state, which makes the audit trail trivial.
+
+## Technologies Used
+
+### ElevenLabs
+
+- **Conversational AI agents** — voice intake for both tenant inbound and vendor outbound calls.
+- **MCP integration** — the agent connects to PropertyIQ's FastMCP server at `/mcp/sse` and invokes tools live during the call.
+- **Outbound Call API** (`POST /v1/convai/twilio/outbound-call`) — used to place vendor calls programmatically with per-call prompt overrides.
+- **Post-call webhook** — `/api/calls/ended` receives `conversation_id` and lets the backend branch on tenant vs. vendor flows.
+- **Browser widget** — `<elevenlabs-convai>` embedded on the `/call` page for browser-based tenant intake.
+
+### Stack
+
+- **Backend**: FastAPI (Python), SQLModel + SQLite, FastMCP (Model Context Protocol), WebSockets for real-time dashboard sync.
+- **Frontend**: React + TypeScript, TanStack Start, Tailwind CSS, Lucide icons, Sonner notifications.
+- **Telephony**: Twilio (PSTN bridge, invisible to the application — ElevenLabs orchestrates it).
+- **Email**: Resend.
+- **Tunneling for local dev**: ngrok (exposes the MCP server + webhook endpoints to ElevenLabs).
+
+## Getting Started
+
+```bash
+# 1. Backend
+source .venv/bin/activate
+uv pip install -r pyproject.toml
+python backend/app.py
+# → http://localhost:8000  (MCP SSE at /mcp/sse)
+
+# 2. Frontend
+bun run dev
+# → http://localhost:5173
+
+# 3. Expose for ElevenLabs webhooks
+ngrok http 8000
+# Use the forwarding URL for:
+#   - SSE MCP URL:         <ngrok>/mcp/sse
+#   - Caller lookup hook:  <ngrok>/api/caller-lookup
+#   - Call ended hook:     <ngrok>/api/calls/{call_id}/ended
+```
+
+Configure the ElevenLabs agent to invoke `read_context` as the first tool call of every conversation, then follow the operational sequence: greet → clarify → `update_master_context` → `search_vendors` → `request_manager_approval` → `send_notification_email`.
+
+## Demo
+
+Watch the demo on X: [https://x.com/SnehaRao10/status/2058855889839313334](https://x.com/SnehaRao10/status/2058855889839313334)
+
+## Future Plans
+
+- SMS fallback when a tenant doesn't pick up.
+- Vendor scoring based on prior dispatch outcomes (response time, completion, tenant rating).
+- Multi-language voice intake (currently English-only).
+- Production deployment behind a stable URL so the live demo no longer requires ngrok.
+
+## Acknowledgments
+
+Built by Sneha Rao and Aditya Ladawa for the ElevenLabs Conversational AI track. Thanks to the ElevenLabs team for the MCP integration and the Outbound Call API that made the vendor-dispatch flow possible.
