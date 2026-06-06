@@ -1,0 +1,99 @@
+---
+title: Handshake AI
+description: AI sales prospecting portal where reps call an AI "Lead Desk"—powered by ElevenLabs Conversational AI—to get briefed on each lead before meetings.
+authorIds:
+  - akshitha
+categories:
+  - agents
+  - text-to-speech
+isFeatured: false
+date: "2026-06-06"
+image: /images/handshake-ai.png
+repoUrl: https://github.com/akukudala/handshake_ai
+videoUrl: https://youtu.be/-GCOGEpUqs8
+---
+
+# Handshake AI
+
+## Overview
+
+Handshake AI is an AI-assisted sales prospecting portal that helps field reps walk
+into every meeting prepared. Reps browse nearby leads, book appointments, and — the
+core of the experience — **call an AI "Lead Desk" and talk to it** to get briefed on a
+lead before the meeting.
+
+The Lead Desk is a live, two-way voice agent built on **ElevenLabs Conversational AI**.
+The rep speaks into their mic and asks natural questions ("Who is this lead?", "What are
+their pain points?", "What should I pitch?"), and the agent answers out loud in real
+time, grounded in that specific lead's profile. When the call ends, the transcript is
+summarized by an LLM into a meeting prep card and saved to a lead-memory store so future
+briefings get smarter over time.
+
+## Key Features
+
+- **Call an AI Lead Desk**: a real-time, two-way ElevenLabs Conversational AI voice agent the rep talks to before a meeting.
+- **Lead-grounded answers**: each call injects the selected lead's profile as dynamic variables, so the agent answers about that exact business by name.
+- **Auto meeting-prep card**: the call transcript is turned into a structured prep card (summary, interest level, pain points, conversation starter, recommended pitch, objection, next best action).
+- **Lead memory**: every call, appointment, note, and AI summary is persisted so the assistant remembers prior interactions.
+- **Prospecting dashboard**: search and filter nearby leads by distance, industry, match score, and status.
+- **Zero-key fallbacks**: a scripted briefing (ElevenLabs TTS) and a heuristic prep generator let the whole flow demo even without API keys.
+
+## How It Works
+
+The rep opens a prospect and clicks **Call the Lead Desk**. The browser requests a
+WebRTC conversation token from a server route (keeping the API key server-side), then
+opens a live session to the ElevenLabs agent using the `@elevenlabs/react` SDK. The
+selected lead's data is passed as **dynamic variables** that fill placeholders in the
+agent's prompt, so the assistant is immediately grounded in that business.
+
+The rep and the agent talk in real time. Messages stream into the UI as a transcript;
+a Pause control mutes the mic mid-call. On hang-up, the transcript is saved to the
+lead-memory store and sent to an LLM (Claude or OpenAI) that returns a structured
+meeting-prep card. As a no-mic fallback for demos, a scripted briefing is voiced with
+**ElevenLabs Text-to-Speech**.
+
+## Technologies Used
+
+- **ElevenLabs Conversational AI (agents)** — live two-way voice "Lead Desk", via the `@elevenlabs/react` SDK over WebRTC, with per-call dynamic variables for lead grounding.
+- **ElevenLabs Text-to-Speech** — voices the scripted briefing fallback (no-mic, near-zero-cost demo path).
+- **Next.js 14 (App Router) + React 18** — frontend and API routes.
+- **Tailwind CSS** — UI.
+- **Claude / OpenAI** — meeting-prep summarization (with a heuristic fallback).
+- **File-backed JSON store** — prospects, appointments, and interaction/lead-memory tables.
+
+## Getting Started
+
+```bash
+git clone https://github.com/akukudala/handshake_ai.git
+cd handshake_ai
+npm install
+
+# Optional: add keys to enable real audio + LLM prep (works without them too)
+cp .env.local.example .env.local
+
+npm run dev
+# open http://localhost:3000
+```
+
+To enable the live Lead Desk, create an ElevenLabs Conversational AI agent, make it
+public (or use a key with Conversational AI access), and set
+`NEXT_PUBLIC_ELEVENLABS_AGENT_ID` in `.env.local`. See
+`docs/ELEVENLABS_AGENT_SETUP.md` in the repo.
+
+## Demo
+
+See the demo video linked above. The flow: browse leads → open a prospect → book an
+appointment → **call the AI Lead Desk and ask about the lead** → get an auto-generated
+meeting prep card → everything saved to lead memory.
+
+## Future Plans
+
+- Outbound phone calls (agent dials real numbers via Twilio).
+- CRM sync (HubSpot / Salesforce) for real lead data.
+- Multi-rep teams with shared, role-aware lead memory.
+- Post-call analysis and coaching from the transcript.
+
+## Acknowledgments
+
+Built with ElevenLabs Conversational AI and Text-to-Speech. Thanks to the ElevenLabs
+team for the SDK and Showcase program.
