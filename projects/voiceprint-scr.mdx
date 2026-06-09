@@ -1,0 +1,66 @@
+---
+title: VOICEPRINT.SCR
+description: a Win95 screensaver that you control with your voice 🎙️, re-rendered through ElevenLabs voice filters and the visuals change with every voice.
+authorIds:
+  - bilge-demirkaya
+categories:
+  - voices
+isFeatured: false
+date: "2026-06-07"
+image: /images/voiceprint-scr.png
+demoUrl: https://voice-print-zeta.vercel.app/
+repoUrl: https://github.com/bilgedemirkaya/voice-print-scr
+xUrl: https://x.com/bilgedemirkaya/status/2063979342686793893?s=20
+---
+
+# VOICEPRINT.SCR
+
+## Overview
+
+VOICEPRINT.SCR is a retro Windows-95 desktop where your voice becomes a screensaver. Record a sentence and a live scene reacts to it: the louder you get, the more it moves; the brighter your voice, the warmer the colors.
+
+The twist is the ElevenLabs integration: open **Display Properties → Screen Saver** dialog, dial in a vibe (gender / age / accent / mood), and the app transforms your recording through a matching **ElevenLabs voice** via Speech-to-Speech. Because the visuals are derived purely from the audio, a new voice *changes the screensaver* — new colors, new energy, a different waveform — at the same instant.
+
+Every take is kept, lets you stack voices each with its own scene. Flip between them and export the ones you love.
+
+## Key Features
+
+- **Voice-reactive visuals in real time** — Web Audio analysis turns your mic into a live, audio-driven animation while you record.
+- **ElevenLabs voice transformation that you can *see*** — applying a voice filter re-renders the clip through ElevenLabs and the screensaver visibly responds.
+- **Five hand-built retro screensavers** — WAVEFIELD (a WebGL terrain displaced by your voice), plus MYSTIFY, STARFIELD, AXOLOTL (a pixel axolotl that "sings" your waveform out of its mouth), and TOASTERS.
+- **A/B compare gallery** — keep multiple transformed takes, each with its own scene + palette, and flip between them.
+- **Shareable export** — save the live visualization as a video-with-sound "voiceprint."
+- **Secure, layered access** — the API key never reaches the browser; visitors get a free trial, a shared access code, or can bring their own ElevenLabs key.
+
+## How It Works
+
+The audio→visual pipeline is a set of **pure functions**: each frame, an `AnalyserNode` yields FFT + time-domain data, and a tested, framework-free mapping turns it into a small typed `AnimationParams` object — energy (RMS), bass/mid/treble band energies, brightness (spectral centroid → hue), roughness (zero-crossing rate), a derived palette, and the raw waveform. The scenes are dumb consumers of that object, which is what lets a voice filter "tune" the visuals just by changing the audio.
+
+Rendering is deliberately split: **WAVEFIELD runs on the GPU**, displacing and coloring a plane entirely in GLSL vertex/fragment shaders (the voice waveform is uploaded as a texture, band energies as uniforms). The other scenes are lightweight 2D-canvas renderers — few enough primitives that moving them to the GPU would be complexity without payoff.
+
+ElevenLabs is called **only server-side**, from Next.js API routes. The recorded clip is sent to ElevenLabs Speech-to-Speech, and the converted audio is **streamed straight back in the response body** — never written to disk, never base64-shuttled — so it runs on serverless hosts and nothing is retained. The same route enforces the access model (local / free-trial cookie / access code / bring-your-own-key).
+
+## Technologies Used
+
+- **ElevenLabs API** — Speech-to-Speech (Voice Changer) for the transforms, and the List Voices endpoint to populate the filter picker; voice settings (stability / similarity / style) exposed as advanced controls.
+- **Next.js (App Router) + TypeScript** — server routes hold the key and do the ElevenLabs work.
+- **Three.js via @react-three/fiber** — the WebGL Wavefield shader scene.
+- **Web Audio API** — `AnalyserNode` FFT/time-domain analysis (no external DSP lib).
+- **Tailwind CSS** + a hand-built Windows 95/98 component layer, **Framer Motion** for window/dialog transitions.
+
+## Getting Started
+
+```bash
+# clone
+git clone https://github.com/bilgedemirkaya/voice-print-scr
+cd voice-print-scr
+
+# install (Node ≥ 20, pnpm 9)
+pnpm install
+
+# add your ElevenLabs key (read server-side only, never sent to the browser)
+cp .env.example .env.local
+#   then paste your ELEVENLABS_API_KEY into .env.local
+
+# run
+pnpm dev
