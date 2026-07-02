@@ -1,0 +1,13 @@
+name: Your Full Name
+avatar: "https://github.com/kjlis.png"
+url: "https://kjlis.com"
+bio: "Principal Software Engineer"
+location: "Warsaw, Poland"
+isElevenLabs: false
+socials:
+  - label: X
+    url: "https://x.com/tenkrzys"
+  - label: GitHub
+    url: "https://github.com/kjlis"
+  - label: LinkedIn
+    url: "https://linkedin.com/in/kjlis"
