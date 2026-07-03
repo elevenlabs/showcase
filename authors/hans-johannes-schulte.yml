@@ -1,0 +1,11 @@
+name: Hans Johannes Schulte
+avatar: "https://github.com/kaascanvas.png"
+url: "https://lensdj.app"
+bio: "Independent music producer, developer, and creator of LensDJ Pro, a sovereign AI DAW bridging ElevenLabs vocals and Google Lyria instrumentals."
+location: "Bern, Switzerland"
+isElevenLabs: false
+socials:
+  - label: X
+    url: "https://x.com/LensDJing"
+  - label: GitHub
+    url: "https://github.com/kaascanvas"

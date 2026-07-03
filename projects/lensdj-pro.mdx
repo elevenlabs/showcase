@@ -1,0 +1,71 @@
+---
+title: "LensDJ Pro"
+description: "A sovereign AI DAW and multitrack music production terminal featuring an 8-channel stem matrix, real-time Web Audio mixing, and biometric voice cloning."
+liveDemoUrl: "https://lensdj.app/live_agent?domain=dj"
+codeUrl: "https://github.com/kaascanvas/showcase"
+videoUrl: "https://x.com/LensDJing/status/2057959115905749454"
+author: "Hans Johannes Schulte"
+tags: ["Music", "Text to Speech", "Voices"]
+---
+
+## Official Resources & App Channels
+
+To explore the LensDJ Pro ecosystem, watch our live production videos, or download the app on your mobile device, use the resources below:
+
+*   **Google Play Store:** [Download the Mobile App on Google Play](https://play.google.com/store/apps/details?id=app.lensdj.pro)
+*   **X (formerly Twitter) Profile:** Follow [@LensDJing on X](https://x.com/LensDJing) for active development and system updates
+*   **Demo & Media Library:** Watch our full collection of production and testing videos on the [X Media Timeline](https://x.com/LensDJing/media)
+*   **TikTok Channel:** Follow [@lensdj on TikTok](https://www.tiktok.com/@lensdj) for quick, viral production breakdowns
+
+---
+
+## Overview
+
+**LensDJ Pro** is a sovereign AI Digital Audio Workstation (DAW) designed for professional producers, sync-licensing musicians, and creators. Unlike consumer "black-box" music generators that yield flattened, uneditable audio files, LensDJ Pro decouples vocal and instrumental generation into independent neural pipelines.
+
+By integrating the **ElevenLabs Voice Engine** alongside Google Lyria 3 Pro, LensDJ Pro operates exactly like a professional physical recording studio. Lyrical vocals are synthesized in isolation on Channel 1, while backing tracks (drums, bass, melodies, and atmospheres) are generated on Channels 2–8. All stems are mixed locally on the user's device via the Web Audio API with zero cross-channel frequency bleed.
+
+---
+
+## Key Features
+
+- **8-Channel Decoupled Stem Matrix:** Renders isolated, uncompressed 48kHz WAV files (Kick, Sub-Bass, Lead Synths, Percussion, Vocals) directly to local RAM for DAW integration.
+- **Biometric Voice Cloning (The Sovereignty Shield):** Allows creators to clone their own biological voice. This establishes the human authorship necessary to satisfy copyright registration requirements and prevent automated platform takedowns.
+- **State-Stateful Decoupling:** Spoken or written natural language instructions are parsed by reasoning nodes (Gemini and Grok) to update UI mixer configurations locally in real-time, reducing render latency.
+- **Bring-Your-Own-Key (BYOK) Billing:** Operates on a decentralized economic model. Users provide their own API credentials, generating studio-grade music at raw, wholesale compute costs rather than paying a marked-up platform subscription.
+- **Auto-Ducker & Parametric Equalizers:** Local client-side audio processing featuring 3-band EQs, volume faders, and turntable pitch controls on every channel.
+
+---
+
+## The Challenge & Solution
+
+### 1. Navigating upstream safety filters on standard engines
+Many foundational music models enforce strict, non-negotiable safety filters. Benign poetic metaphors in standard songwriting (using terms like *broke*, *kill*, *blood*, or *shatter*) can trigger false positives, causing the generation of full songs to fail entirely. 
+
+By routing all vocal prompts directly through **ElevenLabs**, LensDJ Pro bypasses these restrictive guardrails, offering creators complete artistic freedom while keeping instrumental generations legally clean and unblocked on Lyria.
+
+### 2. Eliminating phase cancellation and bleed
+Traditional post-processing stem splitters separate mixed stereo audio using frequency subtraction, leaving behind metallic "swishing" artifacts and muddy drum bleed. LensDJ Pro resolves this by generating each channel's backing track natively in isolation. 
+
+The vocals are kept completely separate from the beats, saving producers hours of spectral editing and delivering broadcast-ready stems instantly.
+
+---
+
+## Technologies Used
+
+- **ElevenLabs API:** Synthesizes custom singing, spoken vocals, and biometric voice clones (Text-to-Speech & Voice Cloning).
+- **Google Lyria 3 Pro:** Renders high-fidelity, physics-based acoustic backing tracks.
+- **xAI Grok & Gemini 3.5 Flash:** Handles intent parsing, natural language translation, and automated mixer updates.
+- **Web Audio API:** Executes on-device multi-channel routing, parametric EQs, master limiting, and real-time panning.
+- **Quart (Python):** Lightweight, asynchronous server framework for backend WebSocket telemetry and static serving.
+
+---
+
+## How to Use It
+
+1. Open the [LensDJ Pro web app](https://lensdj.app/live_agent?domain=dj).
+2. Insert your Google Gemini and ElevenLabs API keys in the left sidebar to establish your secure, local compute keyring.
+3. Open the **8-Channel Stem Matrix** and select an industry-standard template (e.g., Slap House, Tech House, or Uplifting Trance) to auto-tune the global BPM and key.
+4. Add your cloned Voice ID to the left panel to active the *Sovereignty Shield*.
+5. Type your lyrics in the Channel 1 text field, configure your backing track prompts, and click **Synthesize Audio**.
+6. Balance your stems live in the mixer, and click **Bounce Mix** to export uncompressed WAV files straight into Ableton Live, FL Studio, or Logic Pro.
