@@ -1,0 +1,97 @@
+---
+title: VEKTOR — AI Voice Intelligence Agent
+description: Multi-mode AI voice agent for Star Citizen delivering real-time game intel, mining loops, loadout queries, tactical analysis, and military doctrine by voice.
+authorIds:
+  - mike-matthews
+categories:
+  - agents
+isFeatured: false
+date: "2026-05-26"
+image: /images/vektor.png
+demoUrl: https://www.class7prod.com/vektor
+repoUrl: https://github.com/C7PROD/vektor
+---
+ 
+# VEKTOR — AI Voice Intelligence Agent
+ 
+## Overview
+ 
+VEKTOR is a Claude-powered AI voice agent deployed on ElevenLabs Conversational AI for the 8th ESG — a 100+ member military organization in Star Citizen. It replaces static wikis and slow manual lookups with real-time, voice-activated intelligence across nine operational modes.
+ 
+Built by Class 7 Consulting & Productions as a proof of concept for AI voice agents in complex, niche knowledge domains. The same architecture applies directly to enterprise use cases: construction safety training, legal compliance, field procedure coaching, and anywhere an organization needs on-demand structured knowledge delivered by voice.
+ 
+Live at: [class7prod.com/vektor](https://www.class7prod.com/vektor)
+ 
+## Key Features
+ 
+- **Nine operational modes** — Doctrine reference, Star Citizen game intelligence, ship loadout queries, mining loop guidance, org OSINT, tactical image analysis, military strategy, guided AAR, and OPORD generation
+- **Multi-modal query routing** — Strict sub-section labeling architecture prevents model conflation across similar query types (a design rule learned the hard way after a regression in v3.1 where sell-back logic merged with loadout flow)
+- **Custom ElevenLabs widget** — Military terminal aesthetic with four animated voice states: STANDBY (breathing ring), LISTENING (sonar rings), ANALYZING (bouncing dots), TRANSMITTING (waveform bars)
+- **Live knowledge base (SC 4.8)** — Ship components, weapons, mining tools, ore prices by SCU, refinery bonuses, cave harvestable prices, and Rayari mission chains — maintained as a separate reference document
+- **Architecture-first design** — System prompt and KB are decoupled so either can be updated independently as the game patches
+## How It Works
+ 
+VEKTOR uses a layered system prompt with strict structural conventions to handle nine query types without cross-contamination:
+ 
+**The labeling convention (hard rule — don't break it):**
+ 
+| Section | Label Style | Why |
+|---------|-------------|-----|
+| Section 3 — Loadout | Step one / two / three / four | Original |
+| Section 3 — Sell-back sub | Source A / Source B / Source C | Distinct from parent |
+| Section 4 — Mining | Phase one / two / three / four | Distinct from Section 3 |
+ 
+Sub-sections are always `####`, never `###`. Using `###` at the same level as numbered sections caused a v3.1 regression where the model conflated sell-back logic with the main component query flow. This convention is the single most important structural decision in the build.
+ 
+The knowledge base lives as a companion document — not embedded in the prompt — keeping the prompt lean and the KB independently updatable.
+ 
+The custom widget uses the ElevenLabs `@11labs/client` SDK (ESM CDN import) and listens to the `onModeChange` callback to trigger CSS animations for each voice state. No backend or build step required — it's a single standalone HTML file.
+ 
+## Technologies Used
+ 
+- **ElevenLabs Conversational AI** — voice agent runtime and custom voice
+- **ElevenLabs `@11labs/client` SDK** — widget voice state management
+- **Claude (Anthropic)** — underlying LLM for doctrine reasoning, tactical analysis, and structured query routing
+- **Vanilla HTML/CSS/JS** — standalone widget, zero framework dependencies
+## Getting Started
+ 
+```bash
+# No installation needed — the widget is a single HTML file
+# 1. Clone the repo
+git clone https://github.com/C7PROD/vektor.git
+ 
+# 2. Open widget/vektor_widget.html in any browser
+# 3. Replace YOUR_AGENT_ID with your ElevenLabs Conversational AI agent ID
+# 4. Deploy anywhere: static host, embed on website, Discord bot, etc.
+```
+ 
+Replace the agent ID in the widget:
+```js
+// widget/vektor_widget.html — find this line:
+const AGENT_ID = 'YOUR_AGENT_ID_HERE';
+// Replace with your actual ElevenLabs Conversational AI agent ID
+```
+ 
+To use the system prompt template:
+1. Open `system-prompt/VeKtor_System_Prompt_template.md`
+2. Replace `[YOUR ORG NAME]`, doctrine sections, and access rules with your organization's content
+3. Upload to your ElevenLabs agent as the system prompt
+4. Upload your knowledge base document as agent knowledge
+## Demo
+ 
+VEKTOR is live at [class7prod.com/vektor](https://www.class7prod.com/vektor).
+ 
+Example queries it handles in real time:
+- *"What's the best refinery for Quantainium right now?"*
+- *"Walk me through the MOLE mining phase loop."*
+- *"Compare a Deadbolt to a Mantis for a Hornet loadout."*
+- *"What are the current sell prices for Hadanite?"*
+## Future Plans
+ 
+- IVR phone number integration via ElevenLabs-native number (so org members can call VEKTOR directly)
+- Multi-org deployment — the architecture is org-agnostic; other Star Citizen organizations can fork and configure for their own doctrine
+- Enterprise version: same build pattern applied to construction safety training, OSHA compliance coaching, and field procedure delivery
+- Expanded OPORD generation with structured templates
+## Acknowledgments
+ 
+Built with ElevenLabs Conversational AI and Claude by Anthropic. Star Citizen game data sourced from UEX Corp (uexcorp.space), Rocks Syndicate, and the SC community. Widget terminal aesthetic inspired by military HUD systems.

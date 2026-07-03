@@ -1,0 +1,11 @@
+name: Mike Matthews
+avatar: "https://github.com/C7PROD.png"
+url: "https://www.class7prod.com"
+bio: "Owner of Class 7 Consulting & Productions. Builder of custom AI voice agents for construction safety, business automation, and high-complexity knowledge domains."
+location: "Tallahassee, FL"
+isElevenLabs: false
+socials:
+  - label: GitHub
+    url: "https://github.com/C7PROD"
+  - label: Website
+    url: "https://www.class7prod.com"
