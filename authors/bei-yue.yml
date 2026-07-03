@@ -1,0 +1,13 @@
+name: beiyue
+avatar: "https://github.com/beiyuezou.png" # or any avatar URL
+url: "https://preview--refund-right.lovable.app/" # Optional: your website
+bio: "I enjoy learning, traveling, and staying active, especially when they blend together — that’s often where innovation is born."
+location: "Hefei, China"
+isElevenLabs: true # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "x.com/lazhangao"
+  - label: GitHub
+    url: "https://github.com/beiyuezou"
+  - label: LinkedIn
+    url: "https://linkedin.com/in/zhangao16" # Optional
