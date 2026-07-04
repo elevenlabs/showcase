@@ -1,0 +1,130 @@
+title: SafeGuard
+description: Autonomous AI insurance claims agent powered by ElevenLabs voice AI.
+authorIds:
+  - ansh-chopada
+
+categories:
+  - agents
+
+isFeatured: false
+date: "2026-05-15"
+
+image: /images/safeguard.png
+
+demoUrl: https://loops-hackerhouse.vercel.app/
+repoUrl: https://github.com/aniruddha1295/Loops_hackerhouse.git
+videoUrl:https://youtu.be/QGLEtF0HWg4?si=DkMwvN1-AT9PIZs-
+
+---
+
+# SafeGuard
+
+## Overview
+
+SafeGuard is an AI-powered autonomous insurance claims assistant designed to automate the entire claims workflow using conversational voice AI.
+
+Powered by ElevenLabs, SafeGuard handles:
+- Claim registration
+- Policy verification
+- Document status updates
+- Customer support interactions
+- Real-time conversational assistance
+
+The platform aims to reduce claim resolution time while improving customer experience.
+
+## Key Features
+
+- Autonomous voice claims processing
+- Real-time policy verification
+- Human-like conversational AI
+- 24/7 customer support
+- End-to-end workflow automation
+
+## How It Works
+
+SafeGuard combines ElevenLabs conversational voice AI with backend automation systems to process insurance claims autonomously.
+
+The system manages customer interactions, verifies information, and guides users throughout the claims process.
+
+## Technologies Used
+
+- ElevenLabs Conversational AI (STT + LLM + TTS)
+- Fastify + TypeScript (Backend)
+- React + Vite + Tailwind (Frontend)
+- Supabase (PostgreSQL Database)
+- Twilio (Phone Integration)
+- Railway & Vercel (Deployment)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+ (`node -v` to check)
+- npm 9+ (`npm -v` to check)
+- Git
+- A code editor (VS Code recommended)
+
+### Quick Start
+
+**1. Clone and Setup**
+```bash
+git clone https://github.com/aniruddha1295/Loops_hackerhouse.git
+cd Loops_hackerhouse
+```
+
+**2. Backend Setup**
+```bash
+cd backend
+npm install
+```
+
+**3. Environment Configuration**
+Get the shared `.env` file from the team. Place it at `backend/.env`.
+
+Required variables: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `PORT`, `NODE_ENV`, `FRONTEND_URL`
+
+**4. Start the Backend**
+```bash
+npm run dev
+# Server runs at http://localhost:3005
+```
+
+**5. Test the Tool Endpoints**
+```bash
+# Lookup a claim
+curl -X POST http://localhost:3005/api/tools/lookup-claim \
+  -H "Content-Type: application/json" \
+  -d '{"claim_id": "CLM-2026-000456"}'
+
+# File a new claim
+curl -X POST http://localhost:3005/api/tools/file-claim \
+  -H "Content-Type: application/json" \
+  -d '{"policy_number": "POL-2024-001234", "claim_type": "collision", "incident_date": "2026-04-16", "incident_description": "Tree fell on car"}'
+
+# Check missing documents
+curl -X POST http://localhost:3005/api/tools/check-documents \
+  -H "Content-Type: application/json" \
+  -d '{"claim_id": "CLM-2026-000456"}'
+```
+
+**6. Frontend Setup**
+```bash
+cd frontend
+npm install
+npm run dev
+# App runs at http://localhost:5173
+```
+
+## Demo
+
+Visit [loops-hackerhouse.vercel.app](https://loops-hackerhouse.vercel.app/) for live demo or watch the [YouTube demo](https://youtu.be/QGLEtF0HWg4?si=DkMwvN1-AT9PIZs-).
+
+## Future Plans
+
+- Start by deepening our focus on insurance and making SafeGuard the best-in-class AI voice agent for claims support.
+- Expand horizontally into other industries where AI voice agent assistance is needed, such as customer support, scheduling, and operations.
+- Add more domain-specific workflows, better automation, and broader language support as we scale.
+
+## Acknowledgments
+
+Built at Loops Hacker House Shanghai (April 2026) with ElevenLabs Conversational AI sponsorship.
