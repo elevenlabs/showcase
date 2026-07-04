@@ -1,0 +1,59 @@
+---
+title: Beat Your Meet
+description: AI meeting facilitator that joins your calls, keeps everyone on-topic, and enforces time limits.
+authorIds:
+  - s-w-leong
+categories:
+  - agents
+isFeatured: false
+date: "2026-03-01"
+image: /images/beat-your-meet.jpeg
+demoUrl: https://beat-your-meet.vercel.app
+repoUrl: https://github.com/S-W-Leong/beat-your-meet.git
+---
+
+# Beat Your Meet
+
+## Overview
+
+Beat Your Meet is an AI meeting facilitator that joins your calls, keeps everyone on-topic, and enforces time limits — so your meetings actually end on time. It uses ElevenLabs for real-time text-to-speech interaction, giving the AI bot ("Beat") a natural, responsive voice as it participates in LiveKit audio rooms.
+
+## Key Features
+
+- **Automated Agenda Generation**: Mistral Large creates a structured, time-boxed agenda from your meeting description.
+- **Adjustable Facilitation Styles**: Choose how aggressive the bot should be (gentle, moderate, or aggressive) depending on the meeting's tone.
+- **Real-time Conversation Monitoring**: The AI transcribes the conversation, detects tangents, warns when time is running low, and dynamically transitions between agenda items.
+
+## How It Works
+
+1. **Describe your meeting** — tell the app what you're meeting about and how long you have.
+2. **AI generates an agenda** — Mistral Large creates a structured, time-boxed agenda from your description.
+3. **Pick a facilitation style** — choose how aggressive the bot should be (gentle, moderate, or aggressive).
+4. **Start the meeting** — everyone joins a LiveKit audio room. The AI bot ("Beat") joins as a voice participant.
+5. **Beat keeps you on track** — it transcribes the conversation in real-time, detects tangents, warns when time is running low, and transitions between agenda items.
+
+## Technologies Used
+
+- **ElevenLabs API**: TTS (ElevenLabs Turbo v2.5) for the AI facilitator's natural voice output
+- **Mistral AI**: LLM for agenda generation and tangent monitoring
+- **Deepgram Nova 2**: Real-time STT
+- **Silero**: VAD (Voice Activity Detection)
+- **LiveKit Core & Agents SDK**: Real-time audio and agent orchestration
+- **Next.js 14 & FastAPI**: Frontend and backend infrastructure
+
+## Getting Started
+
+Check out the full repository to see how to run the project locally. You'll need credentials for ElevenLabs, Mistral, and Deepgram.
+
+```bash
+# Clone the repository
+git clone https://github.com/S-W-Leong/beat-your-meet.git
+cd beat-your-meet
+
+# The project consists of a Next.js frontend, a FastAPI server, and a LiveKit agent.
+# Refer to the README in the repository for full setup instructions.
+```
+
+## Future Plans
+
+We plan on adding more fine-grained controls for the facilitator's personality, and in the future, possibly integrate directly into Google Meet and Zoom via bot accounts.
