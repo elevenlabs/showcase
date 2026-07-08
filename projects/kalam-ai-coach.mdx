@@ -1,0 +1,50 @@
+---
+title: Kalam - AI Communication Coach
+description: Master interviews and public speaking with real-time AI roleplay using ultra-low latency voice.
+authorIds:
+  - muhammad-junaid
+categories:
+  - text-to-speech
+  - speech-to-text
+  - agents
+isFeatured: false
+date: "2026-03-02"
+image: /images/kalam.png
+repoUrl: https://github.com/junaiddshaukat/Mistral-AI-Hackathon
+---
+
+# Kalam: Your Real-Time AI Communication Coach
+
+## Overview
+
+Kalam is an ultra-low latency, voice-first AI coach designed to help you master job interviews, public speaking, and difficult conversations through real-time roleplay and personalized feedback. Built for the Mistral AI Worldwide Hackathon 2026!
+
+Whether it's a high-stakes job interview or a difficult negotiation, the best way to improve is through practice. Kalam acts as your conversational sparring partner, listening naturally and responding instantly with a lifelike voice to keep you on your toes. 
+
+Once your session ends, Kalam steps out of character to become your expert coach, providing a detailed breakdown of your performance.
+
+## Key Features
+
+- **Instant Voice Roleplay:** Engage in natural, flowing conversations with near-zero hesitation or delay.
+- **Dynamic Personas:** Practice against unique characters tailored to your specific scenario—from strict hiring managers to casual friends.
+- **Adaptive Session Timers:** Practice in focused bursts (1 to 5 minutes) with visual countdowns that help you manage your time under pressure.
+- **Feedback Scorecards:** Get evaluated on clarity, confidence, and context. Download your personalized PDF scorecard to track your progress!
+
+## How It Works
+
+Kalam leverages the power of Next.js 16 (App Router) combined with React hooks for stateful audio streaming. The system uses Mistral Large (`mistral-large-latest`) in JSON mode to reliably generate character constraints before the session, and to output structured, multi-metric performance scorecards afterward.
+
+To ensure real-time latency, the audio pipeline works right in the browser utilizing the Web Audio API alongside ElevenLabs' incredibly fast text-to-speech and speech-to-text systems.
+
+## Technologies Used
+
+- **ElevenLabs API**
+  - **Speech-to-Text (STT):** ElevenLabs `scribe_v1` via Web Speech API for fast audio transcriptions.
+  - **Text-to-Speech (TTS):** ElevenLabs `eleven_turbo_v2_5` with optimized streaming latency (`optimize_streaming_latency=3`) for instantaneous replies.
+- **Mistral AI:** Evaluative intelligence and dynamic character persona generation using JSON Mode.
+- **Frontend Framework:** Next.js 16 (App Router) & React.
+- **Styling:** Tailwind CSS v4.
+
+## Future Plans
+
+We plan to add historical progress tracking, more complex branching scenarios, and visual emotion detection to give feedback on your body language alongside your vocal performance!
