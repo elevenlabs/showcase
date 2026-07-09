@@ -1,0 +1,99 @@
+---
+title: Reelize
+description: Turn viral Shorts into teaching templates. Reelize reverse-engineers a reference video's retention structure and generates a finished short on that blueprint.
+authorIds:
+  - eliyahu-mizrahi
+  - isaac-sasson
+categories:
+  - text-to-speech
+  - voices
+isFeatured: false
+date: "2026-04-20"
+image: /images/reelize.png
+demoUrl: https://eliyahumizrahi.com/reelize
+repoUrl: https://github.com/EliyahuMizrahi/reelize
+videoUrl: https://www.youtube.com/watch?v=eTKgPNKFsIU
+---
+
+# Reelize
+
+## Overview
+
+Reelize turns viral Shorts into templates for teaching complex topics. Drop in any TikTok, Reel, or YouTube Short whose pacing hooks you, pick a topic you want to teach, and Reelize reverse-engineers the reference's retention structure - hook timing, beat grid, scene rhythm, voice cadence - then generates a brand-new short on that blueprint. 
+The output is not a script or a slideshow. It's a fully rendered short-form video, delivered to your phone, ready to publish. ElevenLabs sits at the heart of the generation stage. Once the pipeline has extracted the reference video's retention blueprint, ElevenLabs' Text-to-Speech API synthesizes the new narration to match the reference's voice cadence and land emphasis on its beat drops. 
+Voice choice and delivery style are matched to the tone of the original, and the synthesized audio is rendered into the final video at millisecond precision alongside music, SFX, and footage. Without high-quality, timing-controllable voice synthesis, the beat-grid alignment that makes Reelize work wouldn't be possible.
+Built in 48 hours at Hack Brooklyn 2026, where it won Grand Prize: Third Place.
+
+## Key Features
+
+- Retention-blueprint extraction - Analyzes a reference video to produce a shared manifest of hook timing, beat grid, energy envelope, scene cuts, voice cadence, and music ID.
+- Beat-grid-aligned script generation - The beat grid and energy envelope are fed directly into the LLM prompt, so generated narration lands its emphasis on the reference's existing beat drops.
+- ElevenLabs voice synthesis - High-quality AI voiceover timed to the original's pacing, composed into the final render at millisecond precision.
+- End-to-end rendered output - Remotion composes the final video with layered voice, music, SFX, and visuals. The user gets a finished short, not raw assets.
+- Cross-platform mobile + web - Expo / React Native app for iOS, Android, and web, with signed-URL uploads to Cloudflare R2.
+
+## How It Works
+
+Reelize runs a four-phase pipeline on every job.
+
+**1. Analyze.** The reference video is fanned out to seven specialized services: Demucs separates audio stems, Whisper transcribes dialogue, Shazam identifies background music, librosa extracts the beat grid and energy envelope, pyannote handles speaker diarization, and Gemini detects scene changes with a multi-pass keyframe refinement loop.
+
+**2. Extract.** All of that output is unified into a single shared manifest - hook timing, pacing curve, visual rhythm, voice cadence - that every downstream stage reads from and writes into.
+
+**3. Generate.** Gemini writes a new script and shot timeline conditioned on the manifest (not just the transcript - the beat grid and energy envelope go into the prompt directly). ElevenLabs synthesizes the voiceover. Music and SFX are matched to the original's energy curve.
+
+**4. Render.** Remotion, a React-based video framework, composes the final video deterministically. Voice, music, SFX, and footage are normalized to a single clock and aligned to the reference's beat grid with millisecond precision.
+
+The AI models were the easy part. The real work was the orchestration: designing the shared manifest, wiring retries and partial-failure recovery, and running a serialized job queue so Demucs, Whisper, pyannote, and Gemini don't melt GPU memory fighting each other.
+
+## Technologies Used
+
+- **ElevenLabs API** - Voice synthesis for the generated narration
+- **Google Gemini** - Script generation, shot timeline, and scene detection
+- **Whisper** - Speech-to-text transcription of the reference video
+- **Demucs** - Audio stem separation
+- **librosa** - Beat grid and energy envelope extraction
+- **pyannote.audio** - Speaker diarization
+- **Shazam (shazamio)** - Background music identification
+- **Remotion** - Deterministic React-based video rendering
+- **Expo / React Native** - Mobile + web client (iOS, Android, web)
+- **FastAPI** - Backend orchestration with a serialized job queue
+- **Supabase** - Postgres for job state, Storage for media
+- **Cloudflare R2** - Object storage with signed-URL upload flow
+- **Docker / Docker Compose** - Local dev and GPU worker deployment
+
+## Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/EliyahuMizrahi/reelize
+cd reelize
+
+# See the repository README for backend, GPU worker,
+# and mobile client setup. The stack needs:
+#   - ElevenLabs API key
+#   - Google Gemini API key
+#   - Supabase project (Postgres + Storage)
+#   - Cloudflare R2 bucket
+#   - Docker + a CUDA-capable GPU for the analysis worker
+```
+
+## Demo
+
+Watch the full demo on YouTube: [https://www.youtube.com/watch?v=eTKgPNKFsIU](https://www.youtube.com/watch?v=eTKgPNKFsIU)
+
+Full project writeup and screenshots in the project gallery: [eliyahumizrahi.com/reelize](https://eliyahumizrahi.com/reelize)
+
+Devpost submission: [devpost.com/software/reelize-jx05re](https://devpost.com/software/reelize-jx05re)
+
+## Future Plans
+
+- **Template library** - Save a reference video's blueprint and reuse it across many topics.
+- **Creator profiles** - Fine-tune voice and visual style per user, with a persistent ElevenLabs voice per creator.
+- **Classroom mode** - Teachers upload a lesson topic and students get a 60-second short-form video they'll actually watch.
+
+## Acknowledgments
+
+Built by Eliyahu Mizrahi and Isaac Sasson in 48 hours at Hack Brooklyn 2026. Grand Prize: Third Place.
+
+Thanks to the open-source maintainers behind Demucs, Whisper, pyannote, librosa, Remotion, and Expo - none of this pipeline ships on a weekend without them.

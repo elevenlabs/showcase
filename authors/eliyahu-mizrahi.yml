@@ -1,0 +1,13 @@
+name: Eliyahu Mizrahi
+avatar: "https://github.com/EliyahuMizrahi.png"
+url: "https://eliyahumizrahi.com"
+bio: "CS student focused on full-stack, AI, mobile, and cybersecurity."
+location: "New York, USA"
+isElevenLabs: false
+socials:
+  - label: Website
+    url: "https://eliyahumizrahi.com"
+  - label: GitHub
+    url: "https://github.com/EliyahuMizrahi"
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/eliyahu-mizrahi-a82672331/"
