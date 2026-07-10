@@ -1,0 +1,90 @@
+---
+title: neo-theo
+description: AI voice triage for property management — Theo classifies urgency, routes to the right place, and writes back tested knowledge after every call.
+authorIds:
+  - ibxibx
+categories:
+  - agents
+isFeatured: false
+date: "2026-05-28"
+image: /images/neo-theo.png
+demoUrl: https://neo-theo.vercel.app
+repoUrl: https://github.com/ibxibx/neo-theo
+---
+
+# neo-theo — the AI voice layer between tenants and property staff
+
+> _"7 out of 10 tenant inquiries don't need real staff involvement."_
+
+**neo-theo** picks up the phone when a tenant calls their property manager, has a real conversation in the tenant's language, then classifies what just happened on two axes — **urgency** and **action class** — and routes the inquiry to the right place automatically. Auto-resolve for minor stuff (with a DIY guide sent over the tenant's preferred channel), property manager for routine work, emergency dispatch with parallel vendor/PM/owner notification for the things that actually need it.
+
+Built in two days at the **HalloTheo Hackathon** in Berlin (Track 1 · ElevenLabs Integration), with an in-person customer conversation with **Jan from Hallo Theo** shaping every design decision in the repo.
+
+---
+
+## Why this exists
+
+Property management is a phone-call business. When something breaks in a building, the tenant calls — and most of those calls are repetitive, solvable with a step-by-step guide or a known vendor, and they swamp the staff who should be working on the rest. Jan's headline framing during our customer session was simple: _"Triage and negotiation are two distinct problems."_ neo-theo is the triage layer. (The negotiation layer — `Theo Negotiates`, a multi-vendor voice auction with a two-sided Stripe marketplace — is specced in the repo for Phase 2.)
+
+The other insight Jan called out as the killer feature: **tested knowledge** lives in property managers' heads — _which elevator vendor actually fixed which building_ — and never makes it into a system. Every staff handoff in neo-theo has a `knowledge_capture` write-back step so that information gets operationalized into the property's knowledge graph.
+
+---
+
+## How it works
+
+1. **Tenant calls** via the hallo theo landing page (a web call — per Wynand's guidance, no real phone number needed for the demo). The dashboard, on pickup, already knows who's calling.
+2. **ElevenLabs Conversational AI agent** has a natural conversation in German (or English, Turkish, Polish, Arabic). The agent calls `lookup_tenant_by_phone` on connect and opens with _"Guten Tag {first_name}, hier ist Theo von hallo theo"_ — never _"please tell me your name."_
+3. The agent **transcribes** every word in real time and posts the final transcript to a Supabase webhook at end-of-call.
+4. The **AI triage layer (Claude Sonnet 4.6)** classifies the inquiry: urgency (`LOW` / `MEDIUM` / `HIGH` / `EMERGENCY`), action class (`AUTO_RESOLVE` / `SERVICER_QUEUE` / `PROPERTY_MANAGER` / `OWNER_APPROVAL` / `EMERGENCY_DISPATCH`), plus a `knowledge_capture_required` modifier.
+5. The system **dispatches** via the matching Standard Action Sequence — 7 SAS branches, deterministic, each with its own SLA.
+6. **Everything logs to Supabase**, indexed by tenant / contract / property — so the next call uses last call's context.
+
+---
+
+## What's actually built (verifiable in the repo)
+
+- **Backend live** at `https://neo-theo-api.onrender.com` — `/health` returns `{status: ok, db: ok, claude: ok}`. Auto-deploys from GitHub → Render on every push to `main`, with a 10-minute keep-warm cron.
+- **Dashboard live** at `https://neo-theo.vercel.app` — Next.js 14 + Tailwind, Supabase Realtime subscription, ElevenLabs web SDK. Responsive down to mobile.
+- **4 ElevenLabs agent tools** in production: `lookup_tenant_by_phone`, `get_building_emergency_info`, `log_inquiry`, `trigger_emergency_dispatch`.
+- **11 database tables** covering triage + Phase-2 Theo-Negotiates auction subsystem + two-sided Stripe marketplace.
+- **50 hand-written sample inquiries** ([`docs/INQUIRIES_SAMPLES.md`](https://github.com/ibxibx/neo-theo/blob/main/docs/INQUIRIES_SAMPLES.md)) spanning ages 25–100, WEG + SEV, all categories — usable as training set, eval harness, and judge demo menu.
+- **7 communication channels** the dispatch system picks between by tenant age + tech-affinity: voice callback, letter PDF, email, SMS, WhatsApp Business, Telegram, in-app push.
+
+---
+
+## Technologies used
+
+- **ElevenLabs Conversational AI** — German-default voice agent with 4 server tools, real-time transcription, end-of-call webhook
+- **Claude Sonnet 4.6** (Anthropic) — triage classification on the two-axis taxonomy
+- **Next.js 15 + React 19 + Tailwind** — the staff dashboard
+- **FastAPI + Python** — the API, agent tools, triage endpoint
+- **Supabase** — Postgres + Realtime + Auth
+- **Render** — backend hosting
+- **Vercel** — dashboard hosting
+- **Stripe (Phase 2)** — two-sided marketplace for the Theo Negotiates auction subsystem
+
+---
+
+## Demo
+
+Live: [neo-theo.vercel.app](https://neo-theo.vercel.app) — tap the green button on the phone in the left column to start a call with Theo. The dashboard fills in live: tenant identification on pickup, German transcript streaming as the call happens, then Claude's triage classification and the dispatch panel populate as soon as the call ends.
+
+For the architecture, urgency rules, the full categories taxonomy, and the in-person customer transcripts with Jan and Wynand, see the [repo's `docs/`](https://github.com/ibxibx/neo-theo/tree/main/docs).
+
+---
+
+## Future plans
+
+- **Theo Negotiates** (Phase 2, specced in [`docs/THEO_NEGOTIATES.md`](https://github.com/ibxibx/neo-theo/blob/main/docs/THEO_NEGOTIATES.md)) — voice-based multi-vendor auctions for above-budget repairs, with owner one-tap consent and a two-sided Stripe marketplace
+- **Knowledge graph population** — turn the per-property write-backs into a queryable graph PMs can browse
+- **Channel-adaptive dispatch** at scale — currently 7 channels, all wired into the data model, with the dispatch logic stubbed for letter + email + WhatsApp Business
+- **Multi-language live demo** — model + voices are ready, the demo is currently set to German for the hackathon
+
+---
+
+## Acknowledgments
+
+- **Jan @ Hallo Theo** for the in-person customer conversation that shaped every product decision — the `knowledge_capture` flag is his
+- **Wynand** for the early-stage guidance that kept us out of a telephony rabbit-hole
+- **ElevenLabs** for the Conversational AI platform that made a two-day voice product possible
+- The **HalloTheo Hackathon** team for the venue and the brief
