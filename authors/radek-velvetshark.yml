@@ -1,0 +1,15 @@
+name: Radek
+avatar: "https://github.com/velvet-shark.png"
+url: "https://velvetshark.com"
+bio: "Builder at velvetshark.com"
+location: "Warsaw, Poland"
+isElevenLabs: false
+socials:
+  - label: X
+    url: "https://x.com/velvet_shark"
+  - label: GitHub
+    url: "https://github.com/velvet-shark"
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/radeksienkiewicz/"
+  - label: Website
+    url: "https://velvetshark.com"
