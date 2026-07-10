@@ -1,0 +1,80 @@
+---
+title: The Lektor
+description: Drop in any video and get it back with a single deadpan Polish lektor voice reading translated dialogue over the ducked original.
+authorIds:
+  - radek-velvetshark
+categories:
+  - text-to-speech
+  - speech-to-text
+  - voices
+isFeatured: false
+date: "2026-07-10"
+image: /images/the-lektor.png
+demoUrl: https://thelektor.pl
+repoUrl: https://github.com/velvet-shark/lektor
+---
+
+# The Lektor
+
+## Overview
+
+If you grew up in Poland — like the founders of ElevenLabs did — you didn't watch dubbed movies. You watched movies where a single, utterly unmoved male voice read every line of dialogue, man or woman, whisper or scream, in the same flat monotone, layered over the quieted original audio. That's the lektor, the "szeptanka" style of voice-over translation that ElevenLabs' founders have cited as part of the inspiration for starting the company.
+
+The Lektor is an homage to that tradition. It's a web app: drop in any video up to 90 seconds, and you get it back with an authentic Polish lektor reading the translated dialogue over the ducked original soundtrack. One voice for everyone. No emotion. Exactly as it should be.
+
+## Key Features
+
+- **Any video in, lektor video out**: Upload a clip up to 90 seconds in any language and get back the same video with a Polish lektor voice-over
+- **Faithful szeptanka timing**: A custom timing algorithm delays each lektor line 600–900ms behind the original speaker, mimicking how real lektors trail the dialogue
+- **One voice, zero emotion**: A single deadpan voice reads every character's lines, true to the classic style
+- **Designed voice, not a cloned one**: The lektor voice was created with ElevenLabs Voice Design — no real lektor's voice was cloned
+- **Original audio preserved underneath**: The source soundtrack is ducked, not replaced, so music and effects stay audible under the voice-over
+
+## How It Works
+
+1. **Transcription and diarization**: The uploaded video's audio goes through ElevenLabs Scribe (scribe_v2), which returns word-level timestamps and speaker diarization — so the app knows exactly who speaks and when
+2. **Translation**: The dialogue is translated into Polish, segment by segment
+3. **Lektor speech**: Each translated segment is synthesized with Multilingual v2 (eleven_multilingual_v2), passing `previous_text` and `next_text` for each request so consecutive segments flow naturally despite being generated separately
+4. **Timing**: A custom algorithm places each lektor line 600–900ms after the original line starts — the characteristic lag that makes a lektor feel like a lektor — while compressing or nudging segments so the voice-over never falls behind
+5. **Mix**: ffmpeg ducks the original audio track under the generated voice-over and muxes the result back into the video
+
+The hardest part was the timing: real lektors don't speak in sync with the actors, they trail them by just enough that you can hear the original delivery start before the translation lands. Getting that delay right — and keeping it stable across overlapping speakers and rapid-fire dialogue — is what the custom timing algorithm handles.
+
+## Technologies Used
+
+- **ElevenLabs Scribe (scribe_v2)**: Speech-to-text with word-level timestamps and speaker diarization
+- **ElevenLabs Multilingual v2 (eleven_multilingual_v2)**: Per-segment text-to-speech with `previous_text`/`next_text` context stitching
+- **ElevenLabs Voice Design**: The lektor voice itself — designed from a prompt, not cloned from any real person
+- **ffmpeg**: Audio ducking and final mix
+- **Custom timing algorithm**: 600–900ms lektor delay with segment fitting
+
+## Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/velvet-shark/lektor
+cd lektor
+
+# Set up environment
+echo "ELEVENLABS_API_KEY=your_key_here" > .env
+
+# Install and run
+npm install
+npm run dev
+```
+
+Then open the app, drop in a video (90 seconds or less), and wait for your lektorized version.
+
+## Demo
+
+Try it live at https://thelektor.pl
+
+## Future Plans
+
+- Longer videos
+- Selectable lektor voices (still all deadpan, of course)
+- Other classic voice-over traditions (Russian single-voice, Vietnamese thuyết minh)
+
+## Acknowledgments
+
+Dedicated to every Polish lektor who read "I'll be back" with the enthusiasm of a tax form, and to the ElevenLabs founders whose childhood of szeptanka led to the tools that made this possible.
