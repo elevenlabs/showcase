@@ -11,6 +11,7 @@ isFeatured: false
 date: "2026-07-10"
 image: /images/the-lektor.png
 demoUrl: https://thelektor.pl
+repoUrl: https://github.com/velvet-shark/lektor
 ---
 
 # The Lektor
@@ -46,6 +47,23 @@ The hardest part was the timing: real lektors don't speak in sync with the actor
 - **ElevenLabs Voice Design**: The lektor voice itself — designed from a prompt, not cloned from any real person
 - **ffmpeg**: Audio ducking and final mix
 - **Custom timing algorithm**: 600–900ms lektor delay with segment fitting
+
+## Getting Started
+
+The project is open source and free to use.
+
+```bash
+# Clone the repository
+git clone https://github.com/velvet-shark/lektor
+cd lektor
+
+# Set up environment
+echo "ELEVENLABS_API_KEY=your_key_here" > .env
+
+# Install and run
+npm install
+npm run dev
+```
 
 ## Demo
 
