@@ -1,0 +1,13 @@
+name: Elhassan Ould El Moustapha
+avatar: "https://github.com/elhould.png" # or any avatar URL
+url: "https://www.linkedin.com/in/elhassan-ould-el-moustapha/" # Optional: your website
+bio: "I am CS M.Sc at TUM and founding engineer at an AI startup in the logistics industry."
+location: "Munich, Germany"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "https://x.com/yesoktheyknow"
+  - label: GitHub
+    url: "https://github.com/elhould"
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/elhassan-ould-el-moustapha/" # Optional

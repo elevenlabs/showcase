@@ -1,0 +1,73 @@
+---
+  title: Classroom Life
+  description: AI-powered 3D classroom simulation that diagnoses student understanding and provides personalized tutoring with voice interaction
+  authorIds:
+    - elhassan-ould-el-moustapha
+  categories:
+    - agents
+    - text-to-speech
+    - speech-to-text
+    - voices
+  isFeatured: false
+  date: "2026-01-20"
+  image: /images/classroom-life.png
+  demoUrl: # Add if deployed
+  repoUrl: https://github.com/elhould/hackathon-track1
+  videoUrl: # Add demo video if available
+  xUrl: # Add X post if available
+  ---
+
+  # Classroom Life
+
+  ## Overview
+
+  Winner of the Agent Olympics Hackathon 2026 "Best use of ElevenLabs" Challenge - Classroom Life is an AI-powered tutoring simulation featuring a 3D classroom environment where an AI tutor interacts with simulated students. The system diagnoses each student's understanding level (1-5) through strategic conversation, then adapts its teaching approach accordingly. ElevenLabs brings the characters to life with unique voices for each student personality and enables voice-based tutor input. Classroom Life was created by Team Mr. Karpathy consisting of Di Wu, Jae Yoon Bae, Emanuel Morhard, Syed Wassi Ul Haque and Elhassan Ould El Moustapha
+
+  ## Key Features
+
+  - **Adaptive AI Tutoring**: 10-turn conversations with diagnostic phase (turns 1-5) followed by personalized tutoring (turns 6-10)
+  - **LLM-Based Understanding Assessment**: GPT-4o evaluates student responses to predict mastery level using educational rubrics
+  - **Immersive Voice Experience**: Each student has a unique ElevenLabs voice matching their personality (shy, confident, anxious, etc.)
+  - **Voice Input for Tutors**: Speak your tutoring responses using ElevenLabs speech-to-text
+  - **3D Classroom Visualization**: Interactive React Three Fiber scene with speech bubbles synced to audio playback
+  - **Educational Image Generation**: AI-generated visual aids displayed on the classroom monitor
+
+  ## How It Works
+
+  1. **Student Simulation**: GPT-4o-mini powers simulated students with distinct personalities (easily distracted, perfectionist, unmotivated, overconfident, shy)
+  2. **Diagnostic Phase**: The tutor asks strategic questions to gauge understanding without teaching
+  3. **Level Prediction**: After 5 turns, an LLM judge evaluates all student responses against educational rubrics to predict their level (1-5)
+  4. **Tutoring Phase**: The AI adapts explanations, examples, and practice problems to the diagnosed level
+  5. **Voice Synthesis**: ElevenLabs TTS with per-character voice settings (stability, similarity boost) creates distinct personalities
+  6. **Real-time Animation**: Speech bubbles reveal text word-by-word synchronized with audio duration
+
+  ## Technologies Used
+
+  - **ElevenLabs API**:
+    - Text-to-Speech (`eleven_multilingual_v2`) with 6 distinct voice configurations
+    - Speech-to-Text (`scribe_v2`) for voice input transcription
+  - **OpenAI**: GPT-4o-mini for student simulation, tutor responses, and level prediction; gpt-image-1-mini for educational illustrations
+  - **React Three Fiber**: 3D classroom rendering with Three.js
+  - **React + TypeScript + Vite**: Frontend framework
+  - **Express.js**: Backend API server
+  - **Tailwind CSS + shadcn/ui**: Styling
+
+  ## Getting Started
+
+  ```bash
+  # Clone and install
+  cd frontend/classroom-life-main
+  npm install
+
+  # Configure environment
+  cp .env.example .env
+  # Add your API keys:
+  # OPENAI_API_KEY=sk-...
+  # ELEVENLABS_API_KEY=...
+  # Add Vite API URL:
+  # VITE_API_URL=http://localhost:3001
+
+  # Run in frontend/classroom-life-main
+  npm run dev
+
+  Open http://localhost:8080, select a student and topic, then start tutoring!
