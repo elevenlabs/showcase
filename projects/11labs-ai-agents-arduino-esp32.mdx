@@ -1,0 +1,145 @@
+---
+title: Elato | Realtime Speech on AI Toys and Robots
+description: ElevenLabs Conversational AI Agents on Arduino ESP32 hardware devices for AI Toys and Robots
+authorIds:
+  - akashdeep-deb
+categories:
+  - agents
+  - voices
+  - text-to-speech
+  - speech-to-text
+isFeatured: true
+date: "2025-10-30"
+image: /images/elato-arduino-esp32-ai.png
+demoUrl: https://www.elatoai.com/
+repoUrl: https://github.com/akdeb/ElatoAI
+videoUrl: https://youtu.be/BRyVJOn5oI0
+xUrl: https://x.com/akad3b
+---
+
+import pcb from './images/elato-pcb-design.png'
+import system from './images/elato-system-design.png'
+
+# ElatoAI: Realtime Speech AI Agents for Arduino
+
+ElatoAI brings realtime AI speech to ESP32 microcontrollers using **ElevenLabs Conversational AI Agents**. This open-source project combines secure WebSockets, Deno Edge Functions, and optimized Arduino firmware to create a complete voice AI platform for IoT devices.
+
+### Prerequisites
+- ESP32-S3 development board (or custom ElatoAI hardware)
+- Node.js 22.13.0+
+- Deno runtime
+- Supabase CLI and Docker Desktop
+- PlatformIO or Arduino IDE
+- ElevenLabs API key ([get one here](https://elevenlabs.io/))
+
+## Hardware Setup
+
+- ESP32-S3 development board
+- I2S microphone (for example INMP441)
+- I2S amplifier and speaker (for example MAX98357A)
+- Push button or touch sensor
+- RGB LED (optional, for status feedback)
+
+<img
+  src={pcb.src}
+  alt="ElatoAI PCB design"
+  className="rounded-md"
+/>
+
+## Quick Start Guide
+
+```bash
+# Clone the repository
+git clone git@github.com:akdeb/ElatoAI.git
+cd ElatoAI
+```
+
+### 1. Supabase
+
+```bash
+brew install supabase/tap/supabase
+supabase start
+```
+
+### 2. NextJS Client
+
+```bash
+cd frontend-nextjs
+npm install
+cp .env.example .env.local
+# Add NEXT_PUBLIC_SUPABASE_ANON_KEY and ELEVENLABS_API_KEY to .env.local
+npm run dev
+
+# Frontend: http://localhost:3000
+# Login: admin@elatoai.com / admin
+```
+
+### 3. ElevenLabs AI Character Setup
+
+1. Get your key from [elevenlabs.io](https://elevenlabs.io/).
+2. Add `ELEVENLABS_API_KEY=your_key_here` to your `.env` files in `server-deno`.
+3. Create an ElevenLabs AI Agent from [elevenlabs.io](https://elevenlabs.io/) and note the `agent_id`.
+4. In the local NextJSweb app, select Create > Add ElevenLabs > Add your `agent_id`.
+5. Start a conversation from the app or on-device button/touch input.
+
+### 4. Deno Edge Functions
+
+```bash
+cd ../server-deno
+cp .env.example .env
+# Add SUPABASE_KEY and ELEVENLABS_API_KEY to .env
+deno run -A --env-file=.env main.ts
+```
+
+### 5. Arduino ESP32 Firmware
+
+```bash
+cd ../firmware-arduino
+# Configure Config.cpp with your local WiFi IP from settings
+# Upload firmware via PlatformIO
+
+# Device creates "ELATO-DEVICE" captive portal
+# Open http://192.168.4.1 and save WiFi credentials
+```
+
+### 6. Setup Complete ✅
+Once the ESP32 connects to your 2.4GHz WiFi network, you will be able to start a conversation with your Eleven Labs AI agent.
+
+
+## Key Features
+
+- ElevenLabs Conversational AI on ESP32 with realtime speech streaming
+- Secure WebSocket architecture with Deno Edge Functions
+- Opus audio compression for clear voice at low bandwidth
+- 15+ minute continuous conversations with server-side VAD turn handling
+- Web app for agent/device management and voice controls
+- ESP32 captive portal WiFi setup and OTA-ready firmware workflow
+
+## What This Includes
+
+- Next.js web app for agent/device management
+- Deno edge server for realtime WebSocket bridging
+- ESP32 firmware (Arduino/PlatformIO) for audio capture/playback
+- Opus-based low-bandwidth streaming for clear speech output
+
+## Architecture
+
+1. **Next.js Frontend (Vercel)**: Web interface for creating agents, managing devices, and conducting voice conversations via WebRTC.
+2. **Deno Edge Functions (Deno Deploy/Supabase Edge)**: Lightweight serverless functions that handle WebSocket connections between ESP32 devices and ElevenLabs APIs.
+3. **ESP32 IoT Client (Arduino/PlatformIO)**: Optimized firmware for microphone input, Opus encoding/decoding, WebSocket communication, and speaker output.
+
+<img
+  src={system.src}
+  alt="ElatoAI System Design"
+  className="rounded-md"
+/>
+
+## Links
+
+- Project repo: [github.com/akdeb/ElatoAI](https://github.com/akdeb/ElatoAI)
+- Demo: [elatoai.com](https://www.elatoai.com/)
+- ElevenLabs docs: [elevenlabs.io/docs](https://elevenlabs.io/docs)
+
+## License
+
+MIT

@@ -1,0 +1,13 @@
+name: Akashdeep Deb
+avatar: "https://github.com/akdeb.png" # or any avatar URL
+url: "https://elatoai.com" # Optional: your website
+bio: "Bringing Realtime Voice AI to Arduino Hardware"
+location: "San Francisco, CA"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "https://x.com/akad3b"
+  - label: GitHub
+    url: "https://github.com/akdeb"
+  - label: LinkedIn
+    url: "https://linkedin.com/in/akashdeep-deb"
