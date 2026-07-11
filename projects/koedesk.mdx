@@ -1,6 +1,6 @@
 ---
 title: koedesk
-description: Hold a key, speak, and text appears at your cursor. Desktop voice dictation powered by ElevenLabs Scribe v2.
+description: Hold a key, speak, and text appears at your cursor. Voice dictation for macOS, Windows, iOS, and Android powered by ElevenLabs Scribe v2.
 authorIds:
   - masaki-kondo
 categories:
@@ -10,56 +10,61 @@ date: "2026-04-04"
 image: /images/koedesk.png
 demoUrl: https://koedesk.app
 videoUrl: https://youtu.be/b9yK4dwSg28
-xUrl: https://x.com/koedesk_info
+xUrl: https://x.com/koedesk
 ---
 
 # koedesk
 
 ## Overview
 
-koedesk is a desktop voice dictation app for macOS and Windows. Hold a hotkey, speak, and your words appear as text at the cursor — in any application. It uses **ElevenLabs Scribe v2** as its core speech-to-text engine, supporting all 47 Tier 1 languages.
+koedesk is a voice dictation app for **macOS, Windows, iOS, and Android**. On desktop, hold a hotkey, speak, and your words appear at the cursor — in any application. On mobile, it ships as a keyboard: an iOS keyboard extension and an Android IME, so you can dictate into any app. Every platform uses **ElevenLabs Scribe v2** as its speech-to-text engine, fixed server-side, in 36 languages.
 
-koedesk is not just a transcription tool. It is a paradigm shift in how we give context to computers. As AI becomes a collaborator rather than just a tool, the amount of context we need to convey has exploded. The keyboard is no longer enough. Speaking is now a viable input method — not a novelty, but a genuine alternative to typing.
+koedesk is not just a transcription tool. It is a bet on how we give context to computers. As AI becomes a collaborator rather than just a tool, the amount of context we need to convey has exploded. The keyboard alone is no longer enough. Speaking is now a genuine alternative to typing — and Scribe v2 is accurate enough that koedesk sends you its raw output: no LLM post-processing layer, no cleanup pass.
 
 ## Key Features
 
-- **Push-to-talk hotkey**: Hold a key, speak, release — text is inserted at your cursor instantly
-- **47 languages**: Full coverage of ElevenLabs Scribe v2 Tier 1 languages, from English and Japanese to Icelandic and Malayalam
-- **Works everywhere**: Inserts text into any application — editors, terminals, browsers, chat apps
-- **No LLM post-processing needed**: Scribe v2 is accurate enough that we trust the model's output directly — no extra LLM cleanup step
-- **Lightweight**: Built with Rust and Tauri, uses the OS native WebView — no bundled Chromium
-- **Pill bar UI**: A small floating indicator shows recording/processing state, stays out of your way
+- **Push-to-talk on desktop**: Hold a key (Fn on macOS, Right Alt on Windows — configurable), speak, release. Text lands at your cursor with no manual copy and paste
+- **A keyboard on mobile**: iOS keyboard extension (with Live Activity) and Android IME — tap to start, tap to stop, dictate into any app
+- **One engine everywhere**: Scribe v2 on every platform, enforced server-side. The free tier (5 minutes a day, no card required) runs the exact same engine — only the quota differs
+- **36 languages**: STT languages and UI locales are deliberately the same 36-language set
+- **Personal dictionary, synced**: Register your names and jargon once; entries sync across all your devices and are passed to Scribe v2 as key terms to improve recognition
+- **Clean output by default**: Filler words and false starts are removed (Scribe v2's verbatim filtering), and punctuation comes out natural — straight from the model
+- **Works where you type**: Any text field in any app, with secure fields (passwords and the like) deliberately excluded
+- **Private by design**: koedesk's own servers never store your audio — it is processed in memory and passed straight to the ElevenLabs API
+- **Lightweight**: Desktop app built with Rust and Tauri on the OS native WebView — no bundled Chromium
+
+## We benchmarked the engines — in the open
+
+To choose koedesk's engine honestly, we built a public STT benchmark: **13 engines × 12 languages, 28,400 audio samples**, with a pre-registered methodology. The full dataset is published on Hugging Face and the live leaderboard is at [koedesk.app/benchmark](https://koedesk.app/benchmark). Scribe v2's consistently top-tier multilingual accuracy — including Japanese, our home market — is why it is the engine behind koedesk.
 
 ## Built for every language, not just English
 
-Most voice-to-text tools are built in the US, optimized for English. Quality drops sharply for other languages. When languages mix — Japanese with English technical terms, Vietnamese with code snippets — existing tools often break down entirely.
-
-The lead developer of koedesk is Japanese, working from Vietnam. This firsthand experience of using voice input across languages and accents shaped every design decision. That is why we chose **ElevenLabs Scribe v2** as the default model — it delivers consistently high accuracy across languages, not just English.
+Most voice-to-text tools are built in the US, optimized for English. Quality drops sharply for other languages, and breaks down when languages mix — Japanese with English technical terms, Vietnamese with code snippets. The lead developer of koedesk is Japanese, working from Vietnam; that firsthand experience shaped every design decision, starting with the choice of Scribe v2.
 
 ## How It Works
 
-1. User holds the configured hotkey (e.g., Right Option on macOS)
-2. Audio is captured from the microphone in real-time
-3. On key release, the audio is sent to **ElevenLabs Scribe v2** via the Speech-to-Text API
-4. The transcribed text is inserted at the current cursor position using OS-level input simulation
+1. Hold the hotkey (desktop) or tap the mic key (mobile) and speak
+2. Audio is captured locally; a local VAD skips silence so nothing empty is sent
+3. On release, audio goes to **ElevenLabs Scribe v2** via the Speech-to-Text API — with your dictionary entries attached as key terms
+4. The transcription is inserted at your cursor; Esc cancels a desktop recording mid-way
 
-No intermediate LLM step. As speech-to-text models continue to improve, koedesk benefits directly from every improvement — without layers of complexity in between.
+No intermediate LLM step. As Scribe improves, koedesk improves — with no layers of complexity in between.
 
 ## Technologies Used
 
-- **ElevenLabs Scribe v2** — Core speech-to-text engine (Speech-to-Text API)
-- **Rust** — Backend logic, audio capture, hotkey handling, tuned for minimal latency
-- **Tauri v2** — Desktop app framework (macOS and Windows)
-- **Cloudflare Workers** — API proxy, authentication, usage tracking
+- **ElevenLabs Scribe v2** — Speech-to-text engine on all platforms (Speech-to-Text API)
+- **Rust + Tauri v2** — Desktop apps for macOS and Windows, tuned for minimal latency
+- **Swift / Kotlin** — iOS keyboard extension with Live Activity; Android IME
+- **Cloudflare Workers + D1** — API proxy, authentication, usage tracking, dictionary sync
 
 ## Demo
 
-Watch the full demo video showing koedesk in action with Claude Code:
+Watch koedesk in action with Claude Code:
 
 <video src="https://youtu.be/b9yK4dwSg28" />
 
 ## Acknowledgments
 
-koedesk was born from daily work at [Guide Inc.](https://web.guide.inc/), a financial technology company based in Tokyo with a development office in Ho Chi Minh City. As developers building complex systems, we needed a faster way to communicate with AI coding assistants — without taking our hands off the keyboard flow. We built the tool we wished existed, and decided to share it with the world.
+koedesk was born from daily work at [Guide Inc.](https://web.guide.inc/), a financial technology company based in Tokyo with a development office in Ho Chi Minh City. As developers building complex systems, we needed a faster way to communicate with AI coding assistants — without breaking the flow. We built the tool we wished existed, and decided to share it with the world.
 
 Special thanks to the ElevenLabs team for building Scribe v2 — it made accurate multilingual dictation accessible to indie developers.
