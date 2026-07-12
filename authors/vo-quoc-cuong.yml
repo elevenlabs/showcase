@@ -1,0 +1,13 @@
+name: Vo Quoc Cuong
+avatar: "https://github.com/Olympusxvn.png" # or any avatar URL
+url: "https://trynoah.ai/shared/69fe001a0c26654df1e2da9d" # Optional: your website
+bio: "i love to build AI, learn AI"
+location: "Ho Chi Minh City, Vietnam"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "https://x.com/OlympusXVN"
+  - label: GitHub
+    url: "https://github.com/Olympusxvn"
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/quoc-cuong-vo-1b1137200/" # Optional

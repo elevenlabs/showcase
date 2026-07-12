@@ -1,0 +1,226 @@
+---
+title: SonicSign
+description: Your voice confirms every transaction. No click. No doubt, Solana dApp — voice-guided transaction confirmation middleware
+authorIds:
+  - vo-quoc-cuong # Must match your author file name (without .yml)
+categories:
+  - agents # Choose from: speech-to-text
+isFeatured: false # Leave as false, we'll feature exceptional projects
+date: "2026-05-08" # Today's date in YYYY-MM-DD format
+image: /images/your-project.png # Upload image to /public/images/
+demoUrl: https://your-demo.com # Optional: Live demo
+repoUrl: https://github.com/you/project # Optional: Repository
+videoUrl: https://youtube.com/watch?v=... # Optional: Demo video
+xUrl: https://x.com/you/status/... # Optional: X/Twitter post
+---
+
+# SonicSign
+
+> "Your voice confirms every transaction. No click. No doubt."
+
+SonicSign is a Solana dApp that uses AI voice to guard SOL transfers. Before any transaction is submitted on-chain, an ElevenLabs AI voice reads the full transaction details aloud — amount, recipient, network — and waits for the user to verbally confirm or cancel. No confirmation by voice means no transaction.
+
+Built for the [Dev3pack Global Hackathon 2026](https://hack.dev3pack.xyz) · May 8–10 · Solana Devnet
+
+---
+
+## The Problem
+
+Solana wallets are fast. One-click signing is great for UX and terrible for high-stakes mistakes. Fat-finger errors, rushed approvals, and socially engineered transactions all exploit the same gap: the user signs before they really process what they are signing.
+
+Existing 2FA adds friction through extra apps and codes — it does not make the user understand the transaction.
+
+---
+
+## The Solution
+
+SonicSign adds a **voice checkpoint** that forces human attention at the moment of signing:
+
+1. User fills in recipient + amount
+2. ElevenLabs AI voice reads: *"You are about to send 2.5 SOL to address ABC4...XY89. This is irreversible. Say confirm to proceed, or cancel to abort."*
+3. User speaks their intent
+4. Only "confirm" triggers the on-chain transaction
+
+You cannot silently hijack a real-time voice confirmation.
+
+---
+
+## Demo (Devnet)
+
+| Step | What happens |
+|---|---|
+| Connect Phantom | Wallet connects to Devnet, balance loads |
+| Get Devnet SOL | Airdrop 2 SOL for testing |
+| Enter recipient + amount | Standard send form |
+| Click "Voice Confirm" | ElevenLabs TTS speaks transaction summary |
+| Say "confirm" | Transaction submits, Explorer link shown |
+| Say "cancel" | Transaction aborted, log updated |
+
+---
+
+## Architecture
+
+```
+Phantom Wallet
+    │
+    ▼
+Next.js Frontend  ──────► ElevenLabs TTS API
+    │                           │
+    │ (audio plays)             │
+    │                           ▼
+    │                   Browser SpeechRecognition
+    │                     (listens for "confirm")
+    │
+    ▼ (if confirmed)
+@solana/web3.js
+SystemProgram.transfer
+    │
+    ▼
+Solana Devnet
+```
+
+No backend. No database. No smart contract. Pure client-side.
+
+---
+
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 14 (App Router) |
+| Styling | Tailwind CSS |
+| Wallet | Phantom via `@solana/wallet-adapter-react` |
+| Blockchain | `@solana/web3.js` — Devnet |
+| Voice TTS | ElevenLabs Text-to-Speech REST API |
+| Voice STT | Web Speech API (browser native) |
+
+---
+
+## Quick Start
+
+```bash
+# Clone and install
+git clone https://github.com/Olympusxvn/sonicsign
+cd sonicsign
+pnpm install
+
+# Set environment variable
+cp .env.example .env.local
+# Add your ElevenLabs API key to .env.local
+
+# Run development server
+pnpm dev
+```
+
+### Required Environment Variable
+
+```env
+NEXT_PUBLIC_ELEVENLABS_API_KEY=your_key_here
+```
+
+Get a free API key at [elevenlabs.io](https://elevenlabs.io).
+
+---
+
+## Project Structure
+
+```
+SonicSign/
+├── app/
+│   ├── page.tsx              ← Landing page
+│   └── app/page.tsx          ← Dashboard
+├── components/
+│   ├── VoiceConfirmFlow.tsx  ← Core feature
+│   ├── VoiceVisualizer.tsx   ← Animated waveform/mic
+│   ├── SendPanel.tsx
+│   └── TxLog.tsx
+├── lib/
+│   ├── elevenlabs.ts         ← TTS integration
+│   ├── speechRecognition.ts  ← STT wrapper
+│   └── solana.ts             ← Transfer + balance
+└── hooks/
+    └── useVoiceFlow.ts       ← State machine
+```
+
+---
+
+## Voice Flow States
+
+```
+idle → speaking → listening → processing → success
+                            ↘ cancelled
+```
+
+- **speaking**: ElevenLabs audio playing, animated sound bars
+- **listening**: Mic active, pulsing ring, 8-second window
+- **processing**: Transaction signing + submission
+- **success**: Green flash, Solana Explorer link
+- **cancelled**: Red flash, "Transaction aborted by voice"
+
+---
+
+## Why ElevenLabs
+
+ElevenLabs is used as the **core security layer**, not a cosmetic feature. The AI voice:
+
+- Forces the user to process transaction details in a different cognitive mode (hearing vs reading)
+- Creates a mandatory pause before signing
+- Makes rushed or socially engineered approvals significantly harder
+- Is natural — speak to confirm, exactly like confirming a bank transfer on the phone
+
+---
+
+## Limitations (Devnet MVP)
+
+- Devnet only — not production-ready
+- Browser must support Web Speech API (Chrome/Edge recommended)
+- No replay attack protection (future: dynamic on-chain passphrases)
+- No liveness detection against voice recordings (future: ElevenLabs voice verification when available)
+- SOL transfers only (future: SPL tokens)
+
+---
+
+## Roadmap
+
+- [ ] Dynamic one-time passphrases per transaction (replay protection)
+- [ ] SPL token support (USDC, BONK)
+- [ ] Mobile support (Solana Mobile Stack)
+- [ ] Multi-language voice prompts
+- [ ] Mainnet deployment with HSM relayer
+
+---
+
+### Concept
+
+After the hackathon, SonicSign could expand into a voice-enabled DeFi assistant — not just for transaction confirmation, but also to proactively chat with users about their portfolio, the market, and on-chain activity. ElevenLabs would handle the voice, an LLM (GPT-4o or Claude) would act as the brain, and Solana would serve as the data source.
+**Tagline scale**: *"SonicSign Agent — your DeFi portfolio speaks to you."*
+
+### Why This Works as a Product
+
+- **MVP** (hackathon): Voice confirms transactions → security tool
+- **V2** (post-hackathon): Voice briefs portfolio + answers questions → DeFi assistant
+- **V3**: Agent monitors wallets 24/7, sends voice alerts for large movements, price triggers, liquidation risks
+
+Same ElevenLabs + Solana core. Incrementally more useful at each step.
+
+---
+
+## Built With
+
+- [Solana](https://solana.com) — blockchain
+- [ElevenLabs](https://elevenlabs.io) — AI voice synthesis
+- [Phantom](https://phantom.com) — wallet
+- [NoahAI](https://trynoah.ai) — vibe coding platform
+- [Dev3pack](https://dev3pack.xyz) — hackathon host
+
+---
+
+## Source Code
+
+https://trynoah.ai/shared/69fe001a0c26654df1e2da9d
+
+---
+
+## License
+
+MIT
