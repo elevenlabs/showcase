@@ -1,0 +1,13 @@
+name: Vadlamannati Teja Srinivas
+avatar: "https://github.com/yourusername.png" # or any avatar URL
+url: " https://github.com/TejaSrinivas301105/Hakkuna_Mattata_AI_Interview" # Optional: your website
+bio: "Brief description about yourself"
+location: "City, Country"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "https://x.com/yourusername"
+  - label: GitHub
+    url: " https://github.com/TejaSrinivas301105/Hakkuna_Mattata_AI_Interview"
+  - label: LinkedIn
+    url: " https://www.linkedin.com/in/tejasrinivasvadlamannati" # Optional
