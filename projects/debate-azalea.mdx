@@ -1,0 +1,52 @@
+---
+title: Azalea – AI Debate Arena
+description: AI-powered debate platform where you argue with and against AI agents, voiced with ElevenLabs.
+authorIds:
+  - rishi
+categories:
+  - agents
+isFeatured: false
+date: "2025-12-12"
+image: /images/debate-azalea.png  # you'll add this file next
+demoUrl: https://debate-azalea.com
+repoUrl: https://github.com/Rishdafish/Azalea
+videoUrl: https://www.youtube.com/watch?v=F32qLRy_GGU
+xUrl: ""  # or your tweet URL if you have one
+---
+
+# Azalea – AI Debate Arena
+
+## Overview
+
+Azalea is an AI-first debate platform where users can spin up structured debates against AI agents. It uses ElevenLabs to generate natural, expressive voices for each side of the argument, turning what would normally be text-only debates into immersive audio experiences.
+
+## Key Features
+
+- Multi-agent debate orchestration where different AI roles tackle framing, counterpoints, and summaries
+- ElevenLabs-powered voice output so debates can be listened to, not just read
+- Persistent chat history per debate session, with a unique URL for each
+- File upload support to provide context (e.g., PDFs or sources) for the debate
+
+## How It Works
+
+On the backend, Azalea runs a Flask API that manages users, sessions, and debate threads. Debate state and messages are stored in Firebase/Firestore, while uploaded files are stored in Firebase Storage. When a debate turn is generated, the text response is sent to ElevenLabs to synthesize speech, and the resulting audio is streamed back to the client. The frontend (HTML/CSS/JS) renders a clean, chat-style interface with a sidebar of past debates and a dedicated page for each `chat_id`.
+
+## Technologies Used
+
+- ElevenLabs API for text-to-speech debate voices
+- Python (Flask) backend
+- Firebase / Firestore for user and chat persistence
+- Firebase Storage for file uploads
+- Vanilla JS + custom UI for dashboard and chat views
+- Stripe / Raindrop / Vultr (for compute and payments, where applicable)
+
+## Getting Started
+
+```bash
+# Clone the repo
+git clone https://github.com/Rishdafish/Azalea.git
+cd Azalea
+
+# Install and run (example)
+pip install -r requirements.txt
+flask run
