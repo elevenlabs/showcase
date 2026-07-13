@@ -1,0 +1,13 @@
+name: Vaibhav Manihar
+avatar: "https://github.com/vai-man.png" # or any avatar URL
+url: "http://vaiman.vercel.app" # Optional: your website
+bio: "CS undergrad @ VIT-AP"
+location: "Jodhpur, India"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "https://x.com/OfcVaiMan"
+  - label: GitHub
+    url: "https://github.com/vai-man"
+  - label: LinkedIn
+    url: "https://linkedin.com/in/VaiMan" # Optional
