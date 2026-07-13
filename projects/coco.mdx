@@ -1,0 +1,89 @@
+---
+title: COCO - Conversation Coach
+description: Real-time AI conversation coach giving instant feedback in calls, negotiations, and presentations.
+authorIds:
+  - fiadhnaid-lydon
+categories:
+  - text-to-speech
+isFeatured: false
+date: "2025-11-11"
+image: /images/coco.png
+demoUrl: https://coco-frontend-inky.vercel.app/
+repoUrl: https://github.com/fiadhnaid/coco-backend
+videoUrl: https://youtu.be/qVst3SeXVO8
+---
+
+# COCO - Conversation Coach
+
+## Overview
+
+COCO is a real-time AI conversation coach that helps you improve your communication skills during live conversations, negotiations and meetings. Using ElevenLabs text-to-speech, COCO whispers intelligent coaching suggestions directly in your ear while you're speaking, then provides comprehensive feedback after your session ends.
+
+Unlike traditional conversation training that requires reviewing recordings after the fact, COCO analyses your speech as it happens and delivers actionable advice through natural-sounding voice feedback powered by ElevenLabs TTS.
+
+## Key Features
+
+- **Real-Time Voice Coaching**: Live transcription with context-aware suggestions delivered as natural speech via ElevenLabs TTS
+- **Post-Session Analysis**: "2 Stars and a Wish" feedback framework with filler word tracking, key takeaways, and conversation summary
+- **Beautiful UI**: Smooth Rive animations and responsive design for an engaging user experience
+- **Coaching when you need it most**: Fast audio pipeline ensures coaching feels natural and unobtrusive
+
+## How It Works
+
+1. **Set Context**: Enter your name, conversation setting (meeting, salary negotiation, interview, etc.), and goal for the conversation
+2. **Start Recording**: COCO captures and transcribes your voice in real-time via WebSocket
+3. **Receive Coaching**: Coco analyzes conversation patterns in real time and generates helpful suggestions
+4. **Hear Feedback**: ElevenLabs TTS converts suggestions into natural-sounding voice prompts
+5. **Review & Improve**: End your session for AI-generated feedback with strengths, areas for growth, and actionable takeaways
+
+## Technologies Used
+
+- **ElevenLabs Text-to-Speech**
+- **FastAPI**
+- **React + TypeScript**
+- **Vite**
+- **Tailwind CSS + Radix UI**
+- **Rive**
+
+## Getting Started
+
+### Backend Setup
+```bash
+cd coco-backend/coco-backend
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Add API keys to .env
+cp .env.example .env
+# Edit .env with OPENAI_API_KEY and ELEVENLABS_API_KEY
+
+python main.py  # Runs on http://localhost:8000
+```
+
+### Frontend Setup
+```bash
+cd coco-frontend/coco-frontend
+npm install
+PORT=3000 npm run dev  # Runs on http://localhost:3000
+```
+
+## Use Cases
+
+- **Negotiations**: From salary to rent to valuations — get real-time guidance in high-stakes conversations where experience and money are on the line.
+- **Presentations**: Cut filler words, improve pacing, and ensure you hit every key point with confidence.
+- **Networking**: Keep conversations flowing naturally and build real connections beyond small talk.
+- **Sales Calls**: Sharpen your pitch, handle objections smoothly, and close with confidence.
+- **Team Meetings**: Strengthen active listening, clarity, and quality of contribution.
+
+## Demo 
+
+- **Demo Video**: https://youtu.be/qVst3SeXVO8
+- **Live Project**: https://coco-frontend-inky.vercel.app/
+
+## Acknowledgments
+
+Built by Bryanna Bone, Claire Cui and Fiadhnaid Lydon at the London Women in AI Hackathon
+- https://www.linkedin.com/in/bryanna-bone-484b19294/
+- https://www.linkedin.com/in/claire-cui-b564b4124/
+- https://www.linkedin.com/in/fiadhnaid

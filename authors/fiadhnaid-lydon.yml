@@ -1,0 +1,13 @@
+name: Fiadhnaid Lydon
+avatar: "https://github.com/fiadhnaid.png" # or any avatar URL
+# url: "https://yourwebsite.com" # Optional: your website
+bio: "Full stack AI dev"
+location: "London, UK"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "https://x.com/fiadhnaid"
+  - label: GitHub
+    url: "https://github.com/fiadhnaid"
+  - label: LinkedIn
+    url: "https://linkedin.com/in/fiadhnaid" # Optional
