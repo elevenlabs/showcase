@@ -1,0 +1,88 @@
+---
+title: MedAI – AI Powered Healthcare Assistant
+description: Voice-first AI healthcare assistant for symptom triage, doctor availability, and smart appointment booking using ElevenLabs.
+authorIds:
+  - subhanshu-singh
+categories:
+  - agents
+isFeatured: false
+date: "2026-02-26"
+image: /images/medai.png
+demoUrl: https://medai-nine.vercel.app/
+repoUrl: https://github.com/Pritam-72/med_ai.git
+videoUrl: https://youtube.com/watch?v=your-demo-video
+xUrl: https://x.com/your-handle/status/your-post
+---
+
+# MedAI – AI Powered Healthcare Assistant
+
+## Overview
+
+MedAI is a voice-first AI healthcare assistant that helps users describe symptoms naturally and receive instant triage guidance, doctor availability, and smart appointment booking.
+
+Using ElevenLabs’ real-time voice AI, MedAI enables conversational healthcare access — reducing friction, saving time, and improving early medical decision-making.
+
+---
+
+## Key Features
+
+- 🎙 Voice-Based Symptom Input  
+  Users speak naturally instead of typing.
+
+- 🧠 AI Symptom Triage  
+  Classifies urgency level (mild / moderate / emergency).
+
+- 👨‍⚕️ Intelligent Specialist Recommendation  
+  Suggests the right doctor type based on symptoms.
+
+- 📅 Doctor Availability Section  
+  Displays available doctors and time slots.
+
+- 📄 Medical Transcript Generation  
+  Generates structured symptom summary.
+
+- 📍 Appointment Booking  
+  Book appointments seamlessly after triage.
+
+---
+
+## How It Works
+
+1. User speaks symptoms through voice interface.
+2. ElevenLabs Speech-to-Text converts speech to structured text.
+3. AI model analyzes symptoms and determines urgency.
+4. Specialist mapping engine selects appropriate doctor category.
+5. Doctor availability system retrieves time slots.
+6. Transcript is generated and appointment is booked.
+
+### Architecture Flow
+
+Voice Input → ElevenLabs STT → AI Triage Engine → Specialist Mapping → Availability API → Booking + Transcript
+
+---
+
+## Technologies Used
+
+- ElevenLabs API  
+  - Speech-to-Text (STT)  
+  - Text-to-Speech (TTS)
+
+- LLM for medical reasoning
+- Next.js
+- React
+- Node.js
+- Vercel Deployment
+
+---
+
+## Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/Pritam-72/med_ai.git
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
