@@ -1,0 +1,93 @@
+---
+title: MeetLens
+description: Understand any meeting instantly. MeetLens gives you live transcripts, real-time translation, and clear action items — right from any device.
+authorIds:
+  - akcware # Must match your author file name (without .yml)
+  - WinneRose
+categories:
+  - speech-to-text # Choose from: agents, text-to-speech, speech-to-text, music, voices
+isFeatured: false # Leave as false, we'll feature exceptional projects
+date: "2025-12-12" # Today's date in YYYY-MM-DD format
+image: /images/meetlens-thumbnail.png # Upload image to /public/images/
+demoUrl: https://github.com/MeetLens/meetlens-electron-app/releases/tag/v1.0.0 # Optional: Live demo
+repoUrl: https://github.com/MeetLens/meetlens-backend # Optional: Repository
+---
+
+## Project Description
+
+### The Problem
+
+Modern meetings are increasingly multilingual, fast-paced, and cognitively demanding. Participants are often forced to choose between *listening*, *taking notes*, or *translating mentally*—which leads to lost information, reduced engagement, and poor recall after the meeting. Existing AI meeting tools are usually tied to specific platforms like Zoom or Google Meet, making them unusable in real-world, in-person, or cross-platform scenarios.
+
+MeetLens addresses this gap by acting as a **mobile-first, platform-agnostic AI meeting companion** that works anywhere—no matter the language or meeting setup.
+
+---
+
+### Features & Functionality (How We Solve the Problem)
+
+**Live Transcription**
+MeetLens captures microphone audio on the device and streams it in small chunks to the backend. Speech-to-text runs in real time, producing partial and then stable transcripts so users can follow the conversation instantly.
+
+**Real-Time Translation**
+Each stable transcript segment is translated on the fly, allowing users to read meetings in their preferred language while the conversation is still happening.
+
+**Transcript Stabilization Engine**
+A custom incremental diff-based merger prevents duplicated or cut-off words—one of the biggest issues in real-time transcription pipelines.
+
+**Structured Meeting Summary**
+At the end of a session, MeetLens generates a clean, structured output including:
+
+* Overview
+* Key decisions
+* Action items
+
+**Minimal, Focus-First UI**
+A premium black-and-white design ensures streaming text remains readable and non-distracting, even during long meetings.
+
+---
+
+### How We Used the Required Technologies
+
+**Raindrop**
+Raindrop was central to our rapid MVP execution:
+
+* **PRD Generation**: We used Raindrop’s PRD tools to quickly define scope, requirements, and feature priorities, keeping the project focused and realistic.
+* **Deployment / Hosting**: Raindrop was used to deploy the backend services and expose a public demo endpoint, allowing judges to access a live version of MeetLens.
+
+
+---
+
+### Additional Integrations
+
+**Flutter (Mobile App)**
+Handles audio capture, WebSocket streaming, real-time transcript rendering, translation display, and summary UI.
+
+**FastAPI Backend**
+Manages WebSocket connections, audio chunk handling, transcript stabilization, translation requests, and summary generation.
+
+**ElevenLabs Scribe v2 Realtime**
+Used for low-latency, real-time speech-to-text processing.
+
+**GPT-based Models**
+Used for translation and structured summarization (overview, action items, decisions).
+
+---
+
+### System Overview (Conceptual)
+
+Audio flows through a real-time processing pipeline:
+
+Audio → Speech-to-Text (partial) → Transcript Merger (stable) → Translation
+
+At session end:
+
+Full Transcript → Structured Summary (Overview, Decisions, Action Items)
+
+---
+
+### Why This Matters
+
+MeetLens turns any phone into a universal meeting lens—removing language barriers, reducing cognitive load, and ensuring meetings are both understandable *and* actionable. It enables people to fully participate in conversations instead of struggling to keep up.
+
+MeetLens represents a focused application of real-time systems, AI, and UX craftsmanship to solve a problem many people face every day—yet few tools address properly.
+
