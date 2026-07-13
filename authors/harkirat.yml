@@ -1,0 +1,13 @@
+name: Harkirat Singh Nagpal
+avatar: "https://github.com/harkirat2910.png" # or any avatar URL
+url: "" # Optional: your website
+bio: "Full-stack AI/ML Engineer with 4+ years of experience designing and deploying scalable, production-grade web applications powered by Generative AI and Large Language Models (LLMs). Specialize in Python, FastAPI, and React to build reliable backend services and high-performance user interfaces within cloud-native architectures and MLOps pipelines. Proven ability to deliver end-to-end AI products, integrating advanced reasoning systems to drive measurable business impact. Actively conduct research in adversarial robustness for face recognition systems and recently led a hackathon-winning AI product, demonstrating strong execution under real-world constraints."
+location: "Ottawa, Canada"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "https://x.com/harkirat_nagpal"
+  - label: GitHub
+    url: "https://github.com/harkirat2910"
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/harkirat7/" # Optional

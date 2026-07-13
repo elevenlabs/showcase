@@ -1,0 +1,92 @@
+---
+title: Second Sight
+description: A multimodal Reality-OS for the visually impaired that sees through a camera, answers questions, and remembers user preferences.
+authorIds:
+  - harkirat # Must match your author file name (without .yml)
+categories:
+  - agents # Choose from: agents, text-to-speech, speech-to-text, music, voices
+isFeatured: false # Leave as false, we'll feature exceptional projects
+date: "2025-12-14" # Today's date in YYYY-MM-DD format
+image: /images/second-sight.png # Upload image to /public/images/
+demoUrl: https://steady-tiramisu-bf1a54.netlify.app/ # Optional: Live demo
+repoUrl: https://github.com/ElevenLabs-Hackathon-Ottawa-SecondSight/SecondSight # Optional: Repository
+videoUrl:  # Optional: Demo video
+xUrl: # Optional: X/Twitter post
+---
+
+# Second Sight
+
+## Overview
+
+Second Sight is a multimodal Reality Operating System designed for visually impaired users.
+It listens, sees through a live camera feed, retrieves real-world knowledge, and remembers user preferences over time.
+Unlike traditional chatbots, Second Sight acts as an orchestrator—deciding when to see, search, or recall memory using ElevenLabs Conversational AI as its core decision engine. The project demonstrates advanced agent orchestration, accessibility-first design, and serverless memory without a traditional database.
+## Key Features
+
+- Feature 1: Multimodal Vision Assistance - Captures live camera frames and describes objects, scenes, and text for blind users in real time.
+- Feature 2: Agent-Driven Orchestration - ElevenLabs Agent intelligently selects tools (vision, web search, memory) instead of responding statically.
+- Feature 3: Long-Term Personal Memory - User preferences and facts are stored persistently using Clerk user metadata—no external database required.
+
+## How It Works
+
+Second Sight is built as a mobile-first Next.js SPA with a live camera background and a glassmorphism HUD overlay.
+At the core is an ElevenLabs Conversational Agent acting as the “brain.”
+Based on user speech intent, the agent dynamically triggers one of four client tools:
+Vision Tool – Captures a video frame, sends it to an OpenAI GPT-4o vision endpoint, and returns a natural-language scene description.
+Search Tool – Queries the Tavily API for real-time factual information and summaries.
+Memory Write Tool – Saves user preferences or facts into Clerk public metadata as structured JSON.
+Memory Read Tool – Retrieves and contextualizes previously saved memories for follow-up queries.
+Authentication is enforced with Clerk, ensuring camera access and memory are scoped per user.
+All backend logic runs as serverless API routes, enabling rapid deployment and scalability without managing infrastructure.
+
+## Technologies Used
+
+ElevenLabs Conversational AI - Agent orchestration,Real-time voice interaction
+OpenAI GPT-4o - Image understanding and scene description
+Clerk - Authentication, Persistent user memory via metadata
+Tavily API - Real-time web search and knowledge retrieval
+Next.js (App Router)
+React + TypeScript
+Tailwind CSS
+Framer Motion
+Lucide React Icons
+Netlify - Deployment and HTTPS (camera access)
+
+## Getting Started
+
+```bash
+# Installation instructions
+# Clone the repository
+git clone https://github.com/ElevenLabs-Hackathon-Ottawa-SecondSight/SecondSight.git
+cd SecondSight
+
+# Install dependencies
+npm install
+
+# Run locally (HTTPS required for camera)
+npm run dev
+
+
+# Usage example
+// Environment variables (.env)
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
+NEXT_PUBLIC_ELEVENLABS_AGENT_ID=...
+OPENAI_API_KEY=sk-...
+TAVILY_API_KEY=tvly-...
+
+##Demo 
+Second Sight is live and can be used by users at https://steady-tiramisu-bf1a54.netlify.app/
+
+##Future Plans 
+Expanded Multimodal Inputs - Add OCR-first document reading, currency recognition, product label understanding, and indoor navigation cues to support daily independent living tasks.
+Multi-Language & Voice Personalization - Support multilingual interaction and personalized voice profiles using ElevenLabs voice technologies to better serve global users.
+Wearable & Mobile Integration - Adapt Second Sight for smart glasses and mobile devices, transforming it into a continuous, hands-free accessibility companion.
+
+##Acknowledgements 
+Team - 
+John Siu - https://www.linkedin.com/in/siujohn/
+Harkirat Singh Nagpal - https://www.linkedin.com/in/harkirat7/
+Saurav Bhasin - https://www.linkedin.com/in/sauravbhasin/
+
+```
