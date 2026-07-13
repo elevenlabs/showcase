@@ -1,0 +1,13 @@
+name: Joni Rajala
+avatar: "https://github.com/jonirajala.png" # or any avatar URL
+url: "https://hetki.xyz" # Optional: your website
+bio: "Founder @ Hetki"
+location: "Helsinki, Finland"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "https://x.com/jonirraj"
+  - label: GitHub
+    url: "https://github.com/jonirajala"
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/joni-r-37a02012b/" # Optional
