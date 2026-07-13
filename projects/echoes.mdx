@@ -1,0 +1,89 @@
+---
+title: Echoes
+description: Tap any spot on the NYC map and hear a first-person historical story narrated by an AI voice matched to the era and character.
+authorIds:
+  - husnain-khaliq
+categories:
+  - text-to-speech
+  - speech-to-text
+  - agents
+isFeatured: false
+date: "2026-04-19"
+image: /images/echoes.png
+demoUrl: https://echoes.vercel.app
+repoUrl: https://github.com/bananadonn/Echoes_Hack_Brooklyn
+---
+
+# Echoes
+
+## Overview
+
+Echoes is a real-time, location-based audio storytelling platform for New York City. Tap any spot on the map, search any address, or speak a location out loud and within seconds you hear a first-person narrative from someone who actually lived there, grounded in real historical sources pulled live from the web.
+
+Won 1st place and Best Architecture out of 30 teams at Hack Brooklyn 2026.
+
+## Key Features
+
+- Tap anywhere on the NYC map to generate a unique real-time historical story
+- Voice search via ElevenLabs Scribe, speak any address or landmark to trigger the pipeline
+- 8 narrator voice types matched dynamically to the era, age, and background of the story
+- Documentary-style intro audio followed by a personal first-person narrative
+- Multilingual support across 8 languages, story fully rewritten and re-narrated
+- Echo trail showing everywhere you have listened this session
+- Real source citations from Tavily shown under every story
+
+## How It Works
+
+1. User taps the map, searches by text, or speaks a location via voice search
+2. ElevenLabs Scribe transcribes voice input and feeds it into the same pipeline
+3. Nominatim reverse-geocodes coordinates into a real street address
+4. Tavily searches public archives, newspaper databases, and historical records in real time
+5. Claude reads those sources and generates a first-person narrative with a matched narrator persona
+6. ElevenLabs generates two audio clips in parallel via Promise.all, a documentary intro and the personal story, each voiced by a character matched to the era and background
+7. The story panel slides up with the quote, waveform, context, and real source citations
+
+## Technologies Used
+
+- ElevenLabs TTS (eleven_multilingual_v2) — narrator voice synthesis matched to character persona
+- ElevenLabs Scribe (scribe_v1) — real-time voice search transcription
+- Claude API (claude-sonnet-4-6) — first-person narrative generation
+- Tavily API — live historical web research
+- Next.js 15 App Router — frontend and API routes
+- Leaflet.js with CartoDB Dark Matter tiles — interactive NYC map
+- Nominatim — reverse geocoding
+- Vercel — serverless deployment, zero infrastructure
+
+## Getting Started
+
+```bash
+git clone https://github.com/bananadonn/Echoes_Hack_Brooklyn
+cd Echoes_Hack_Brooklyn
+npm install
+```
+
+Add your API keys to `.env.local`:
+
+```
+ANTHROPIC_API_KEY=
+ELEVENLABS_API_KEY=
+TAVILY_API_KEY=
+```
+
+```bash
+npm run dev
+```
+
+## Demo
+
+Live at [Echoes](https://echoes-hack-brooklyn.vercel.app)
+
+## Future Plans
+
+- Shareable story links
+- Expand beyond NYC to any city with documented history
+- AR overlay for mobile, point your camera at a building and hear its story
+- Offline mode with pre-cached neighborhood stories
+
+## Acknowledgments
+
+Built with teammates Tahreem Imran, Donald Reith, and Sanjida Akter at Hack Brooklyn 2026.
