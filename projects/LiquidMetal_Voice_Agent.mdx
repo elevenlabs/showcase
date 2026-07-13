@@ -1,0 +1,54 @@
+---
+title:LiquidMetal_Voice_Agent.mdx
+description: Real-time low-latency voice AI with memory, reasoning, and streaming TTS using Raindrop, Vultr, and ElevenLabs.
+authorIds:
+  -  Anil-kumar 
+categories:
+  - agents 
+isFeatured: false 
+date: "2025-12-11" 
+image:projects/images/Voice.png
+demoUrl:https://ai.studio/apps/drive/1uLfE3eTJgFJ2KU_jHUOP3NXziJDYcvpl?fullscreenApplet=true
+repoUrl: https://github.com/Anil-962/LiquidMetal-Voice-Agent
+videoUrl:https://youtu.be/eQAMDiWDRoo 
+---
+
+##LiquidMetal Voice Agent
+#Overview
+
+- LiquidMetal Voice Agent is a real-time conversational AI system built using the Raindrop Platform, 
+Vultr Inference, and ElevenLabs streaming TTS. It delivers natural, ultra-low-latency voice interactions 
+with persistent memory, contextual reasoning, and a production-ready pipeline designed for scalable voice applications.
+
+#Key Features
+
+- Real-time Voice Pipeline: Streaming STT → NLU → LLM reasoning → ElevenLabs TTS
+- Persistent SmartMemory: Remembers user context across turns
+- Document-Aware Intelligence: SmartBuckets for transcript and embedding retrieval
+- Low-Latency Architecture: Optimized WebSocket audio streaming
+- Robust Error Handling: Connection retries, reconnection logic, and clean UI states
+
+#How It Works
+
+-The system uses Raindrop SmartInference to orchestrate speech recognition, NLU, and reasoning in sequence. SmartMemory stores user context, while SmartBuckets maintains audio, transcripts, and embeddings for retrieval. ElevenLabs provides real-time streaming TTS, and Vultr Inference enhances intent detection and reasoning accuracy. A React + TypeScript frontend streams audio via WebSockets to a Node.js backend connected to the Raindrop MCP Server.
+
+#Technologies Used
+
+- ElevenLabs API: Streaming Text-to-Speech (TTS)
+- Raindrop Platform: SmartInference, SmartMemory, SmartBuckets, SmartSQL
+- Vultr Inference: Intent detection, reranking, NLU enhancement
+- Frontend: React, TypeScript, WebSockets, Audio APIs
+- Backend: Node.js, Raindrop MCP Server
+- Tools: AI Coding Assistants (Claude Code / Gemini CLI)
+
+## Getting Started
+
+# Clone the repository
+git clone https://github.com/Anil-962/LiquidMetal-Voice-Agent
+cd LiquidMetal-Voice-Agent
+
+# Install dependencies
+npm install
+
+# Run development environment
+npm run dev
