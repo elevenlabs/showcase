@@ -1,0 +1,128 @@
+---
+title: Furnito
+description: A mixed-reality VR/AR interior design and warehouse training application that uses real-time speech-to-text input to procedurally generate 3D assets for spatial design.
+authorIds:
+  - gameayush
+  - aaryan73
+  - lakshya-02
+  - spirizeon
+categories:
+  - unity
+  - mixed-reality
+  - spatial-computing
+  - speech-to-text
+  - hackathon
+isFeatured: false
+date: "2026-02-26"
+image: /images/furnito-showcase.png
+demoUrl: "http://devfolio.co/projects/furnito-11bf"
+repoUrl: https://github.com/lakshya-02/HackSrm
+---
+
+# Furnito
+
+## Overview
+
+**Furnito** is a mixed-reality VR/AR interior design and warehouse training application built during **HackSRM 7.0**. The project enables users to design and modify 3D spaces using natural voice commands instead of manual drag-and-drop interactions.
+
+By leveraging real-time speech-to-text processing, Furnito converts spoken instructions into actionable spatial logic that dynamically generates and positions 3D assets inside a Unity environment. This approach helps architects, designers, and warehouse planners rapidly prototype layouts, reduce material waste, and visualize spatial arrangements before physical implementation.
+
+
+## Key Features
+
+- 🎤 **Voice-Driven Scene Editing**  
+  Users can create and modify environments using natural speech commands.
+
+- 🧠 **Real-Time Speech-to-Text Integration**  
+  Powered by ElevenLabs API for accurate and low-latency transcription.
+
+- 🏗️ **Procedural 3D Asset Generation**  
+  Dynamically spawns and positions furniture or structural elements based on interpreted commands.
+
+- 🕶️ **VR/AR Compatible**  
+  Designed for immersive use with XR devices such as Meta Quest.
+
+- 📦 **Warehouse Training & Interior Planning**  
+  Supports layout planning, training simulations, and rapid prototyping workflows.
+
+
+
+## How It Works
+
+1. **Voice Capture**  
+   The user speaks commands inside the VR/AR environment using a microphone-enabled device.
+
+2. **Speech-to-Text Processing**  
+   The audio stream is sent to ElevenLabs' API, which converts speech into text in real time.
+
+3. **Command Parsing & Intent Recognition**  
+   The transcribed text is analyzed to determine:
+   - Object type (e.g., chair, table, shelf)
+   - Placement instructions (e.g., next to wall, center of room)
+   - Transform properties (scale, rotation)
+
+4. **Dynamic Scene Generation**  
+   Corresponding prefabs are instantiated and positioned within the Unity scene.
+
+5. **Immediate Spatial Feedback**  
+   Users can walk around and interact with the updated environment instantly in VR/AR.
+
+
+## Technologies Used
+
+- **Unity (C#)** – Real-time 3D engine and spatial interaction logic  
+- **ElevenLabs API** – Speech-to-Text processing  
+- **XR SDK / Meta Quest Support** – Immersive mixed-reality deployment  
+- **REST API Integration** – Backend communication for transcription services  
+
+
+
+## Getting Started
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/lakshya-02/HackSrm
+cd HackSrm
+````
+
+### 2️⃣ Open in Unity
+
+* Install Unity (2021 LTS or later recommended)
+* Open Unity Hub
+* Click **Add Existing Project**
+* Select the cloned project folder
+
+### 3️⃣ Configure API Access
+
+* Add your ElevenLabs API key in the appropriate configuration script.
+* Ensure microphone permissions are enabled.
+
+### 4️⃣ Run the Project
+
+* Open the main scene from `Assets/Scenes`
+* Click **Play**
+* Begin issuing voice commands to generate spatial assets
+
+## Demo
+
+Add:
+
+* Screenshots of the VR interface
+* Voice-to-asset generation examples
+* A short demo video showcasing real-time spatial modification
+
+## Future Plans
+
+* Advanced natural language understanding for more complex spatial relationships
+* Multi-user collaborative design sessions
+* AI-assisted semantic placement recommendations
+* Expanded asset libraries and environment presets
+* Full AR passthrough optimization for real-world spatial mapping
+
+
+
+## Acknowledgments
+
+Built at HackSRM 7.0 as a rapid-prototype solution focused on improving spatial design workflows through voice-driven interaction and immersive mixed reality.
+
