@@ -1,0 +1,66 @@
+---
+title: Scowld
+description: Open-source iOS AI voice companion with an animated VRM character, vision, hands-free wake mode, and configurable ElevenLabs voices.
+authorIds:
+  - apoorv-darshan
+categories:
+  - agents
+  - text-to-speech
+  - voices
+isFeatured: false
+date: "2026-08-04"
+image: /images/scowld.jpg
+demoUrl: https://scowld.xyz
+repoUrl: https://github.com/apoorvdarshan/scowld
+---
+
+# Scowld
+
+## Overview
+
+Scowld is a free, open-source AI voice companion for iPhone. It combines an animated VRM character with hands-free conversation, optional front-camera vision, local chat history, and bring-your-own-key AI providers. ElevenLabs gives the character a configurable, expressive speaking voice.
+
+## Key Features
+
+- **Animated voice companion:** Responses are spoken while the VRM character reacts and lip-syncs.
+- **Configurable ElevenLabs voices:** Choose a bundled voice preset or enter a custom ElevenLabs voice ID.
+- **Selectable speech models:** Switch among Eleven Flash, Multilingual, and Turbo models from the app.
+- **Hands-free conversation:** Wake mode supports natural voice interaction without repeatedly tapping controls.
+- **Optional vision:** The companion can use the front camera to understand visual context when enabled.
+- **Private BYOK architecture:** Provider keys are stored in the iOS Keychain, and chat history stays on the device.
+
+## How It Works
+
+After the language model produces a reply, Scowld sends the response text directly from the iPhone to ElevenLabs' text-to-speech API. The user chooses the voice ID and model; Scowld requests MP3 audio, plays it inside the native app, and synchronizes the animated character with the spoken response.
+
+The integration is bring-your-own-key: the ElevenLabs API key is entered in Settings, stored in the iOS Keychain, and never routed through a Scowld credential server. Users can also select a supported service language, tune the voice model, and use bundled local previews before choosing a preset.
+
+## Technologies Used
+
+- **ElevenLabs Text-to-Speech API:** Expressive multilingual character speech using configurable voices and models
+- **Swift and SwiftUI:** Native iPhone interface and provider configuration
+- **WKWebView and VRM:** Embedded real-time character rendering, reactions, and lip-sync
+- **iOS Keychain:** Device-side provider credential storage
+- **Gemini, OpenAI, Anthropic, OpenRouter, and local Ollama:** Configurable language-model backends
+- **Deepgram, AssemblyAI, Groq, and native iOS speech recognition:** Configurable speech-to-text backends
+
+## Getting Started
+
+1. Download Scowld from the [App Store](https://apps.apple.com/app/id6760672848).
+2. Open **Settings > Text-to-Speech**.
+3. Add an ElevenLabs API key, then choose a voice preset or enter a custom voice ID.
+4. Select an ElevenLabs model and start speaking with the companion.
+
+Developers can inspect or build the complete MIT-licensed source from the [Scowld repository](https://github.com/apoorvdarshan/scowld).
+
+## Demo
+
+The product site at [scowld.xyz](https://scowld.xyz) includes the app overview and download links. The repository also documents the provider architecture, privacy model, and local setup.
+
+## Future Plans
+
+Scowld will continue expanding voice and character customization while keeping the app open source, provider-independent, and private by default.
+
+## Acknowledgments
+
+Scowld uses ElevenLabs to turn model responses into the character's spoken voice. It also builds on the open-source Amica character runtime and the broader VRM ecosystem.
