@@ -1,0 +1,75 @@
+---
+title: Say It Ahead
+description: Practice difficult conversations out loud with realtime AI characters and practical four-skill feedback.
+authorIds:
+  - ian-finn
+categories:
+  - agents
+  - voices
+isFeatured: false
+date: "2026-08-09"
+image: /images/say-it-ahead.png
+demoUrl: https://sayitahead.com
+repoUrl: https://github.com/imfinn/say-it-ahead
+---
+
+# Say It Ahead
+
+## Overview
+
+Say It Ahead is a self-serve website for rehearsing difficult conversations out loud. A user can choose a guided or custom workplace, interview, customer, negotiation, or school-family scenario, then speak with an AI character in real time. The character responds to what the user says and the session ends with practical feedback.
+
+The goal is rehearsal, not professional assessment. The site gives people a low-stakes place to find useful words before a real conversation.
+
+## Key Features
+
+- Realtime speech-to-speech practice in the browser
+- Guided scenarios plus a shareable custom scenario builder
+- Live progress across acknowledging, clarifying, reflecting, and moving forward
+- Post-call review based on those same four conversation skills
+- Eight curated synthetic voice personas with public samples
+- A community-funded pool with per-session usage limits and actual-cost reconciliation
+
+## How It Works
+
+The Next.js server checks that a session can start, reserves its maximum expected cost, and requests a temporary signed ElevenLabs connection credential. The browser never receives the long-lived ElevenLabs API key.
+
+One shared ElevenLabs Agent supports the scenario library. Each session overrides the agent's prompt, opening line, and selected voice, so the same realtime agent can play different characters without maintaining a separate agent for every scenario.
+
+After the conversation, a signed ElevenLabs webhook supplies the provider transcript, analysis results, duration, and cost. Say It Ahead uses those results to build the four-skill review and replace the initial cost reservation with the actual charge. The app does not keep raw audio or full transcripts in its own database.
+
+## Technologies Used
+
+- ElevenLabs Agents and the ElevenLabs React SDK for realtime voice conversations
+- ElevenLabs voice design and text-to-speech for fictional voice personas and samples
+- Next.js and TypeScript
+- Supabase Postgres and passwordless authentication
+- Vercel for the production deployment
+- Buy Me a Coffee webhooks for optional community funding
+
+## Getting Started
+
+```bash
+git clone https://github.com/imfinn/say-it-ahead.git
+cd say-it-ahead
+npm ci
+cp .env.example .env.local
+npm run dev
+```
+
+The repository README documents the required Supabase migrations, ElevenLabs agent overrides, analysis criteria, and webhook setup.
+
+## Production Validation
+
+A live production test completed a 232-second conversation and all four practice skills. For that call, ElevenLabs reported median LLM time to first byte of 0.90 seconds and median TTS startup of 0.10 seconds. These are observations from one call, not performance guarantees.
+
+## Future Plans
+
+- Add more guided scenarios and voice options
+- Improve accessibility and mobile practice flows
+- Explore multilingual scenarios
+- Add optional tools for people who facilitate training or peer practice
+
+## Acknowledgments
+
+Say It Ahead is powered by ElevenLabs Agents and the open-source libraries listed in the repository.
