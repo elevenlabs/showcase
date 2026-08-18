@@ -1,0 +1,114 @@
+---
+title: DialNexa
+description: Build multilingual, code-switching Voice AI agents for real customer calls using DialNexa APIs and ElevenLabs-powered voices.
+authorIds:
+  - shreeyash-kanwade
+categories:
+  - agents
+isFeatured: false
+date: "2026-08-18"
+image: /images/dialnexa.png
+repoUrl: https://github.com/shreeyash-10/dialnexa-elevenlabs-agent-demo
+---
+
+# Production Voice AI for India and emerging markets
+
+## Overview
+
+DialNexa helps teams create and operate Voice AI agents for sales, support,
+collections, qualification, and other real customer-call workflows. The
+platform is designed for multilingual conversations, including callers who
+naturally switch between Hindi and English during the same call.
+
+This open-source example creates a Hinglish admissions agent through the
+DialNexa v1 API. It discovers an ElevenLabs-backed voice from DialNexa's live
+voice catalogue, creates a safe draft agent, and optionally publishes its first
+version.
+
+## Key Features
+
+- **Natural code-switching:** The example starts in Hinglish and adapts when a
+  caller changes their preferred language mid-conversation.
+- **API-first agent creation:** Languages and voices are resolved at runtime
+  before the agent is created through `POST /v1/agents`.
+- **ElevenLabs-powered voice:** The voice catalogue request is explicitly
+  filtered with `provider=elevenlabs` before the selected voice is attached to
+  the agent.
+- **Outcome capture:** Post-call analysis fields record the agreed next step and
+  the caller's language preference.
+- **Safe publishing:** The default command is a dry run, live mode creates a
+  draft, and publishing requires a separate explicit command.
+
+## How It Works
+
+The TypeScript client performs four clear steps:
+
+1. Resolve the requested BCP-47 language through `GET /v1/languages`.
+2. Discover compatible voices through
+   `GET /v1/voices?provider=elevenlabs&language_id=...`.
+3. Create the agent and draft version 1 through `POST /v1/agents`.
+4. Optionally publish that version through `PATCH /v1/agents/{id}`.
+
+DialNexa provides the agent API, versioning, and production routing layer.
+ElevenLabs provides the voice technology selected behind the DialNexa voice
+catalogue. The sample needs only a server-side DialNexa API key; it never
+exposes credentials in browser code.
+
+## Technologies Used
+
+- DialNexa v1 REST API for agent orchestration and publishing
+- ElevenLabs voices through the DialNexa voice catalogue
+- TypeScript and Node.js 20+
+- Native `fetch` with typed request and response models
+- Node test runner with mocked API responses
+
+## Getting Started
+
+```bash
+git clone https://github.com/shreeyash-10/dialnexa-elevenlabs-agent-demo.git
+cd dialnexa-elevenlabs-agent-demo
+npm install
+cp .env.example .env
+```
+
+Add a DialNexa workspace API key to `.env`, then preview the agent payload
+without making any API request:
+
+```bash
+npm run demo
+```
+
+Create a draft agent or explicitly create and publish version 1:
+
+```bash
+npm run demo:live
+npm run demo:publish
+```
+
+## Demo
+
+The repository includes a scripted 30–45 second walkthrough that demonstrates
+context adaptation:
+
+> **Caller:** "Actually mere bete ne NEET diya tha."
+>
+> **Agent:** "Samajh gayi. Is saal NEET mein unke approximately kitne marks
+> aaye the?"
+>
+> **Caller:** "Around 510. English thoda easier hoga."
+>
+> **Agent:** "Of course..."
+
+The walkthrough and its post-call values are explicitly marked as simulated;
+they are not customer data or production metrics.
+
+## Future Plans
+
+- Add an approved audio or video walkthrough of the Hinglish interaction.
+- Extend the sample with a browser-based web call experience.
+- Demonstrate signed post-call webhooks and CRM outcome routing.
+- Add more regional-language agent configurations.
+
+## Acknowledgments
+
+Built with the DialNexa Voice AI platform and ElevenLabs voice technology.
