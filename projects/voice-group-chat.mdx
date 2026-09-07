@@ -1,0 +1,109 @@
+---
+title: Teaching agents to shut up
+description: Three voice agents in one room. Every one of them hears every line, each decides for itself whether it was meant, and only the one it was for speaks.
+authorIds:
+  - fabrizio-guespe
+categories:
+  - agents
+  - text-to-speech
+  - speech-to-text
+isFeatured: false
+date: "2026-09-07"
+image: /images/voice-group-chat.png
+repoUrl: https://github.com/humanagent/voice-group-chat
+---
+
+# Teaching agents to shut up
+
+Put three voice agents in one room and the hard problem is not getting them to talk. It is getting two of them to stay quiet.
+
+```
+> hey everyone, how's it going?
+  Anna stayed quiet
+  Jordan stayed quiet
+  Pepe stayed quiet
+
+> hey ana ask pepe what time it is
+  Anna: Pepe, what time is it?
+  Jordan stayed quiet
+  Pepe stayed quiet
+  Pepe: It's 3:47pm.
+```
+
+That second exchange is the whole project. Anna heard her name and answered. Jordan heard the same line and decided it was not for him. Pepe heard it too, stayed quiet — and then answered Anna, because her reply re-entered the room as a line attributed to her, exactly like a person's, and this time it was for him. Nobody was told whose turn it was.
+
+## What it is
+
+Three agents in a browser room, each its own process with its own memory and its own voice. You type into it or hold the microphone and speak. Every line reaches every agent. Each one decides, alone, whether the last thing said was meant for it. The one that answers answers out loud, and the transcript follows the voice through the sentence.
+
+The round ends when nobody thought the last thing said was for them. There is no orchestrator, no turn order, no router. Addressing is a function each agent runs on what it heard, not a rule a client enforces.
+
+## Why it is interesting
+
+Most multi-agent demos have a conductor: something decides who speaks. This one does not, and the interesting behaviour comes from the absence. Ask Anna to pass a standup on and whoever she names goes next, because her reply reached everyone and one of them recognised their name in it. Ask a question nobody's name is in and the room stays silent, which is correct — and which almost no voice demo can do.
+
+Two rules carry the turn-taking. **A turn that ends in nothing counts as success.** And **addressing is a function rather than a prompt**: the check that decides whether a line was for you is code you can test, not an instruction you hope the model follows. The policy came over from a text product already running in production; porting it to voice was mostly deleting the transport.
+
+Half the room arrives through speech-to-text, so an agent's name reaches it misheard. "Ana" and "Anna" are one sound in two languages, and a transcriber listening in English writes the English one — so for a while she sat silent while being called by name, out loud, twice. Invisible in any text-only test. Fixed on both sides: the addressing check collapses held letters, and she is spelled Anna now.
+
+## Built as customer zero
+
+Every number below came off this project's own free-plan key.
+
+**Text to speech.** Same voice, same sentence: `eleven_flash_v2_5` in **0.7s**, `eleven_multilingual_v2` in 1.2s, `eleven_v3` in 2.7s. Flash is the one built for live conversation, and a chat is not paying two seconds a line for expressiveness. Two decisions mattered more than the model. Synthesis left the turn: it used to run inside the agent, so the reply did not leave until the MP3 existed — 1.96s of a 4.14s turn spent on an empty room. Now the browser asks for audio, and the text lands two seconds sooner. And the route answers JSON, not audio, because it asks `/with-timestamps` for where in the clip each character is spoken. That is what lets the transcript follow the voice through the line instead of sitting there finished while somebody is still saying it.
+
+**Speech to text.** `scribe_v2_realtime` over WebSocket, with a single-use token so the key never reaches the browser. Press to speak, not open mic: an open microphone was built first and cut, because in a room where three agents talk out loud, no VAD threshold separates a person from a speaker reliably enough to send what it heard to three agents unasked. What survived is one testable function deciding whether anything was said between the two presses. Fillers and `[BLANK_AUDIO]` come off; one real word still counts, because "sí" and "stop" are whole turns.
+
+**Voices.** Picked on `high_quality_base_model_ids` — how many current model families actually render a voice. Most premade voices sit at 7 or 8. Adam, who led the account list for months, sits at **0**: a 2023 voice carried for compatibility, which is exactly why he sounded flat.
+
+**A bug in the UI registry**, filed as [elevenlabs/ui#82](https://github.com/elevenlabs/ui/issues/82). The realtime transcriber block ships `scribe_realtime_v2`; the API wants `scribe_v2_realtime`. The socket opens, then the server closes it, so it reads as a broken microphone rather than a bad parameter. Same value in the registry JSON, so `shadcn add` ships it broken. Standalone repro included.
+
+**Evaluated, not taken.** `text-to-dialogue` works on free and lost on latency: first sound went from +0.0s to ~+15.2s, because a dialogue needs every reply before it can start. Streaming the model was dropped after 469 turns ended in a suppress token — streaming means showing text from an agent that then says nothing. TTS `/stream` was verified and superseded by `/with-timestamps`: same two seconds, plus the timings.
+
+## How it works
+
+```
+mic (scribe_v2_realtime) ─┐
+                          ├─▶ POST /api/say ─▶ Anna ─▶ was this for me? ─▶ no: silence
+type ─────────────────────┘              ├─▶ Jordan ─▶ was this for me? ─▶ yes: reply, whole
+                                          └─▶ Pepe ──▶ was this for me?
+                                                            │
+                          reply ─▶ GET /api/speak (with-timestamps) ─▶ transcript follows the voice
+                            └── becomes a line the others read ──▶ back to /api/say
+```
+
+The last edge is the part that makes it a room. An agent's reply is delivered to the others as `Anna: ...`, indistinguishable from a person's line, and the round continues until a pass where everyone stayed quiet.
+
+Each agent is an upstream [Hermes](https://github.com/NousResearch/hermes-agent) process behind its own gateway — no fork, three hooks and one middleware. The UI is ElevenLabs UI on shadcn, Next.js 16, React 19. Three registry components had to change, all the same kind of problem: correct in a demo, load-bearing here. `useTexture` suspends on a CDN fetch, so the orb textures are served locally. WebGL contexts get reclaimed by the browser, so an SVG orb sits underneath that paints on frame one and cannot be lost. Two scroll springs eased toward the same moving target, so the transcript shivered; both are instant now.
+
+## Technologies
+
+- ElevenLabs text to speech — `eleven_flash_v2_5`, `/with-timestamps`
+- ElevenLabs speech to text — `scribe_v2_realtime`, realtime WebSocket, single-use tokens
+- ElevenLabs UI — `Orb`, `LiveWaveform`, `Conversation`, `Message`, `Response`, the Scribe hook
+- Hermes Agent, one process per agent
+- Next.js 16, React 19, shadcn/ui
+- 250 Python tests and 34 in the browser; lint, types, both suites and a production build on every PR
+
+## Getting started
+
+```sh
+pnpm setup                             # writes .hermes/ with a config and a key
+# add a provider key + ELEVENLABS_API_KEY to .hermes/.env
+pnpm start                             # the runtime
+uv run python scripts/group_up.py      # Anna, Jordan, Pepe
+pnpm web                               # the room
+```
+
+Then type the one line that exercises nearly everything at once:
+
+```
+ana, daily standup, pass-it-on. say your one thing — what you're working on
+or stuck on — then name ONE person who has not gone yet.
+```
+
+Anna answers and the other two stay quiet. She names someone; that person goes next. When everyone has gone, whoever is last closes and the room falls silent. Three agents reading the same line and two of them deciding it was not theirs is the demonstration.
+
+## Next
+
+An MCP server over the agents, knowledge base and voice APIs, so an agent's lifecycle runs from whatever tool is already open. The shape is here already: this repo runs three agent processes, deals them personas and reconciles their config on every boot. A typed control surface on that, speaking MCP, is the same work with a different caller.
