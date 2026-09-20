@@ -1,0 +1,140 @@
+---
+title: Tell-Well
+description: "A voice-first health journal that turns daily conversations into organized records, with medication tracking and WHOOP wearable insights."
+authorIds:
+  - luoqing-shao
+  - liza-pozhenko
+  - toan-dang
+categories:
+  - speech-to-text
+  - text-to-speech
+isFeatured: false
+date: "2026-09-20"
+image: /images/tell-well.png
+demoUrl: https://tell-well-demo-production.up.railway.app/auth/
+repoUrl: https://github.com/kimberlieShao/tell-well
+videoUrl: https://www.youtube.com/watch?v=7rvYrlKnK9c
+---
+
+# Tell-Well
+
+## Overview
+
+Remembering weeks of symptoms and daily habits before a medical appointment can be difficult. Tell-Well makes it easier to record that history through a short conversation, especially when typing is uncomfortable.
+
+Built by Luoqing Shao, Liza Pozhenko and Toan Dang during a 30-hour hackathon, Tell-Well is a mobile-friendly health journal. ElevenLabs transcribes the user's speech and reads prompts aloud, while Gemini organizes reported details into structured health records.
+
+## Key Features
+
+- **Voice check-ins:** Speak naturally, choose from five spoken voices, or switch to typing.
+- **Short conversations:** One optional symptom follow-up helps capture details without a long questionnaire.
+- **Editable records:** Review symptom and medication details before saving, with original words kept alongside the extracted information.
+- **Medication tracking:** Confirmed reports of taking a listed medicine update its daily count.
+- **Meals and water:** Record food and glasses of water without additional questions.
+- **Wearable context:** WHOOP integration compares readings with the user's recent history.
+- **Visit preparation:** Revisit entries in a calendar and create a printable summary of recent check-ins, medications and wearable readings.
+
+## How It Works
+
+The backend creates a single-use ElevenLabs transcription token so the browser can stream microphone audio without receiving the permanent API key. ElevenLabs Scribe Realtime converts speech into text, and the Text to Speech API reads the app's prompts aloud.
+
+Gemini extracts the details the user reported, such as symptom location, pain score and timing. The backend validates the result and limits symptom conversations to one optional follow-up. Symptom and medication entries can be corrected before saving, while food and water entries can log directly.
+
+A separate Python service handles WHOOP authorization and wearable data retrieval. The app also supports saved WHOOP snapshots for demos where the connector is unavailable. Personal comparisons use recent readings rather than a population average.
+
+## Technologies Used
+
+- ElevenLabs Scribe Realtime for speech-to-text
+- ElevenLabs Text to Speech for spoken prompts
+- Google Gemini for structured information extraction
+- HTML, CSS and JavaScript for the interface
+- Node.js, TypeScript, Express and Zod for the backend
+- Python, FastAPI and httpx for WHOOP integration
+- WHOOP API for wearable readings
+
+## Getting Started
+
+[Try the live demo](https://tell-well-demo-production.up.railway.app/auth/) or [watch the demo video](https://www.youtube.com/watch?v=7rvYrlKnK9c). Use fictional information when exploring the prototype.
+
+For local development, install Node.js 24 or newer, then run:
+
+```bash
+git clone https://github.com/kimberlieShao/tell-well.git
+cd tell-well/backend
+npm ci
+cp .env.example .env
+```
+
+Configure `GEMINI_API_KEY`, `GEMINI_MODEL` and `ELEVENLABS_API_KEY` in the local `.env` file, and set `EXTRACTION_MODE=gemini`. Choose a Gemini model available to your API project. For an initial run without a WHOOP connector, add `WEARABLE_MODE=demo` to use labeled example wearable readings. Keep API keys out of source control. Then start the app:
+
+```bash
+npm start
+```
+
+Open `http://127.0.0.1:3001/app`. Live WHOOP integration requires its separate service and configuration, with `WEARABLE_MODE=whoop`.
+
+## Screenshots
+
+A walkthrough of the hackathon prototype, including the example patient used in the Records and check-in screens. Some screens show demo or preview features.
+
+### Voice check-in
+
+Speak naturally, with options to pause or switch to typing.
+
+![Tell-Well listening screen with pause and typing controls](/images/tell-well-voice-listening.png)
+
+An optional follow-up uses a short checklist to guide symptom details.
+
+![Optional symptom checklist for location, pain score, activities and timing](/images/tell-well-symptom-details.png)
+
+Review the original words and extracted details before confirming the check-in.
+
+![Check-in review with the original transcript and editable symptom details](/images/tell-well-checkin-review.png)
+
+### Records and daily details
+
+The calendar provides access to previous entries. These screenshots show the example patient.
+
+![Records calendar with example patient entries and the doctor summary button](/images/tell-well-records.png)
+
+![Daily record showing symptoms, medication reports, meals and measurements](/images/tell-well-daily-record.png)
+
+### Wearable context and trends
+
+The dashboard places wearable readings alongside personal usual ranges and the medication list.
+
+![Wearable dashboard with personal comparisons and the medication list](/images/tell-well-wearable-data.png)
+
+The Trends screen below illustrates the interface with example data; completing the remaining calculations is part of our future work.
+
+![Health Trends interface showing pain, blood pressure and medication summaries](/images/tell-well-trends.png)
+
+### Meals and water
+
+Food entries are organized by meal, with a separate water counter.
+
+![Meals page with breakfast, lunch, dinner, snacks and the water counter](/images/tell-well-meals-water.png)
+
+### Welcome, onboarding and settings
+
+The welcome screen provides access to the demo. Verified authentication is not connected in this prototype.
+
+![Tell-Well welcome and demo sign-in screen](/images/tell-well-login.png)
+
+The onboarding flow lets users report their health background.
+
+![Onboarding health background checklist](/images/tell-well-onboarding.png)
+
+The More tab groups profile, health data and settings entry points. Some options remain interface previews.
+
+![More tab with profile, medications, connected health data and settings](/images/tell-well-more.png)
+
+## Future Plans
+
+We plan to complete the remaining Trends calculations, add durable record storage and connect verified accounts. We also hope to test usability with consenting users and clinicians before extending the prototype further.
+
+## Team
+
+Luoqing Shao, Liza Pozhenko and Toan Dang are students at Johns Hopkins University.
+
+Tell-Well is a hackathon prototype for health tracking and visit preparation. It does not provide diagnoses.
