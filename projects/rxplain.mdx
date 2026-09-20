@@ -1,0 +1,85 @@
+---
+title: RxPlain
+description: RxPlain turns dense med labels into plain language you can read or hear—so remote communities and non-native speakers understand their meds and find nearby clinics when they need a human next step.
+authorIds:
+  - Tony-Zhang
+categories:
+  - text-to-speech
+isFeatured: false # Leave as false, we'll feature exceptional projects
+date: 2026-09-20 
+image: /images/rxplain.png
+repoUrl: https://github.com/TonyZhang47/Hophacks2026
+videoUrl: https://youtube.com/watch?v=... # Optional: Demo video
+
+---
+
+# RxPlain
+
+## Overview
+
+RxPlain is an educational accessibility tool that translates dense medication labels, dosage limits, and food interactions into plain, readable language and interactive visual maps for patients facing health literacy, vision, or language barriers. To ensure these vital summaries are accessible to everyone, we integrated ElevenLabs technology to deliver clear, human-like voice read-alouds for our Spanish interface, ensuring non-English speakers can hear and understand their prescriptions with natural clarity.   
+## Key Features
+
+Plain-Language Dose & Food Interaction Warnings: Translates complex openFDA label data and food interactions into simple, actionable summaries without jargon.
+
+
+Multimodal Bottle Scanning & Safety Guardrails: Scans prescription bottles via camera or phone QR capture, parses directions using Grok vision, and strictly checks doses against official FDA daily maximums before confirming.
+
+
+Accessible Dual-Language Read-Alouds: Built-in voice read-aloud functionality providing English and Spanish audio for all medication explanations, community experiences, and label summaries.
+
+
+
+## How It Works
+
+RxPlain is built with Next.js (App Router) and TypeScript, deployed on the DigitalOcean App Platform. All third-party vendor calls are executed strictly inside `/api/` route handlers to keep credentials off the client. The core data layer utilizes an adapter pattern (`lib/db`), querying Snowflake when configured or falling back to structured JSON seed datasets (HRSA/CMS clinics, openFDA label sections, dose limits, and glossary mappings).
+
+For dose checking, the system retrieves official FDA administration and overdosage text, verifies daily totals against structured limits, and passes the text to Grok to generate a plain-language restatement. Strict guardrails enforce numeric grounding and fail closed whenever a dose cannot be verified. For audio accessibility, `lib/tts/` handles dynamic routing based on language preference: English requests route to xAI Grok Voice, while Spanish text passes through a translation layer that protects numbers and units before generating high-fidelity audio via ElevenLabs.
+
+## Technologies Used
+
+-ElevenLabs API: Text-to-Speech (TTS) for natural Spanish voice synthesis
+
+
+-xAI Grok API: Grok Vision for bottle OCR scanning, Grok Chat for plain-text rewrites/summaries, and Grok Voice for English TTS
+
+
+-openFDA API & RxNorm: Official drug label evidence lookup and deterministic drug name normalization
+
+
+-Snowflake Database: Cloud data warehouse for structured interaction querying, drug caches, and session storage
+
+
+-Frameworks & Libraries: Next.js (App Router), TypeScript, Tailwind CSS, Cytoscape.js
+
+
+-Infrastructure: DigitalOcean App Platform
+
+
+
+## Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/TonyZhang47/Hophacks2026.git
+cd Hophacks2026
+
+# Install dependencies
+npm install
+
+# Set up environment variables (optional for local mock data)
+cp .env.example .env.local
+
+# Run the development server
+npm run dev
+
+```
+
+Future Plans
+
+What's next for your project? Any upcoming features or improvements?
+We plan to expand language support beyond English and Spanish using ElevenLabs' multilingual capabilities and add direct integration with community health center appointment booking systems. We also aim to implement xAI Imagine for generating simple, non-clinical illustrations that help low-literacy patients visualize food warnings and dosage instructions safely.
+
+
+Acknowledgments
+Credits: Hung-yu Chen, Crystal Yang, Abigail Wang

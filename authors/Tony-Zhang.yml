@@ -1,0 +1,13 @@
+name: Tony Zhang
+avatar: "https://github.com/TonyZhang47.png" # or any avatar URL
+url: "" # Optional: your website
+bio: "Computer Science @ Johns Hopkins University"
+location: "Baltimore, MD"
+isElevenLabs: false # Set to true if you work at ElevenLabs
+socials:
+  - label: X
+    url: "https://x.com/_eiyao"
+  - label: GitHub
+    url: "https://github.com/TonyZhang47/Hophacks2026"
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/tonyzhang47/" # Optional
