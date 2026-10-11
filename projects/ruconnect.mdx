@@ -1,0 +1,73 @@
+---
+title: RUConnect
+description: A 3D map of Rutgers campus events with a voice agent that finds something to do and flies the map to it. A Gemini agent swarm turns flyers into events.
+authorIds:
+  - minh-le
+  - benjamin-kuoch
+  - chaitanya-kadian
+categories:
+  - agents
+isFeatured: false
+date: "2026-10-11"
+image: /images/ruconnect.png
+repoUrl: https://github.com/mlhv/RUConnect
+videoUrl: https://www.youtube.com/watch?v=xID1iHmn76k
+---
+
+# RUConnect
+
+## Overview
+
+Campus events are scattered across paper flyers, club Instagram posts, and event boards, so students miss things they would have loved. RUConnect puts every event on Rutgers College Ave onto one 3D map. Buildings light up when something is happening inside, and a time slider shows activity moving across campus through the day.
+
+The fastest way to use it is to ask. An ElevenLabs Conversational AI agent takes a spoken question such as "I'm free until 4 and I like robotics and free food, what's near the library?", searches the events, answers out loud, and flies the map camera to the building it recommends. It also understands questions that share no word with any event: "I like tinkering with machines" finds the robotics club.
+
+## Key Features
+
+- Voice assistant: an ElevenLabs agent that searches events by time, interests, and location, speaks its recommendation, and drives the map.
+- Search by meaning: results the database matched by vector similarity alone are shown as cards with a "Matched by meaning" badge.
+- 3D campus map: real College Ave buildings that glow when an event is active, with a slider to scrub through the day.
+- Flyer ingestion swarm: Gemini agents read a photo of a flyer (even a crumpled one), check the reading against the source, match it to a building, remove duplicates, and publish the event.
+- Multiple sources: uploaded flyers and public Rutgers event sites go through the same pipeline.
+
+## How It Works
+
+The browser connects to an ElevenLabs Conversational AI agent with the `@elevenlabs/react` SDK, using a short-lived session credential issued by our server so the API key never reaches the client. The agent has two client tools. `find_events` calls our search endpoint, highlights the matching buildings on the map, and returns a compact list for the agent to speak from. `focus_event` flies the camera to the chosen event's building.
+
+Events come from an ingestion swarm: an orchestrator in our Express server runs Gemini agents with fixed roles (scout, reader, critic, deduper) and streams each step to the UI. Events are stored in Postgres on Tiger Data. For voice search the server embeds the question with Gemini, `pgvector` compares it with each event's embedding, and that similarity is blended with keyword, time, distance, and free-food ranking. If the embedding call fails, search falls back to keywords.
+
+## Technologies Used
+
+- ElevenLabs Conversational AI (agent, client tools, `@elevenlabs/react`)
+- Gemini API (flyer reading, embeddings)
+- Mapbox GL JS, React, Vite
+- Node, Express, TypeScript
+- Tiger Data Postgres with pgvector
+
+## Getting Started
+
+```bash
+git clone https://github.com/mlhv/RUConnect.git && cd RUConnect
+cp .env.example .env   # MOCK=1 runs on sample data; add ElevenLabs, Gemini, and Mapbox keys for the rest
+npm install
+npm run dev            # http://localhost:5173
+```
+
+## Demo
+
+[Watch the two and a half minute demo](https://www.youtube.com/watch?v=xID1iHmn76k). It shows:
+
+- A spoken question, "I'm free until 4, I like robotics and free food, what's near the library?", answered out loud while the map flies to the Rutgers Student Center.
+- A follow-up, "Is there anything after 4?", with the results shown as cards beside the map.
+- A photo of a tilted flyer going through the agent swarm, which recognises it as an event already on the map.
+
+## Future Plans
+
+- Live crowd "energy" per building from ambient sound levels
+- Accessibility routes and audio descriptions
+- Interest-based recommendations and "go with a friend" matching
+- More campuses
+
+## Acknowledgments
+
+Built at HackRU, October 2026.
