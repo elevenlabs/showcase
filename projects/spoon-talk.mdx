@@ -1,0 +1,77 @@
+---
+title: Spoon Talk
+description: Plan your day in spoons. Just talk. A voice agent for chronic illness with a live, explainable pacing model and next-day crash warnings.
+authorIds:
+  - marshall-gould
+categories:
+  - agents
+isFeatured: false
+date: "2026-10-14"
+image: /images/spoon-talk.png
+demoUrl: https://spoon-talk.vercel.app
+repoUrl: https://github.com/MarshallBear1/spoon-talk
+---
+
+# Spoon Talk
+
+## Overview
+
+Spoon Talk is a voice agent that helps people with chronic illness (ME/CFS, long COVID, POTS, fibromyalgia and more) plan one day using [spoon theory](https://junocompanion.com/blog/pacing-and-energy/spoon-theory). You talk through your day, for example "a GP appointment, a shower, and I want to cook tonight". It asks how you slept and how much energy you have, then plans the day in spoons and speaks back in an ElevenLabs voice.
+
+While you talk, the screen builds itself. The spoon budget fills, each activity appears as a card with its cost, rest blocks slot in after big tasks, and a warning appears when the plan risks a delayed crash. Post-exertional malaise often lands 24 to 48 hours later. The voice drives the UI through **ElevenLabs Agents client tools**.
+
+It was built by [Juno](https://junocompanion.com), a companion app for people living with chronic illness.
+
+## Key Features
+
+- **Voice-driven generative UI**: eight client tools (`set_energy`, `set_sleep`, `log_previous_day`, `set_body_signals`, `add_activity`, `remove_activity`, `suggest_rest`, `flag_crash_risk`) update the plan live while the agent speaks.
+- **An explainable pacing model**: budget B = E·k·Πmᵢ, with bounded multipliers for sleep, live barometric pressure change (Open-Meteo), heat and the last two days' overspend (the PEM lag). Each factor appears as a chip showing its spoon contribution.
+- **Bayesian activity costs**: a Normal prior per activity type is updated with the spoken estimate, and each card shows μ ± σ. The plan shows P(over budget).
+- **Next-day crash risk**: a logistic model of overspend, the lagged overspends, sleep debt and falling pressure, shown as a % with its top drivers.
+- **The maths on screen**: KaTeX equations filled in with the live numbers, plus hover breakdowns. The model has unit tests.
+- **ElevenLabs UI**: the WebGL Orb (warms when crash risk rises), Live Waveform, Shimmering Text, Conversation and Message.
+- **Demo mode with no keys**: a scripted conversation drives the same model, so anyone can try it.
+- **Private by default**: the server mints a short-lived WebRTC conversation token, and the API key never reaches the browser.
+
+## How It Works
+
+- `@elevenlabs/react` `useConversation` connects to a private ElevenLabs Agent over WebRTC. Client tools registered with `useConversationClientTool` send actions to one pure reducer and return a model readout, so the agent speaks real numbers and reasons ("pressure's dropped 9 hPa since yesterday, so I've trimmed your budget a little").
+- The local weather reaches the agent through `sendContextualUpdate`.
+- The model is inspired by Juno's [pacing white paper](https://junocompanion.com/juno_pacing_whitepaper.pdf), a development prototype that is not clinically validated. Its coefficients are illustrative defaults.
+- `scripts/create-agent.ts` creates the client tools and the agent (system prompt, first message, voice) through the ElevenLabs API.
+
+## Technologies Used
+
+- ElevenLabs Agents (Conversational AI) with client tools
+- ElevenLabs TTS (Flash v2)
+- `@elevenlabs/react` and `@elevenlabs/elevenlabs-js`
+- ElevenLabs UI (Orb, Live Waveform, Shimmering Text, Conversation, Message)
+- shadcn/ui, Magic UI, Motion, KaTeX, Open-Meteo
+- Next.js (App Router), TypeScript, Tailwind CSS, Vitest
+
+## Getting Started
+
+```bash
+git clone https://github.com/MarshallBear1/spoon-talk
+cd spoon-talk
+npm install
+npm run dev                 # demo mode works with no keys
+
+# live voice
+cp .env.example .env.local  # add ELEVENLABS_API_KEY
+npm run create-agent        # prints ELEVENLABS_AGENT_ID
+```
+
+## Demo
+
+![Spoon Talk](/images/spoon-talk.png)
+
+## Future Plans
+
+- Carry yesterday's plan into today, so the agent can spot a delayed crash as it builds.
+- Optional wearable signals (sleep, HRV, resting heart rate) to adjust costs.
+- More languages using ElevenLabs multilingual voices.
+
+## Acknowledgments
+
+Spoon theory was created by Christine Miserandino. Built by [Juno](https://junocompanion.com). Spoon Talk is not medical advice.
