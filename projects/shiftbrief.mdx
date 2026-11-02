@@ -82,10 +82,12 @@ bun install
 bun run dev
 ```
 
-Set `ELEVENLABS_API_KEY`, `GEMINI_API_KEY`, `DEMO_ACCESS_CODE`, `SUPABASE_URL`,
-`SUPABASE_PUBLISHABLE_KEY` and `SUPABASE_SERVICE_ROLE_KEY` in the environment, apply the migrations in
-`drizzle/migrations/` to a Supabase project and create a private storage bucket `brief-audio`. The
-full product specification, including all prompts, is in `SPEC.md`.
+npm works as well (`npm install`, `npm run dev`). The committed `.env` points the browser at the demo
+database; for your own Supabase project replace the `VITE_SUPABASE_*` values there. Then set
+`ELEVENLABS_API_KEY`, `GEMINI_API_KEY`, `DEMO_ACCESS_CODE`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`
+and `SUPABASE_SERVICE_ROLE_KEY` in the environment, apply the migrations in `drizzle/migrations/` and
+create a private storage bucket `brief-audio`. The full product specification, including all
+prompts, is in `SPEC.md`.
 
 ## Demo
 
