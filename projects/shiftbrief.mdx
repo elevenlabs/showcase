@@ -1,0 +1,108 @@
+---
+title: ShiftBrief
+description: Voice shift handovers. Dictate in your language; the next worker hears a personalized 60-second audio brief in theirs, plus a tappable checklist.
+authorIds:
+  - hans-czylok
+categories:
+  - speech-to-text
+  - text-to-speech
+isFeatured: false
+date: "2026-11-02"
+image: /images/shiftbrief.png
+demoUrl: https://shiftbrief.lovable.app
+repoUrl: https://github.com/hansczylok/ShiftBrief
+videoUrl: https://www.youtube.com/watch?v=7bwSmLltAUM
+---
+
+# ShiftBrief
+
+## Overview
+
+Shift handovers in hospitals, hotels, factories and on-call teams are still done in a hurry, often
+between people who do not share a first language. Details get lost: the fasting patient, the faulty
+machine, the blocked exit.
+
+ShiftBrief fixes that with voice. The outgoing worker taps the mic and dictates the handover for 20 to
+60 seconds. ElevenLabs Scribe transcribes it. An open-weights model (Gemma 4) extracts tasks with
+priority, time and location, flags anything safety-relevant and writes a summary the worker can review
+and publish. When the incoming worker opens the handover, the model writes a spoken script in that
+worker's language, personalized with both names and roles, and ElevenLabs Multilingual v2 reads it
+aloud. A translated checklist keeps the ticks per person.
+
+German in, Turkish or English out, with room numbers, names and ticket numbers kept intact.
+
+ShiftBrief was built in one afternoon at the Hacktoberfest Hack Day Linz × Young AI Leaders Linz
+(30 October 2026, JKU Linz).
+
+## Key Features
+
+- Voice-first handover: no typing at the end of a shift, just talk for a minute.
+- Structured task list: every task gets priority, time and location, and can be edited before publishing.
+- Safety flags: fall risk, fasting patient, faulty machine, blocked exit and similar items are called out separately.
+- Personalized audio brief: the incoming worker hears a 60-second brief in their own language, addressed to them by name and role.
+- Translated checklist: the task list is translated for the listener and ticks persist per person.
+- Works for any shift-based team: hospital wards, hotel front desks, factory lines, on-call rotations.
+
+## How It Works
+
+1. Record. The browser captures 20 to 60 seconds of audio and posts it to a server route.
+2. Transcribe. The route sends the audio to ElevenLabs Scribe (`scribe_v1`). Scribe handles German
+   dictation with room numbers and ticket numbers reliably.
+3. Understand. Gemma 4 (`gemma-4-26b-a4b-it`) receives the transcript and returns tasks, safety flags
+   and a summary as JSON. Gemma has no structured-output mode on the API we use, so the prompt asks
+   for JSON and the route parses from the first `{` to the last `}` with one retry.
+4. Review and publish. The worker edits the list in the UI and publishes it to the team.
+5. Brief. When the next worker opens the handover, Gemma 4 writes a spoken script in that worker's
+   language and translates the checklist. The script goes to ElevenLabs Multilingual v2; one voice
+   covers German, Turkish and English output.
+
+The speech layer is deliberately a thin, swappable module around two ElevenLabs calls. Everything that
+understands the content runs on an open-weights model, so the same prompts can run on-prem where
+patient or worker data must not leave the building.
+
+The hardest bug was not AI at all: the browser had blocked the microphone, so every recording was
+silent and the transcript came back empty. The error toast now shows the recorded audio size so this
+is visible immediately.
+
+## Technologies Used
+
+- ElevenLabs Scribe v1 (speech-to-text) and ElevenLabs Multilingual v2 (text-to-speech)
+- Gemma 4 `gemma-4-26b-a4b-it` (open weights) for extraction, safety flagging, translation and the brief script
+- TanStack Start, TanStack Router, TanStack Query, React 19, Vite
+- Tailwind CSS 4, shadcn/ui on Radix UI
+- PostgreSQL on Supabase, Drizzle ORM
+- Built and hosted with Lovable (Lovable Cloud for database and server routes)
+
+## Getting Started
+
+```bash
+git clone https://github.com/hansczylok/ShiftBrief
+cd ShiftBrief/lovable-app
+bun install
+bun run dev
+```
+
+Set `ELEVENLABS_API_KEY`, `GEMINI_API_KEY`, `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` in the
+environment and apply `drizzle/migrations/0000_migration.sql` to a Supabase project. The full product
+specification, including all prompts, is in `SPEC.md`.
+
+## Demo
+
+- Live app: https://shiftbrief.lovable.app
+- Two-minute demo video: https://www.youtube.com/watch?v=7bwSmLltAUM
+
+| Record a handover | Extracted safety flags | Brief in Turkish (dictated in German) |
+|---|---|---|
+| ![Record](https://raw.githubusercontent.com/hansczylok/ShiftBrief/main/docs/screenshots/02-record.jpg) | ![Safety flags](https://raw.githubusercontent.com/hansczylok/ShiftBrief/main/docs/screenshots/03-extracted-safety-flags.jpg) | ![Turkish brief](https://raw.githubusercontent.com/hansczylok/ShiftBrief/main/docs/screenshots/05-brief-turkish.jpg) |
+
+## Future Plans
+
+- Speaker-specific voices and a short "what changed since your last shift" recap.
+- On-prem deployment with Gemma 4 running locally for hospitals with strict data rules.
+- Team and role management, audit log and integration with existing shift-planning tools.
+
+## Acknowledgments
+
+Built by Hans Czylok, Rohit Kadam, Peter Paul Kirschner and Syed Alhaam Faridi at the Hacktoberfest
+Hack Day Linz, hosted by Young AI Leaders Linz at JKU Linz. Thanks to ElevenLabs for Scribe and
+Multilingual v2, and to the Gemma team for the open weights.

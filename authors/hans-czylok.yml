@@ -1,0 +1,11 @@
+name: Hans Czylok
+avatar: "https://github.com/hansczylok.png"
+url: "https://www.linkedin.com/in/hans-czylok/"
+bio: "Builds AI tools for frontline teams. ShiftBrief, a voice shift-handover app, started at the Hacktoberfest Hack Day Linz 2026."
+location: "Linz, Austria"
+isElevenLabs: false
+socials:
+  - label: GitHub
+    url: "https://github.com/hansczylok"
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/hans-czylok/"
