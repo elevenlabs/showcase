@@ -82,13 +82,17 @@ bun install
 bun run dev
 ```
 
-Set `ELEVENLABS_API_KEY`, `GEMINI_API_KEY`, `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` in the
-environment and apply `drizzle/migrations/0000_migration.sql` to a Supabase project. The full product
-specification, including all prompts, is in `SPEC.md`.
+Set `ELEVENLABS_API_KEY`, `GEMINI_API_KEY`, `DEMO_ACCESS_CODE`, `SUPABASE_URL`,
+`SUPABASE_PUBLISHABLE_KEY` and `SUPABASE_SERVICE_ROLE_KEY` in the environment, apply the migrations in
+`drizzle/migrations/` to a Supabase project and create a private storage bucket `brief-audio`. The
+full product specification, including all prompts, is in `SPEC.md`.
 
 ## Demo
 
-- Live app: https://shiftbrief.lovable.app
+- Live app: https://shiftbrief.lovable.app. Pick a persona in the top bar and open a handover:
+  the demo briefs and their audio play without any code. Recording a new handover or generating a
+  brief for a new person asks for a demo access code that protects the speech and model quotas;
+  ask the author for it.
 - Two-minute demo video: https://www.youtube.com/watch?v=7bwSmLltAUM
 
 | Record a handover | Extracted safety flags | Brief in Turkish (dictated in German) |
