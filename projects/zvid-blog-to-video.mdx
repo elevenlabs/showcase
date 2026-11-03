@@ -1,0 +1,28 @@
+---
+title: Turn blog posts into narrated videos with n8n, ElevenLabs and Zvid
+description: An n8n workflow turns an article into a vertical video. ElevenLabs supplies the voice and word timing, and Zvid uses both to render the captions and scenes.
+authorIds:
+  - mena234
+categories:
+  - text-to-speech
+isFeatured: false
+date: "2026-11-03"
+image: /images/zvid-blog-to-video.png
+demoUrl: https://zvid.io/blog/tutorials/blog-post-to-video-summary
+repoUrl: https://github.com/Zvid-io/workflow-examples/tree/main/workflows/blog-to-video
+videoUrl: https://www.youtube.com/watch?v=xqjp_Af-Hf8
+---
+
+[Watch the 36-second video the workflow produced](https://cdn.zvid.io/blog/blog-to-video/b6e1d6bc4c9b/blog-summary.mp4). It summarizes a Google Health article in portrait format, with spoken narration, timed captions, and a closing invitation to read the source.
+
+## How the narration drives the edit
+
+n8n reads the newest article in an RSS feed and sends its text to OpenRouter for a short script. ElevenLabs reads the script in one take and returns the audio with character timestamps. The workflow groups those timestamps into words. Zvid uses the word timings to place the captions and cut between scenes, so a pause in the voice also leaves room on screen. When a scene has no suitable footage, the workflow renders it as a text slide.
+
+## Try it with your feed
+
+1. [Download the n8n workflow](https://zvid.io/n8n/workflows/blog-to-video). In n8n, install `@zvid/n8n-nodes-zvid` from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner or admin may need to install the package.
+2. Import the workflow, connect your ElevenLabs, OpenRouter, and Zvid credentials, and set your feed URL and ElevenLabs voice. Keep the schedule inactive while testing.
+3. For a first preview, change `dryRun` from `false` to `true` before running. Review the editor draft and credit quote. Writing and narration can incur charges during preview. A full render spends Zvid credits.
+
+The [MIT-licensed example](https://github.com/Zvid-io/workflow-examples/tree/main/workflows/blog-to-video) includes a Node.js version, the n8n workflow, and sample media. You can watch the example or run its offline checks without provider credentials.
