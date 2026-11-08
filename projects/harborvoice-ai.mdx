@@ -1,0 +1,59 @@
+---
+title: HarborVoice AI
+description: A multilingual voice-agent workbench that checks fictional shipment facts, preserves human approval and exposes reproducible evaluation evidence.
+authorIds:
+  - philippe-godfroy
+categories:
+  - agents
+  - text-to-speech
+  - speech-to-text
+  - music
+isFeatured: false
+date: "2026-11-08"
+image: /images/harborvoice-ai.jpg
+demoUrl: https://harborvoice-ai.vercel.app
+repoUrl: https://github.com/phlppgdfry/harborvoice-ai
+---
+
+# An answer is waiting. A guess is not enough.
+
+HarborVoice is an independent, MIT-licensed engineering case study: how should a multilingual voice assistant behave when its answer could affect an operational decision?
+
+Nora helps with a fictional logistics terminal. She retrieves a shipment by exact reference, explains the recorded status and prepares requests for human review. A customs hold remains a hold. A pending escalation remains a proposal. No real terminal systems or customer records are connected.
+
+## See the system
+
+Watch the [36-second commercial](https://harborvoice-ai.vercel.app/elite/commercial-en.mp4) or the [78-second engineering explainer](https://harborvoice-ai.vercel.app/elite/enterprise-explainer.mp4). Recorded ElevenLabs media is available without an account. Live voice access is restricted and may be unavailable outside its bounded trial window; the labeled deterministic text demo remains usable without consuming provider credits.
+
+## Specific ElevenLabs integrations
+
+- **ElevenAgents:** versioned Nora configuration, authenticated voice sessions, shipment lookup and human-review tools, four indexed knowledge documents and English/Dutch/French/German scenarios.
+- **ElevenAPI:** v4 narration, streaming speech, realtime and batch Scribe, speaker diarization, forced alignment, voice processing and an original Music v2.5 score.
+- **ElevenCreative:** editable commercial, localization, learning and briefing Flows; genuine French dubbing; a native Studio caption project. Final video composition is local and explicitly identified.
+- **Developer workflow:** the official SDK, CLI and MCP are used for supported operations. A resource registry and reviewed-hash reconciler detect drift rather than silently overwriting remote edits.
+
+## Architecture and boundaries
+
+The React interface calls a server-side gateway. Provider credentials stay on the server. Tools validate references and return structured fictional records. Consequential business actions require human review. The visitor agent is separate, read-only and provider-limited; public playback uses recorded outputs. A filesystem Credit Governor reserves estimated costs, preserves failed holds and reconciles account-wide observations. It is not distributed multi-user billing protection.
+
+## Measured results
+
+The v2.0 release passed **59 software tests**. Its first native agent suite passed **50 of 52 scenarios**. After prompt and fixture corrections, **10 targeted regression scenarios passed**; a complete rerun of the final configuration is not claimed. These are synthetic provider simulations, not real-customer success rates. Machine-readable reports, failures, configurations and execution limitations are versioned in the repository.
+
+## Reproduce safely
+
+```bash
+git clone https://github.com/phlppgdfry/harborvoice-ai.git
+cd harborvoice-ai
+npm ci
+npm run check
+npm run dev
+```
+
+The default text demonstration uses synthetic business data. Read the README before configuring ElevenLabs credentials. Paid generation and native agent provisioning are separate, explicit operations. Media provenance, capability coverage, native links and the independent-project disclaimer are documented under `docs/elite`.
+
+## Learn and contribute
+
+The foundation Academy and advanced Mastery Lab explain grounding, tools, evaluation, multilingual behavior and budget controls with practical exercises. Internal progress indicators are not ElevenLabs credentials. Contributions that improve failure handling, accessibility or reproducibility are welcome through the project's contribution guide.
+
+HarborVoice is not affiliated with or endorsed by ElevenLabs. Studio API allowlisting and plan-restricted features are documented honestly. No certification, official Top User status or enterprise production readiness is claimed.
