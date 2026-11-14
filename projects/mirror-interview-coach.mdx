@@ -1,0 +1,29 @@
+---
+title: "Mirror // AI Interview Coach"
+description: "Memory-governed AI interview coach with MongoDB Atlas Vector Search and ElevenLabs spoken voice feedback."
+image: "/images/projects/mirror-interview-coach.png"
+authors: ["jaimehernan95"]
+tags: ["Next.js", "MongoDB", "Voice AI", "AI Coach", "ElevenLabs"]
+github: "https://github.com/jaimehernan95/mirror-interview-coach"
+demo: "https://github.com/jaimehernan95/mirror-interview-coach"
+createdAt: "2026-11-14"
+---
+
+## Overview
+
+Mirror is a privacy-first AI interview coach built for the MongoDB Hackathon (Problem Statement Two: Memory You Can Govern).
+
+Traditional AI speech coaches suffer from "AI amnesia," treating every session in isolation. Mirror tracks speech cadence (WPM), verbal fillers, and eye-contact stability 100% locally in the browser, storing episodic memories in MongoDB Atlas with Vector Search.
+
+## How ElevenLabs is Used
+
+After each session evaluation, Mirror calls the ElevenLabs Text-to-Speech API (`eleven_turbo_v2_5` model) to synthesize spoken, empathetic coaching critiques that speak directly to the candidate:
+
+> *"Your pace improved from 118 WPM to 142 words per minute. Eye contact remains your biggest growth area. Keep your gaze anchored to the camera lens."*
+
+## Tech Stack
+- Next.js 15 & React 19
+- MongoDB Atlas Vector Search
+- ElevenLabs Text-to-Speech API
+- Google Gemini SDK
+- LangSmith Tracing
