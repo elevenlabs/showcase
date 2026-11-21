@@ -1,0 +1,67 @@
+---
+title: JingleDrop
+description: Turn a one-line promo into a radio-ready jingle ad in up to 3 languages, with original music, native voiceovers and sound effects.
+authorIds:
+  - sehath-jaladi
+categories:
+  - music
+  - text-to-speech
+isFeatured: false
+date: "2026-11-20"
+image: /images/jingledrop.png
+repoUrl: https://github.com/sehathjaladi5-sudo/jingledrop
+---
+
+# JingleDrop
+
+## Overview
+
+Small shops near campus, like boba spots, taquerias and bike repair shops, serve customers who speak Spanish, Mandarin, Korean, Hindi and more. When they have a slow afternoon, a professional audio ad means paying a studio and waiting days, so most just post a plain text graphic.
+
+JingleDrop lets a shop owner type one line ("Slow Tuesday: 20% off drinks from 2 to 5 PM") and get finished, mixed jingle ads in up to three languages in under a minute, ready for Reels, TikTok or an in-store speaker.
+
+## Key Features
+
+- **Original jingle bed:** an instrumental track composed for the business and vibe with the ElevenLabs Music API
+- **Native voiceovers:** one script per language, written the way a native speaker would say it, voiced with Eleven Multilingual v2
+- **Sound design:** a short intro sting (like a straw popping into a boba cup) from the Sound Effects API
+- **Radio-style mix:** music automatically ducks under the voice, then comes back up
+- **Ready to post:** per-language downloads, music and SFX stems, and an Instagram caption
+
+## How It Works
+
+1. The owner enters a business name, type, promo, music vibe, voice and up to three languages.
+2. An LLM writes a creative brief: native scripts, a music prompt and a sound effect prompt.
+3. The server calls ElevenLabs Music, Sound Effects and Text to Speech in parallel.
+4. The browser mixes everything with the Web Audio API: music fades in, ducks under the voice, the voice is high-passed, and the master bus is compressed, then exported as WAV.
+
+Mixing in the browser keeps the server dependency-free, at the cost of WAV-only export for now. Preset shops include hand-written native scripts as a fallback if the LLM is unavailable.
+
+## Technologies Used
+
+- ElevenLabs Music API (`/v1/music`, instrumental)
+- ElevenLabs Sound Effects API (`/v1/sound-generation`)
+- ElevenLabs Text to Speech (`eleven_multilingual_v2`)
+- Vercel AI Gateway for script writing
+- Node.js (zero dependencies) and the Web Audio API
+
+## Getting Started
+
+```bash
+git clone https://github.com/sehathjaladi5-sudo/jingledrop
+cd jingledrop
+export ELEVENLABS_API_KEY="your-key"
+export AI_GATEWAY_API_KEY="your-key"   # optional
+node server.js
+# open http://localhost:3000, pick a preset and hit DROP THE JINGLE
+```
+
+## Future Plans
+
+- MP4 export with captions for Reels and TikTok
+- Saved brand voice and music style per shop
+- Native-speaker review of scripts and pilots with local shops
+
+## Acknowledgments
+
+Built solo in one afternoon at Berkeley Startup Sprint (Nov 20, 2026), hosted by Valley Consulting Group, with help from an AI coding assistant.
